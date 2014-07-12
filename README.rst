@@ -61,15 +61,15 @@ are of internal use at Globo.com and won't be released open-source.
 
 Fedora
 ------
-    
+
 There are complete setup instructions and scripts for Fedora 20, at:
-https://github.com/globoi/brainiak_api/tree/master/setup/fedora
+https://github.com/globocom/brainiak_api/tree/master/setup/fedora
 
 MacOS
 -----
 
 Setup scripts are being added to:
-https://github.com/globoi/brainiak_api/tree/master/setup/macosx
+https://github.com/globocom/brainiak_api/tree/master/setup/macosx
 
 General instructions
 --------------------
