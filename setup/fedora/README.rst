@@ -25,7 +25,7 @@ To make the setup less intrusive and understand Brainiak dependencies, you might
 Feel free to use other directories!
 Just make sure you set the right paths when defining CODE_DIR and BIN_DIR environment variables: ::
 
-    echo "export CODE_DIR=~/code" >> ~/.bashrc 
+    echo "export CODE_DIR=~/code" >> ~/.bashrc
     echo "export BIN_DIR=~/bin" >> ~/.bashrc
     source ~/.bashrc
 
@@ -38,7 +38,7 @@ Make sure you have git installed... ::
 ... so you can download Brainiak source code (clone project repository): ::
 
     cd ~/code
-    git clone https://github.com/globoi/brainiak_api.git
+    git clone https://github.com/globocom/brainiak_api.git
 
 Once this is done, get into Brainiak Fedora setup directory: ::
 
