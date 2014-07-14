@@ -21,7 +21,7 @@ class TestInstanceResource(TornadoAsyncHTTPTestCase):
         self.assertEqual(response.code, 404)
 
     def test_get_instance(self):
-        response = self.fetch('/person/Gender/Male')
+        response = self.fetch('/person/Gender/Male?expand_uri=0')
         self.assertEqual(response.code, 200)
         json_received = json.loads(response.body)
         self.assertEqual(json_received['@type'], 'person:Gender')
@@ -36,7 +36,7 @@ class TestInstanceResource(TornadoAsyncHTTPTestCase):
         self.assertEqual(response.headers['Access-Control-Allow-Headers'], settings.CORS_HEADERS)
 
     def test_instance_by_uri(self):
-        response = self.fetch('/_/_/_/?instance_uri=http://semantica.globo.com/person/Gender/Female')
+        response = self.fetch('/_/_/_/?instance_uri=http://semantica.globo.com/person/Gender/Female&expand_uri=0')
         self.assertEqual(response.code, 200)
         json_received = json.loads(response.body)
         self.assertEqual(json_received['@type'], 'person:Gender')
@@ -64,7 +64,7 @@ class InstanceResourceTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
 
     @patch("brainiak.utils.cache.settings", ENABLE_CACHE=True)
     def test_get_instance_200(self, mock_cache):
-        response = self.fetch('/person/Gender/Female?lang=pt', method='GET')
+        response = self.fetch('/person/Gender/Female?lang=pt&expand_uri=0', method='GET')
         body = json.loads(response.body)
         self.assertEqual(response.code, 200)
         self.assertIn(u'/person/Gender/Female', body['@id'])
@@ -229,19 +229,19 @@ class InstanceWithExpandedPropertiesTestCase(TornadoAsyncHTTPTestCase, QueryTest
         self.assertEqual(sorted(computed), sorted(expected))
 
     def test_instance_query_expand_object_properties_is_not_defined(self):
-        response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&graph_uri=http://brmedia.com/', method='GET')
+        response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&graph_uri=http://brmedia.com/&expand_uri=0', method='GET')
         self.assertEqual(response.code, 200)
         body = json.loads(response.body)
         self.assertEqual(body[u'http://brmedia.com/related_to'], [u'dbpedia:Cricket'])
 
     def test_instance_query_expand_object_properties_is_false(self):
-        response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&expand_object_properties=0&graph_uri=http://brmedia.com/', method='GET')
+        response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&expand_object_properties=0&graph_uri=http://brmedia.com/&expand_uri=0', method='GET')
         self.assertEqual(response.code, 200)
         body = json.loads(response.body)
         self.assertEqual(body[u'http://brmedia.com/related_to'], [u'dbpedia:Cricket'])
 
     def test_instance_query_expand_object_properties_is_true(self):
-        response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&expand_object_properties=1&graph_uri=http://brmedia.com/', method='GET')
+        response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&expand_object_properties=1&graph_uri=http://brmedia.com/&expand_uri=0', method='GET')
         self.assertEqual(response.code, 200)
         body = json.loads(response.body)
         self.assertEqual(body[u'http://brmedia.com/related_to'], [{u"@id": u"dbpedia:Cricket", u"title": u"Cricket"}])
@@ -259,7 +259,7 @@ class InstanceCauseSchemaToBeCachedTestCase(TornadoAsyncHTTPTestCase, QueryTestC
         # Clean cache
         self.redis_test_client.delete([expected_redis_key])
 
-        class_response = self.fetch('/dbpedia/News/_schema?class_prefix=http://dbpedia.org/ontology/&graph_uri=http://brmedia.com/', method='GET')
+        class_response = self.fetch('/dbpedia/News/_schema?class_prefix=http://dbpedia.org/ontology/&graph_uri=http://brmedia.com/&expand_uri=0', method='GET')
         self.assertEqual(class_response.code, 200)
         cached_schema_by_direct_access_str = self.redis_test_client.get(expected_redis_key)
         cached_schema_by_direct_access = ujson.loads(cached_schema_by_direct_access_str)
@@ -268,7 +268,7 @@ class InstanceCauseSchemaToBeCachedTestCase(TornadoAsyncHTTPTestCase, QueryTestC
         # Clean cache
         self.redis_test_client.delete([expected_redis_key])
 
-        instance_response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&graph_uri=http://brmedia.com/', method='GET')
+        instance_response = self.fetch('/dbpedia/News/news_cricket?instance_prefix=http://brmedia.com/&graph_uri=http://brmedia.com/&expand_uri=0', method='GET')
         self.assertEqual(instance_response.code, 200)
         cached_schema_caused_by_get_instance_str = self.redis_test_client.get(expected_redis_key)
         cached_schema_caused_by_get_instance = ujson.loads(cached_schema_caused_by_get_instance_str)

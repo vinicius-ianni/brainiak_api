@@ -36,7 +36,7 @@ SERVER_PORT = 5100
 DEBUG = True
 ENABLE_CACHE = False
 REDIS_PASSWORD = None
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.INFO
 ES_ANALYZER = "default"
 
 ANNOTATION_PROPERTY_HAS_UNIQUE_VALUE = "base:tem_valor_unico"
