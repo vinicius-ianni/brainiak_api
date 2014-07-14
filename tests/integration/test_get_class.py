@@ -736,7 +736,7 @@ class TestClassResource(TornadoAsyncHTTPTestCase):
         response = self.fetch('/person/Gender/_schema')
         self.assertEqual(response.code, 200)
         schema = json.loads(response.body)
-        self.assertEqual(schema['id'], u'person:Gender')
+        self.assertEqual(schema['id'], u'http://semantica.globo.com/person/Gender')
         self.assertEqual(schema['$schema'], 'http://json-schema.org/draft-04/schema#')
         try:
             Draft4Validator.check_schema(schema)
@@ -838,7 +838,7 @@ class InheritedPredicateRedifinitionTestCase(TornadoAsyncHTTPTestCase, QueryTest
     maxDiff = None
 
     def test_property_redefined_in_subclass(self):
-        response = self.fetch('/_/_/_schema?graph_uri=http://extra.onto/&class_uri=http://example.onto/Golden')
+        response = self.fetch('/_/_/_schema?graph_uri=http://extra.onto/&class_uri=http://example.onto/Golden&expand_uri=0')
         self.assertEqual(response.code, 200)
         computed = json.loads(response.body)["properties"]["http://example.onto/description"]
         expected = {
@@ -852,7 +852,7 @@ class InheritedPredicateRedifinitionTestCase(TornadoAsyncHTTPTestCase, QueryTest
         self.assertEqual(computed, expected)
 
     def test_property_re_redefined_predicate_in_hierarchy(self):
-        response = self.fetch('/_/_/_schema?graph_uri=http://extra.onto/&class_uri=http://example.onto/Golden_Retriever')
+        response = self.fetch('/_/_/_schema?graph_uri=http://extra.onto/&class_uri=http://example.onto/Golden_Retriever&expand_uri=0')
         self.assertEqual(response.code, 200)
         computed = json.loads(response.body)["properties"]["http://example.onto/description"]
         expected = {
@@ -866,7 +866,7 @@ class InheritedPredicateRedifinitionTestCase(TornadoAsyncHTTPTestCase, QueryTest
         self.assertEqual(computed, expected)
 
     def test_property_re_redefined_predicate_in_parent_class(self):
-        response = self.fetch('/_/_/_schema?graph_uri=http://extra.onto/&class_uri=http://example.onto/Mini_Golden_Retriever')
+        response = self.fetch('/_/_/_schema?graph_uri=http://extra.onto/&class_uri=http://example.onto/Mini_Golden_Retriever&expand_uri=0')
         self.assertEqual(response.code, 200)
         computed = json.loads(response.body)["properties"]["http://example.onto/description"]
         expected = {

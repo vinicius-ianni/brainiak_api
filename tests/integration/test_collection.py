@@ -153,7 +153,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(received_response['items'], expected_items)
 
     def test_filter_with_object_as_string(self):
-        response = self.fetch('/person/Gender/?o=Masculino&lang=pt', method='GET')
+        response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=0', method='GET')
         expected_items = [
             {
                 u'title': u'Masculino',
@@ -268,21 +268,21 @@ class MultipleGraphsResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     maxDiff = None
 
     def test_news_filtered_by_sports_graph(self):
-        response = self.fetch('/dbpedia/News/?graph_uri=http://brmedia.com/sports', method='GET')
+        response = self.fetch('/dbpedia/News/?graph_uri=http://brmedia.com/sports&expand_uri=1', method='GET')
         self.assertEqual(response.code, 200)
         body = json.loads(response.body)
         computed_items = body["items"]
         expected_items = [{
             u'resource_id': u'news_cricket',
             u'instance_prefix': u'http://brmedia.com/',
-            u'class_prefix': u'dbpedia',
+            u'class_prefix': u'http://dbpedia.org/ontology/',
             u'@id': u'http://brmedia.com/news_cricket',
             u'title': u'Cricket becomes the most popular sport of Brazil'
         }]
         self.assertEqual(computed_items, expected_items)
 
     def test_news_filtered_by_politics_graph(self):
-        response = self.fetch('/dbpedia/News/?do_item_count=1&graph_uri=http://brmedia.com/politics', method='GET')
+        response = self.fetch('/dbpedia/News/?do_item_count=1&graph_uri=http://brmedia.com/politics&expand_uri=1', method='GET')
         self.assertEqual(response.code, 200)
         body = json.loads(response.body)
 
@@ -303,7 +303,7 @@ class MultipleGraphsResource(TornadoAsyncHTTPTestCase, QueryTestCase):
         expected_items = [{
             u'resource_id': u'news_president_answer',
             u'instance_prefix': u'http://brmedia.com/',
-            u'class_prefix': u'dbpedia',
+            u'class_prefix': u'http://dbpedia.org/ontology/',
             u'@id': u'http://brmedia.com/news_president_answer',
             u'title': u"President explains the reason for the war - it is 42"
         }]

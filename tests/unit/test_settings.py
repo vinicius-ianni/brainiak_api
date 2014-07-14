@@ -21,7 +21,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(settings.EVENT_BUS_PORT, 61613)
         self.assertEqual(settings.ES_ANALYZER, 'default')
         self.assertEqual(settings.LOG_FILEPATH, '/tmp/brainiak.log')
-        self.assertEqual(settings.LOG_LEVEL, logging.DEBUG)
+        self.assertEqual(settings.LOG_LEVEL, logging.WARN)
         self.assertEqual(settings.LOG_NAME, 'brainiak')
         self.assertEqual(settings.NOTIFY_BUS, True)
         self.assertEqual(settings.REDIS_ENDPOINT, 'localhost')
