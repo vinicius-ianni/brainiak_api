@@ -3,8 +3,11 @@ Brainiak
 
 Brainiak is a Linked Data RESTful API to provide transparent access to SPARQL endpoints.
 
-This a project created by Globo.com's engineers to enhace its semantic platform.
+This project was created by `Globo.com <http://globo.com/>`_'s engineers to enhance its semantic platform.
 We are releasing this as an open-source project in order to give something back to the software community.
+
+Learn more about Brainiak at `this slideshare presentation <http://www.slideshare.net/semantic_team/semantic-day-2013-linked-data-at-globocom>`_.
+
 
 DISCLAIMER
 ==========
@@ -15,8 +18,9 @@ People can contribute to turn this project more adoption-friendly outside its or
 
 For this purpose, use the forum https://groups.google.com/forum/#!forum/brainiak_api_users to discuss ideas and ask questions.
 
-We use the twitter https://twitter.com/brainiak_api to also broadcast information about the project and related subjects.
+We use the twitter `@brainiak_api <https://twitter.com/brainiak_api>`_'s to broadcast information about the project and related subjects.
 
+And we also have a facebook page at https://www.facebook.com/brainiakapi.
 
 Motivation
 ==========
@@ -32,12 +36,43 @@ Documentation
 =============
 
 Internally at Globo.com, the docs are available at http://brainiak.semantica.globoi.com/docs/
-After public release we will publish the docs probably at https://brainiak.readthedocs.org
+
+The documentation source is available at `brainiak_api/docs` directory.
+It was developed using `Sphinx <http://sphinx-doc.org/>`_ and
+`Program output plugin <https://pythonhosted.org/sphinxcontrib-programoutput/>`_.
+
+The documentation build is also temporarily available at `brainiak_api/docs`.
 
 Running
 =======
 
 Brainiak is developed using `Python <http://www.python.org/>`_.
+
+The requirements for currently running Brainiak are:
+
+- Python packages (detailed at requirements.txt)
+- Triplestore: `Virtuoso 6 <https://github.com/openlink/virtuoso-opensource>`_
+- Search engine: `ElasticSearch 0.90.12 <http://www.elasticsearch.org/>`_
+- Event bus: `ActiveMQ 5.8.0 <http://activemq.apache.org/>`_
+- *Cache* `Redis <http://redis.io/>`_ (optional)
+
+Currently Brainiak is run in production using CentOS, but the deployment scripts
+are of internal use at Globo.com and won't be released open-source.
+
+Fedora
+------
+
+There are complete setup instructions and scripts for Fedora 20, at:
+https://github.com/globocom/brainiak_api/tree/master/setup/fedora
+
+MacOS
+-----
+
+Setup scripts are being added to:
+https://github.com/globocom/brainiak_api/tree/master/setup/macosx
+
+General instructions
+--------------------
 
 It can be installed using `virtualenvwrapper <http://www.doughellmann.com/projects/virtualenvwrapper/>`_: ::
 
@@ -59,14 +94,29 @@ After virtualenv is ready (run in development mode): ::
 
     make run
 
-Brainiak will be available at: http://localhost:5100/
+By default, brainiak will be available at: http://localhost:5100/
 
 Testing
 =======
 
-Check if everything is running as expected, and keep up the code covered with tests when contributing: ::
+There are two categories of tests in Brainiak:
+- Unit (python-only)
+- Integration (need other services to be up, e.g Virtuoso)
+
+Run unit tests using: ::
+
+    make unit
+
+Run integration tests using: ::
+
+    make integration
+
+To run all tests, and check how much of the code is covered with tests: ::
 
     make test
+
+We expect contributions to have related tests, so we can keep up test code
+coverage to more than 90%.
 
 License
 =======
