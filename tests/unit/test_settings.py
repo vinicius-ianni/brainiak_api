@@ -13,7 +13,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(settings.DEFAULT_PAGE, '0')
         self.assertEqual(settings.DEFAULT_PER_PAGE, '10')
         self.assertEqual(settings.DEFAULT_RULESET_URI, "http://semantica.globo.com/ruleset")
-        self.assertEqual(settings.DEFAULT_URI_EXPANSION, '0')
+        self.assertEqual(settings.DEFAULT_URI_EXPANSION, '1')
         self.assertEqual(settings.GRAPHS_WITHOUT_INSTANCES, ["http://semantica.globo.com/upper/"])
         self.assertEqual(settings.ELASTICSEARCH_ENDPOINT, 'localhost:9200')
         self.assertEqual(settings.ENABLE_CACHE, False)
