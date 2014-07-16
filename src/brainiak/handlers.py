@@ -266,7 +266,8 @@ class RootHandler(BrainiakRequestHandler):
     def finalize(self, response):
         if isinstance(response, dict):
             self.write(response)
-            self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+            url_schema = build_schema_url(self.query_params, propagate_params=True)
+            self.set_header("Content-Type", content_type_profile(url_schema))
 
 
 class ContextJsonSchemaHandler(BrainiakRequestHandler):
@@ -294,7 +295,8 @@ class ContextHandler(BrainiakRequestHandler):
 
     def finalize(self, response):
         self.write(response)
-        self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+        url_schema = build_schema_url(self.query_params, propagate_params=True)
+        self.set_header("Content-Type", content_type_profile(url_schema))
 
 
 class ClassHandler(BrainiakRequestHandler):
@@ -444,7 +446,8 @@ class CollectionHandler(BrainiakRequestHandler):
         else:
             self.write(response)
 
-        self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+        url_schema = build_schema_url(self.query_params, propagate_params=True)
+        self.set_header("Content-Type", content_type_profile(url_schema))
 
 
 class InstanceHandler(BrainiakRequestHandler):
@@ -686,7 +689,8 @@ class SuggestHandler(BrainiakRequestHandler):
             raise HTTPError(404, log_message=msg)
         elif isinstance(response, dict):
             self.write(response)
-            self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+            url_schema = build_schema_url(self.query_params, propagate_params=True)
+            self.set_header("Content-Type", content_type_profile(url_schema))
         elif isinstance(response, int):  # status code
             self.set_status(response)
             # A call to finalize() was removed from here! -- rodsenra 2013/04/25
@@ -715,7 +719,8 @@ class SearchHandler(BrainiakRequestHandler):
 
     def finalize(self, response):
         self.write(response)
-        self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+        url_schema = build_schema_url(self.query_params, propagate_params=True)
+        self.set_header("Content-Type", content_type_profile(url_schema))
 
 
 class PrefixHandler(BrainiakRequestHandler):

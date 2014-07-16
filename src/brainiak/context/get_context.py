@@ -28,15 +28,15 @@ def list_classes(query_params):
 
 def assemble_list_json(query_params, query_result_dict):
     context = MemorizeContext()
-    expand_uri = bool(int(query_params.get('expand_uri', settings.DEFAULT_URI_EXPANSION)))
+    should_expand_uri = bool(int(query_params.get('expand_uri', settings.DEFAULT_URI_EXPANSION)))
     items_list = compress_keys_and_values(
         query_result_dict,
         keymap={"class": "@id", "label": "title"},
         context=context,
-        expand_uri=expand_uri)
+        expand_uri=should_expand_uri)
     items_list = compress_duplicated_ids(items_list)
     decorate_with_resource_id(items_list)
-    decorate_with_class_prefix(items_list)
+    decorate_with_class_prefix(items_list, should_expand_uri)
 
     context_section = context.context
     context_section.update({"@language": query_params.get("lang")})

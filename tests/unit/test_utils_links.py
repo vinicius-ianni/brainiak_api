@@ -41,6 +41,23 @@ class TestBuildSchema(unittest.TestCase):
         expected = 'http://any.uri/graph/Class/_schema_list?class_prefix=class_prefix'
         self.assertEqual(expected, computed)
 
+    def test_build_schema_url_with_querystring_and_propagate(self):
+        params = {
+            'page': 1,
+            'per_page': 2,
+            'class_prefix': 'http://any.uri/prefix',
+            'class_uri': 'http://any.uri/prefix/Class',
+            'class_name': 'Class',
+            'context_name': 'graph',
+            'expand_uri': 1,
+            'graph_uri': 'http://any.uri/graph'
+        }
+        handler = MockHandler(uri="http://any.uri/graph/Class", querystring="class_prefix=class_prefix")
+        query_params = ParamDict(handler, **params)
+        computed = build_schema_url(query_params, propagate_params=True)
+        expected = 'expand_uri=1'
+        self.assertIn(expected, computed)
+
     def test_self_url(self):
         params = {'page': 1, 'per_page': 2}
         handler = MockHandler(uri="http://any.uri")

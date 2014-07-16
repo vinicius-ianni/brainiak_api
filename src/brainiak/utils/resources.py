@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-from brainiak.prefixes import expand_uri, is_compressed_uri, ROOT_CONTEXT
+from brainiak.prefixes import expand_uri, is_compressed_uri, ROOT_CONTEXT, shorten_uri
 from brainiak.utils.links import pagination_items
 from brainiak.settings import EVENT_BUS_PORT
 from brainiak import settings
@@ -75,7 +75,7 @@ def decorate_with_resource_id(list_of_dicts):
             raise TypeError(u"dict missing key {0:s} while processing decorate_with_resource_id()".format(ex))
 
 
-def decorate_with_class_prefix(list_of_dicts):
+def decorate_with_class_prefix(list_of_dicts, should_expand_uri):
     for dict_item in list_of_dicts:
         uri = dict_item["@id"]
         if is_compressed_uri(uri):
@@ -83,7 +83,11 @@ def decorate_with_class_prefix(list_of_dicts):
         else:
             pos = uri.rfind("/") + 1
             class_prefix = uri[:pos]
-        dict_item["class_prefix"] = class_prefix
+        dict_item["class_prefix"] = normalize_class_prefix(class_prefix, should_expand_uri)
+
+
+def normalize_class_prefix(class_prefix, should_expand_uri):
+    return expand_uri(class_prefix) if should_expand_uri else shorten_uri(class_prefix)
 
 
 def compress_duplicated_ids(list_of_dicts):

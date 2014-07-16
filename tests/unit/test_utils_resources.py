@@ -91,7 +91,7 @@ class ResourceUtilsTestCase(TestCase):
         list_of_dicts = [
             {"@id": "dbpedia:AnyClass"}
         ]
-        decorate_with_class_prefix(list_of_dicts)
+        decorate_with_class_prefix(list_of_dicts, 0)
         expected = [
             {
                 "@id": "dbpedia:AnyClass",
@@ -103,7 +103,7 @@ class ResourceUtilsTestCase(TestCase):
         list_of_dicts = [
             {"@id": "http://xubiru/AnyClass"}
         ]
-        decorate_with_class_prefix(list_of_dicts)
+        decorate_with_class_prefix(list_of_dicts, 1)
         expected = [
             {
                 "@id": "http://xubiru/AnyClass",
