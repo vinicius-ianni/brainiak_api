@@ -54,12 +54,11 @@ def run_analyze(target, analyzer, indexes):
     }
 
     response = _get_response(request_params)
-
     return json.loads(response.body)
 
 
 def _build_elasticsearch_analyze_url(indexes, analyzer, target):
-    index_path = ",".join(indexes) if isinstance(indexes, list) else indexes
+    index_path = indexes
 
     if isinstance(target, unicode):
         target = urllib.quote_plus(target.encode('utf-8'))

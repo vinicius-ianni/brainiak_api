@@ -22,7 +22,9 @@ def do_suggest(query_params, suggest_params):
 
     classes = _validate_class_restriction(query_params, range_result)
     graphs = _validate_graph_restriction(query_params, range_result)
-    indexes = ["semantica." + uri_to_slug(graph) for graph in graphs]
+    # TODO: ES no longer support multiplos indexes
+    # FIXME: Move to settings
+    indexes = "semantica.g1"
 
     search_fields = list(set(_get_search_fields(query_params, suggest_params) + LABEL_PROPERTIES))
 

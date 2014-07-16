@@ -58,7 +58,7 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
     href_class = assemble_url(schema_url, {"class_prefix": query_params.get("class_prefix", "")})
     if 'expand_uri' in query_params:
         href_class = append_param(href_class, 'expand_uri={0}'.format(query_params['expand_uri']))
-    
+
     # {value} is used here for CMAaaS integration
     instance_href = u"/_/_/_?instance_uri={value}"
 
