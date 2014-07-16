@@ -58,7 +58,7 @@ def run_analyze(target, analyzer, indexes):
 
 
 def _build_elasticsearch_analyze_url(indexes, analyzer, target):
-    index_path = indexes
+    index_path = indexes[0]
 
     if isinstance(target, unicode):
         target = urllib.quote_plus(target.encode('utf-8'))

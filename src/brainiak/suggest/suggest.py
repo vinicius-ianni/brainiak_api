@@ -24,7 +24,7 @@ def do_suggest(query_params, suggest_params):
     graphs = _validate_graph_restriction(query_params, range_result)
     # TODO: ES no longer support multiplos indexes
     # FIXME: Move to settings
-    indexes = "semantica.g1"
+    indexes = ["semantica.g1"]
 
     search_fields = list(set(_get_search_fields(query_params, suggest_params) + LABEL_PROPERTIES))
 
