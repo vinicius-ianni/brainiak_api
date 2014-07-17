@@ -1,6 +1,22 @@
 Releases
 ========
 
+Version 2.7.0 - 2014/07/
+--------------------------
+
+
+New Features
+____________
+
+- expand_uri=1 is the default now instead of expand_uri=0 (default in versions < 2.7.0)
+
+
+Fixes, Improvements
+___________________
+
+- Suggest was broken when no graphs were specified.
+
+
 Version 2.6.0 - 2014/07/07
 --------------------------
 
