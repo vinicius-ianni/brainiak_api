@@ -42,7 +42,7 @@ def do_suggest(query_params, suggest_params):
     #     search_fields,
     #     response_fields)
 
-    analyze_response = run_analyze(search_params["pattern"], settings.ES_ANALYZER, indexes)
+    analyze_response = run_analyze(search_params["pattern"])
     tokens = analyze_response["tokens"]
 
     request_body = _build_body_query_compatible_with_uatu_and_es_19_in_envs(
