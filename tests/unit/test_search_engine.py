@@ -28,69 +28,48 @@ class SearchEngineTestCase(TestCase):
 
     @patch("brainiak.search_engine.ELASTICSEARCH_ENDPOINT", "esearch.host")
     def test_build_elasticsearch_analyze_url_default_usage(self):
-        expected_url = "http://esearch.host/index1/_analyze?text=something"
-        response = search_engine._build_elasticsearch_analyze_url(
-            indexes=["index1"],
-            analyzer="default",
-            target="something")
+        expected_url = "http://esearch.host/_analyze?text=something"
+        response = search_engine._build_elasticsearch_analyze_url(target="something")
         self.assertEquals(expected_url, response)
 
     @patch("brainiak.search_engine.ELASTICSEARCH_ENDPOINT", "esearch.host")
     def test_build_elasticsearch_analyze_url_special_characters(self):
-        expected_url = "http://esearch.host/index1/_analyze?text=%C5%9A%E1%B9%95%C3%A9c%C3%AC%C3%A3l+ch%C3%A2rs"
-        response = search_engine._build_elasticsearch_analyze_url(
-            indexes=["index1"],
-            analyzer="default",
-            target="Śṕécìãl chârs")
+        expected_url = "http://esearch.host/_analyze?text=%C5%9A%E1%B9%95%C3%A9c%C3%AC%C3%A3l+ch%C3%A2rs"
+        response = search_engine._build_elasticsearch_analyze_url(target="Śṕécìãl chârs")
         self.assertEquals(expected_url, response)
 
     @patch("brainiak.search_engine.ELASTICSEARCH_ENDPOINT", "esearch.host")
     def test_build_elasticsearch_analyze_url_special_characters_encoded(self):
-        expected_url = "http://esearch.host/index1/_analyze?text=galv%C3%A3o"
-        response = search_engine._build_elasticsearch_analyze_url(
-            indexes=["index1"],
-            analyzer="default",
-            target=u"galv\xe3o")
+        expected_url = "http://esearch.host/_analyze?text=galv%C3%A3o"
+        response = search_engine._build_elasticsearch_analyze_url(target=u"galv\xe3o")
         self.assertEquals(expected_url, response)
 
     @patch("brainiak.search_engine.ELASTICSEARCH_ENDPOINT", "esearch.host")
     def test_build_elasticsearch_analyze_url_with_multiple_indexes(self):
-        expected_url = "http://esearch.host/index1,index2/_analyze?text=anything"
-        response = search_engine._build_elasticsearch_analyze_url(
-            indexes=["index1", "index2"],
-            analyzer="default",
-            target="anything")
+        expected_url = "http://esearch.host/_analyze?text=anything"
+        response = search_engine._build_elasticsearch_analyze_url(target="anything")
         self.assertEquals(expected_url, response)
 
     @patch("brainiak.search_engine.ELASTICSEARCH_ENDPOINT", "esearch.host")
     def test_build_elasticsearch_analyze_url_with_non_default_analyzer(self):
-        expected_url = "http://esearch.host/index1/_analyze?analyzer=special_analyzer&text=dummything"
-        response = search_engine._build_elasticsearch_analyze_url(
-            indexes=["index1"],
-            analyzer="special_analyzer",
-            target="dummything")
+        expected_url = "http://esearch.host/_analyze?text=dummything"
+        response = search_engine._build_elasticsearch_analyze_url(target="dummything")
         self.assertEquals(expected_url, response)
 
     @patch("brainiak.search_engine.ELASTICSEARCH_ENDPOINT", "esearch.host")
     def test_build_elasticsearch_analyze_url_with_text_that_needs_scaping(self):
-        expected_url = "http://esearch.host/index1/_analyze?text=text+with+spaces"
-        response = search_engine._build_elasticsearch_analyze_url(
-            indexes=["index1"],
-            analyzer="default",
-            target="text with spaces")
+        expected_url = "http://esearch.host/_analyze?text=text+with+spaces"
+        response = search_engine._build_elasticsearch_analyze_url(target="text with spaces")
         self.assertEquals(expected_url, response)
 
     @patch("brainiak.search_engine._get_response",
            return_value=MockResponse('{}', 200))
     def test_run_analyze(self, request_mock):
-        response = search_engine.run_analyze(
-            target="sometext",
-            analyzer="default",
-            indexes="index1")
+        response = search_engine.run_analyze(target="sometext")
         self.assertEquals(response, {})
 
         call_args = request_mock.call_args[0][0]
-        self.assertEqual(call_args["url"], u'http://localhost:9200/index1/_analyze?text=sometext')
+        self.assertEqual(call_args["url"], u'http://localhost:9200/_analyze?text=sometext')
         self.assertEqual(call_args["method"], u'GET')
         self.assertEqual(call_args["headers"], {u'Content-Type': u'application/x-www-form-urlencoded'})
 
