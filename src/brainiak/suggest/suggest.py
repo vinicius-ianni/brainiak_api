@@ -22,9 +22,7 @@ def do_suggest(query_params, suggest_params):
 
     classes = _validate_class_restriction(query_params, range_result)
     graphs = _validate_graph_restriction(query_params, range_result)
-    # TODO: ES no longer support multiplos indexes
-    # FIXME: Move to settings
-    indexes = ["semantica.g1"]
+    indexes = ["semantica." + uri_to_slug(graph) for graph in graphs]
 
     search_fields = list(set(_get_search_fields(query_params, suggest_params) + LABEL_PROPERTIES))
 
@@ -93,18 +91,24 @@ QUERY_PREDICATE_RANGES = u"""
 SELECT DISTINCT ?range ?range_label ?range_graph {
   {
     <%(target)s> rdfs:range ?root_range .
+    FILTER (!isBlank(?root_range))
+    ?range rdfs:subClassOf ?root_range OPTION(TRANSITIVE, t_min (0)) .
+    ?range rdfs:label ?range_label .
+    GRAPH ?range_graph { ?range a owl:Class } .
   }
   UNION {
     <%(target)s> rdfs:range ?blank .
     ?blank a owl:Class .
     ?blank owl:unionOf ?enumeration .
-    OPTIONAL { ?enumeration rdf:rest ?list_node OPTION(TRANSITIVE, t_min (0)) } .
-    OPTIONAL { ?list_node rdf:first ?root_range } .
+    OPTIONAL {
+        ?enumeration rdf:rest ?list_node OPTION(TRANSITIVE, t_min (0)) .
+        ?list_node rdf:first ?root_range .
+        FILTER (!isBlank(?root_range)) .
+        ?range rdfs:subClassOf ?root_range OPTION(TRANSITIVE, t_min (0)) .
+        ?range rdfs:label ?range_label .
+        GRAPH ?range_graph { ?range a owl:Class } .
+    }
   }
-  FILTER (!isBlank(?root_range))
-  ?range rdfs:subClassOf ?root_range OPTION(TRANSITIVE, t_min (0)) .
-  ?range rdfs:label ?range_label .
-  GRAPH ?range_graph { ?range a owl:Class } .
   %(lang_filter_range_label)s
 }
 """
