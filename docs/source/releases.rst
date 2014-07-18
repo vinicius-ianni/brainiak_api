@@ -15,6 +15,7 @@ Fixes, Improvements
 ___________________
 
 - Suggest was broken when no graphs were specified.
+- Disable external caches
 
 
 Version 2.6.0 - 2014/07/07
