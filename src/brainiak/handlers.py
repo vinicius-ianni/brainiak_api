@@ -91,6 +91,9 @@ class BrainiakRequestHandler(CorsMixin, RequestHandler):
     def __init__(self, *args, **kwargs):
         super(BrainiakRequestHandler, self).__init__(*args, **kwargs)
 
+    def compute_etag(self):
+        return None
+
     def get_cache_path(self):
         raise Exception(u"Method get_cache_path should be overwritten for caching & purging purposes")
 
