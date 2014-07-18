@@ -21,10 +21,10 @@ class TestInstanceResource(TornadoAsyncHTTPTestCase):
         self.assertEqual(response.code, 404)
 
     def test_get_instance(self):
-        response = self.fetch('/person/Gender/Male?expand_uri=0')
+        response = self.fetch('/person/Gender/Male')
         self.assertEqual(response.code, 200)
         json_received = json.loads(response.body)
-        self.assertEqual(json_received['@type'], 'person:Gender')
+        self.assertEqual(json_received['@type'], 'http://semantica.globo.com/person/Gender')
         self.assertEqual(json_received['@id'], "http://semantica.globo.com/person/Gender/Male")
         self.assertEqual(json_received['_resource_id'], "Male")
         self.assertEqual(json_received['_instance_prefix'], "http://semantica.globo.com/person/Gender/")
@@ -102,7 +102,7 @@ class InstanceResourceTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
         self.assertEqual(response.code, 200)
         content_type = response.headers["Content-type"]
         self.assertTrue(content_type.startswith('application/json; profile=http://localhost:'))
-        self.assertTrue(content_type.endswith('/person/Gender/_schema'))
+        self.assertTrue(content_type.endswith('/person/Gender/_schema?expand_uri=1'))
 
     def test_get_instance_with_compressed_instance_prefix_200(self):
         instance_prefix = "http://test.com/other_prefix/"
