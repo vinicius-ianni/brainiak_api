@@ -7,7 +7,6 @@ from tornado.web import HTTPError
 from brainiak import triplestore
 from brainiak import greenlet_tornado
 from brainiak.utils import config_parser
-from brainiak.utils.sparql import compress_keys_and_values
 from tests.mocks import triplestore_config
 from tests.sparql import QueryTestCase
 from tests.tornado_cases import TornadoAsyncTestCase
