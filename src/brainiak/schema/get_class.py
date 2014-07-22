@@ -64,7 +64,6 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
         href_class = append_param(href_class, expand_uri_param)
         instance_href = append_param(instance_href, expand_uri_param)
 
-
     links = [
         {
             'rel': "self",

@@ -19,6 +19,10 @@ def schema(query_params):
         schema_ref = u'/{0}/{1}/_schema'.format(*args)
         href = u'/{0}/{1}'.format(*args)
 
+    if 'expand_uri' in query_params:
+        expand_uri_param = 'expand_uri={0}'.format(query_params['expand_uri'])
+        schema_ref = append_param(schema_ref, expand_uri_param)
+
     link = build_link(query_params)
 
     base = {
