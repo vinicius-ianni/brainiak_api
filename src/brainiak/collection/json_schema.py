@@ -2,15 +2,21 @@
 from brainiak.utils.links import merge_schemas, pagination_schema, append_param
 from brainiak.search.json_schema import SEARCH_PARAM_SCHEMA
 from brainiak.schema.get_class import get_cached_schema
+from brainiak.prefixes import shorten_uri
 
 
 def schema(query_params):
     context_name = query_params['context_name']
     class_name = query_params['class_name']
     class_prefix = query_params.get('class_prefix', None)
+
+    if (class_prefix is not None) and query_params.get('expand_uri')=='0':
+        class_prefix = shorten_uri(class_prefix)
+
     args = (context_name, class_name, class_prefix)
 
     class_schema = get_cached_schema(query_params)
+
 
     if class_prefix is not None:
         schema_ref = u"/{0}/{1}/_schema?class_prefix={2}".format(*args)
@@ -22,6 +28,7 @@ def schema(query_params):
     if 'expand_uri' in query_params:
         expand_uri_param = 'expand_uri={0}'.format(query_params['expand_uri'])
         schema_ref = append_param(schema_ref, expand_uri_param)
+        href = append_param(href, expand_uri_param)
 
     link = build_link(query_params)
 
