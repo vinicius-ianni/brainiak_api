@@ -10,13 +10,12 @@ def schema(query_params):
     class_name = query_params['class_name']
     class_prefix = query_params.get('class_prefix', None)
 
-    if (class_prefix is not None) and query_params.get('expand_uri')=='0':
+    if (class_prefix is not None) and query_params.get('expand_uri') == '0':
         class_prefix = shorten_uri(class_prefix)
 
     args = (context_name, class_name, class_prefix)
 
     class_schema = get_cached_schema(query_params)
-
 
     if class_prefix is not None:
         schema_ref = u"/{0}/{1}/_schema?class_prefix={2}".format(*args)
