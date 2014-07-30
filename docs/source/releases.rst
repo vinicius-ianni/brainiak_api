@@ -1,6 +1,17 @@
 Releases
 ========
 
+
+Version 2.7.1 - 2014/07/30
+--------------------------
+
+Fixes, Improvements
+___________________
+
+- corrections in the documentation
+- SchemaNotFound returning 404 instead of 500 http error
+
+
 Version 2.7.0 - 2014/07/29
 --------------------------
 
