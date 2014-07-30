@@ -77,8 +77,12 @@ supervisor:
 	PYTHONPATH="$(NEW_PYTHONPATH)" supervisord -c config/local/supervisord.conf -n -edebug
 
 docs: clean
-	@echo "Compiling and opening documentation..."
+	@echo "Compiling documentation..."
 	@cd $(HOME_BRAINIAK)/docs; make html
+
+open_docs: docs
+	@echo "Compiling and opening documentation..."
+	@cd $(HOME_BRAINIAK)/docs; make open
 
 console:
 	@echo "Console Python inside Brainiak code (you must be on the correct Virtualenv)"
