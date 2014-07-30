@@ -100,6 +100,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../services.html">Services</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../context/context.html">Managing Contexts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../prefix/prefix.html">Managing Prefixes</a></li>
@@ -119,11 +124,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../i18n.html">Internationalization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../services.html#convention-for-url-resources">Convention for URL Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../services.html#service-examples">Service Examples</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshoot.html">Troubleshooting</a><ul>
@@ -229,41 +229,89 @@ As <strong>class_prefix</strong> was defined, the class URI will be: <a class="r
 this property and/or object values. For example:</p>
 <div class="highlight-http"><pre>GET 'http://brainiak.semantica.dev.globoi.com/place/Country/?p=place:partOfContinent&amp;o=http://semantica.globo.com/place/Continent/America'</pre>
 </div>
-<p>It is also possible to set multiple <tt class="docutils literal"><span class="pre">p's</span></tt> and/or <tt class="docutils literal"><span class="pre">o's</span></tt>, adding a number after them (p1, o1, p2, o2, etc). Example:</p>
-<div class="highlight-http"><pre>GET 'http://brainiak.semantica.dev.globoi.com/place/City/?o=base:UF_RJ&amp;p1=place:longitude&amp;p2=place:latitude&amp;per_page=1''</pre>
+<p>It is also possible to set multiple <tt class="docutils literal"><span class="pre">p's</span></tt> and/or <tt class="docutils literal"><span class="pre">o's</span></tt>, adding a number after them (p1, o1, p2, o2, etc).
+Example:</p>
+<div class="highlight-http"><pre>GET 'http://brainiak.semantica.dev.globoi.com/place/City/?o=place:UF_RJ&amp;p1=place:longitude&amp;p2=place:latitude&amp;per_page=1'</pre>
 </div>
-<div class="highlight-text"><div class="highlight"><pre>{
-    &quot;@context&quot;: {
-        &quot;@language&quot;: &quot;pt&quot;
-    },
-    &quot;@id&quot;: &quot;http://semantica.globo.com/place/City&quot;,
-    &quot;_base_url&quot;: &quot;http://brainiak.semantica.dev.globoi.com/place/City&quot;,
-    &quot;_class_prefix&quot;: &quot;http://semantica.globo.com/place/&quot;,
-    &quot;_first_args&quot;: &quot;p2=place:latitude&amp;per_page=1&amp;p1=place:longitude&amp;page=1&amp;o=base:UF_RJ&quot;,
-    &quot;_next_args&quot;: &quot;p2=place:latitude&amp;per_page=1&amp;p1=place:longitude&amp;page=2&amp;o=base:UF_RJ&quot;,
-    &quot;_schema_url&quot;: &quot;http://brainiak.semantica.dev.globoi.com/place/City/_schema?expand_uri=1&quot;,
-    &quot;items&quot;: [
-        {
-            &quot;@id&quot;: &quot;http://semantica.globo.com/place/City/673caaed-9ebb-4677-b200-0eccac65a3e5&quot;,
-            &quot;class_prefix&quot;: &quot;http://semantica.globo.com/place/&quot;,
-            &quot;instance_prefix&quot;: &quot;http://semantica.globo.com/place/City/&quot;,
-            &quot;p&quot;: &quot;http://semantica.globo.com/place/partOfState&quot;,
-            &quot;place:latitude&quot;: -22.9583,
-            &quot;place:longitude&quot;: -43.4071,
-            &quot;resource_id&quot;: &quot;673caaed-9ebb-4677-b200-0eccac65a3e5&quot;,
-            &quot;title&quot;: &quot;Globoland&quot;
-        }
-    ],
-    &quot;pattern&quot;: &quot;&quot;
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;@context&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;@language&quot;</span><span class="p">:</span> <span class="s2">&quot;pt&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;@id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_base_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://brainiak.semantica.dev.globoi.com/place/City&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_class_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_first_args&quot;</span><span class="p">:</span> <span class="s2">&quot;p2=place:latitude&amp;per_page=1&amp;p1=place:longitude&amp;page=1&amp;o=base:UF_RJ&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_next_args&quot;</span><span class="p">:</span> <span class="s2">&quot;p2=place:latitude&amp;per_page=1&amp;p1=place:longitude&amp;page=2&amp;o=base:UF_RJ&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_schema_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://brainiak.semantica.dev.globoi.com/place/City/_schema&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;@id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City/Globoland&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;class_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;instance_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/partOfState&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;place:latitude&quot;</span><span class="p">:</span> <span class="mf">-22.9583</span><span class="p">,</span>
+            <span class="nt">&quot;place:longitude&quot;</span><span class="p">:</span> <span class="mf">-43.4071</span><span class="p">,</span>
+            <span class="nt">&quot;resource_id&quot;</span><span class="p">:</span> <span class="s2">&quot;673caaed-9ebb-4677-b200-0eccac65a3e5&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Globoland&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>What happened where?</p>
+<p>Querystring p/o parameters are matched using numbers.
+If the number is omitted consider <tt class="docutils literal"><span class="pre">p0</span></tt>.
+Therefore, for parameters <tt class="docutils literal"><span class="pre">o=place:UF_RJ&amp;p1=place:longitude&amp;p2=place:latitude</span></tt>, we have.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="42%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Number</th>
+<th class="head">P</th>
+<th class="head">O</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>place:UF_RJ</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>place:latitude</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>place:longitude</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Places in blank will match everything in base.
+The query above will be translated to this (simplified) query:</p>
+<div class="highlight-sparql"><div class="highlight"><pre><span class="k">SELECT </span><span class="nv">*</span> {<span class="nv"></span>
+<span class="nv">  ?s</span><span class="o"> a               </span><span class="na">place:City </span>.
+  <span class="nv">?s ?p0             </span><span class="na">place:UF_RJ </span>.
+  <span class="nv">?s</span><span class="o"> place:longitude </span><span class="nv">?o1 </span>.
+  <span class="nv">?s</span><span class="o"> place:latitude  </span><span class="nv">?o2 </span>.
 }
 </pre></div>
 </div>
-<p>Note by this last example that if only the predicate is provided, the related object for each item will be returned.
-In this case, the key will be the shorten URI of the predicate and the object will be the items&#8217; objects.
-From the example: <tt class="docutils literal"><span class="pre">place:longitude:</span> <span class="pre">&quot;-43.407133&quot;</span></tt></p>
-<p>The same stands if only the object is provided, the predicate will be returned.
-In this case, the key will be the query string&#8217;s predicate label (eg: p, p1, p2, ..) and the value will be the predicate itself.
-From the example above: <tt class="docutils literal"><span class="pre">p:</span> <span class="pre">&quot;http://purl.org/dc/terms/isPartOf&quot;</span></tt>.</p>
+<p>By fixing a <tt class="docutils literal"><span class="pre">?o=place:UF_RJ</span></tt> without a matching ?p, for example, we set that instances of class City must have some property with value <tt class="docutils literal"><span class="pre">?o=place:UF_RJ</span></tt>.
+In the ontology tested, the property to be matched with this object value is <tt class="docutils literal"><span class="pre">isPartOf</span></tt>, meaning that <tt class="docutils literal"><span class="pre">Globoland</span></tt> is part of state (<a class="reference external" href="http://en.wikipedia.org/wiki/States_of_Brazil">Unidade Federativa</a>) <tt class="docutils literal"><span class="pre">o=place:UF_RJ</span></tt>.</p>
+<p>Fixing predicates like in <tt class="docutils literal"><span class="pre">p1=place:longitude&amp;p2=place:latitude</span></tt> will only present instances that have this predicate, and the values for this properties will appear in the filtered collection result.</p>
 </div>
 <div class="section" id="possible-responses">
 <h2>Possible responses<a class="headerlink" href="#possible-responses" title="Permalink to this headline">¶</a></h2>
