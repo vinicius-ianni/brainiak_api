@@ -85,25 +85,27 @@ The instance was edited successfully, the response body is the modified instance
 
 **Status 400**
 
-If there are unknown parameters in the request, the response status code
-is 400 and the body contains a JSON containing valid and invalid parameters.
-
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/Brazil?invalid_param=1' | python -mjson.tool
-  :shell:
+If there are unknown parameters in the request, the response status code is 400.
 
 The 400 status may also happen when the JSON provided is invalid:
 
-.. include :: examples/edit_instance_400.rst
+.. include :: examples/create_instance_400.rst
 
 **Status 404**
 
 If the class does not exist, the response status code is 404.
 
-.. code-block:: http
+.. code-block:: bash
 
+  $ curl -i -X PUT -T "edit_female.json" http://brainiak.semantica.dev.globoi.com/place/Person/Female
 
-.. program-output:: curl -s -X PUT 'http://brainiak.semantica.dev.globoi.com/place/InexistentClass/InvalidInstance' -d '{}' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+    {
+        "errors": [
+            "HTTP error: 404\nClass http://semantica.globo.com/place/Person doesn't exist in context http://semantica.globo.com/place/."
+        ]
+    }
 
 **Status 500**
 

@@ -9,8 +9,15 @@ This service allows the creation of a new instance, provided its context, class 
 
   $ curl -i -X POST -T "new_york_city.json" http://brainiak.semantica.dev.globoi.com/place/City
 
-.. program-output:: curl -i -s -H "Expect:" -X POST -T "services/instance/examples/new_city.json" http://brainiak.semantica.dev.globoi.com/place/City
-  :shell:
+  HTTP/1.1 201 Created
+  Server: nginx
+  Date: Mon, 14 Jul 2014 14:09:27 GMT
+  Content-Type: application/json; profile=http://brainiak.semantica.dev.globoi.com/place/City/_schema_list
+  Content-Length: 0
+  Connection: keep-alive
+  X-Brainiak-Resource-Uri: http://semantica.globo.com/place/City/38cea15a-d122-4e53-9214-13c00aec9969
+  Location: http://brainiak.semantica.dev.globoi.com/place/City/38cea15a-d122-4e53-9214-13c00aec9969
+  Access-Control-Allow-Origin: *
 
 .. warning::
 
@@ -25,10 +32,8 @@ Sample JSON "new_city.json" for the class City_:
 
 .. warning::
 
-
-
-Note that prefixes are defined in the "@context" section.
-`Default prefixes  <http://brainiak.semantica.dev.globoi.com/_prefixes>`_ are implicit and don't need to be declared.
+  Note that prefixes are defined in the "@context" section.
+  `Default prefixes  <http://brainiak.semantica.dev.globoi.com/_prefixes>`_ are implicit and don't need to be declared.
 
 Besides using ``POST`` to create new instances, it is also possible to use ``PUT`` (for more information, see :ref:`edit_instance`).
 In this case, the ``instance_id`` should be provided, which must be unique in the specified context.
@@ -58,11 +63,7 @@ a instance from the API. For retrieving it, use the retrieve instance primitive 
 
 **Status 400**
 
-If there are unknown parameters in the request, the response status code
-is 400 and the body contains a JSON containing valid and invalid parameters.
-
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/Brazil?invalid_param=1' | python -mjson.tool
-  :shell:
+If there are unknown parameters in the request, the response status code is 400.
 
 The 400 status may also happen when the JSON provided is invalid:
 
@@ -72,8 +73,18 @@ The 400 status may also happen when the JSON provided is invalid:
 
 If the class does not exist, the response status code is 404.
 
-.. program-output:: curl -s -X POST 'http://brainiak.semantica.dev.globoi.com/place/Person' -d '{}' | python -mjson.tool
-  :shell:
+.. code-block:: bash
+
+  $ curl -i -X POST -T "new_york_city.json" http://brainiak.semantica.dev.globoi.com/place/Person
+
+
+.. code-block:: json
+
+    {
+        "errors": [
+            "HTTP error: 404\nClass http://semantica.globo.com/place/Person doesn't exist in context http://semantica.globo.com/place/."
+        ]
+    }
 
 **Status 500**
 

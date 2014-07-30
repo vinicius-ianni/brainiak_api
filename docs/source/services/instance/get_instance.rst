@@ -36,20 +36,47 @@ Possible responses
 
 If the instance exists, the response body is a JSON with all instance information and links to related actions.
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/Brazil' | python -mjson.tool
-  :shell:
+.. code-block:: bash
+
+  $ curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/Brazil' | python -mjson.tool
+
+.. code-block:: json
+
+  {
+      "@id": "http://semantica.globo.com/place/Country/Brazil",
+      "@type": "place:Country",
+      "_base_url": "http://brainiak.semantica.dev.globoi.com/place/Country/Brazil/",
+      "_instance_prefix": "http://semantica.globo.com/place/Country/",
+      "_resource_id": "Brazil",
+      "_type_title": "Pa\u00eds",
+      "upper:description": "Representa o pa\u00eds Brasil.",
+      "upper:name": "Brasil"
+  }
 
 **Status 400**
 
 If there are unknown parameters in the request, the response is a 400
 with a JSON informing the wrong parameters and the accepted ones.
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/Brazil?invalid_param=1' | python -mjson.tool
-  :shell:
+.. code-block:: bash
+
+  $ curl -s 'http://brainiak.semantica.dev.globoi.com/person/Gender/Female?invalid_param=1'
+
+.. code-block:: json
+
+    {
+        "errors": [
+            "HTTP error: 400\nArgument invalid_param is not supported. The supported querystring arguments are: class_prefix, class_uri, expand_object_properties, expand_uri, graph_uri, instance_prefix, instance_uri, lang, meta_properties."
+        ]
+    }
+
 
 **Status 404**
 
-If the instance does not exist, the response is a 404 with a JSON
-informing the error
+If the instance does not exist, the response is a 404 with a JSON informing the error
+
+.. code-block:: bash
+
+  $ curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/NonExistent'
 
 .. include :: examples/get_instance_404.rst

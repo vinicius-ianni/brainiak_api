@@ -28,16 +28,38 @@ Possible responses
 
 If there are contexts, the response body is a JSON containing contexts' titles, resources_id and @ids (URIs).
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+  {
+    "_base_url": "http://brainiak.semantica.dev.globoi.com",
+    "_first_args": "page=1",
+    "_next_args": "page=2",
+    "items": [
+        {
+            "@id": "http://semantica.globo.com/graph1/",
+            "resource_id": "graph1",
+            "title": "graph1"
+        },
+        {
+            "@id": "http://semantica.globo.com/sports/",
+            "resource_id": "sports",
+            "title": "sports"
+        }
+    ]
+  }
 
 **Status 400**
 
 If there are unknown parameters in the request query string, the response status code is 400.
 A JSON containing both the wrong parameters and the accepted ones is returned.
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/?invalid_param=1' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+    {
+        "errors": [
+            "HTTP error: 400\nArgument invalid_param is not supported. The supported querystring arguments are: do_item_count, expand_uri, graph_uri, lang, page, per_page, sort_by, sort_include_empty, sort_order."
+        ]
+    }
 
 **Status 404**
 

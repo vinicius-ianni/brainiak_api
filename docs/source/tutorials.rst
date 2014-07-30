@@ -8,3 +8,4 @@ New to Brainiak? This tutorials might help you getting started:
    :maxdepth: 2
 
    tutorials/building_local_dev_environment.rst
+   globocom/authorization.rst

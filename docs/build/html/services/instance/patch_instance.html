@@ -100,10 +100,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../first_steps.html">First Steps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization using Accounts</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../services.html">Services</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../context/context.html">Managing Contexts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../prefix/prefix.html">Managing Prefixes</a></li>
@@ -127,6 +123,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshoot.html">Troubleshooting</a><ul>
@@ -200,19 +197,19 @@
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -s http://brainiak.semantica.dev.globoi.com/place/City/globoland
 </pre></div>
 </div>
-<div class="highlight-text"><div class="highlight"><pre>{
-    &quot;@id&quot;: &quot;http://semantica.globo.com/place/City/globoland&quot;,
-    &quot;@type&quot;: &quot;http://semantica.globo.com/place/City&quot;,
-    &quot;_base_url&quot;: &quot;http://brainiak.semantica.dev.globoi.com/place/City/globoland/&quot;,
-    &quot;_instance_prefix&quot;: &quot;http://semantica.globo.com/place/City/&quot;,
-    &quot;_resource_id&quot;: &quot;globoland&quot;,
-    &quot;_type_title&quot;: &quot;Cidade&quot;,
-    &quot;http://semantica.globo.com/place/latitude&quot;: -22.9583,
-    &quot;http://semantica.globo.com/place/longitude&quot;: -43.4071,
-    &quot;http://semantica.globo.com/place/partOfState&quot;: &quot;http://semantica.globo.com/base/UF_RJ&quot;,
-    &quot;http://semantica.globo.com/upper/fullName&quot;: &quot;Globoland (RJ)&quot;,
-    &quot;http://semantica.globo.com/upper/name&quot;: &quot;Globoland&quot;
-}
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;@id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City/globoland&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;@type&quot;</span><span class="p">:</span> <span class="s2">&quot;place:City&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;_base_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://brainiak.semantica.dev.globoi.com/place/City/globoland/&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;_instance_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City/&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;_resource_id&quot;</span><span class="p">:</span> <span class="s2">&quot;globoland&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;_type_title&quot;</span><span class="p">:</span> <span class="s2">&quot;Cidade&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;place:latitude&quot;</span><span class="p">:</span> <span class="mf">-22.9583</span><span class="p">,</span>
+  <span class="nt">&quot;place:longitude&quot;</span><span class="p">:</span> <span class="mf">-43.4071</span><span class="p">,</span>
+  <span class="nt">&quot;place:partOfState&quot;</span><span class="p">:</span> <span class="s2">&quot;base:UF_RJ&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;upper:fullName&quot;</span><span class="p">:</span> <span class="s2">&quot;Globoland (RJ)&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;upper:name&quot;</span><span class="p">:</span> <span class="s2">&quot;Globoland&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Note that prefixes, such as &#8220;upper&#8221;, are defined in the &#8220;&#64;context&#8221; section:
@@ -220,16 +217,13 @@
 <p><strong>Replace</strong></p>
 <p>To patch this instance <strong>replacing</strong> some existing property&#8217;s value, do:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -s -X PATCH -d <span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;upper:name&quot;, &quot;value&quot;: &quot;New Globoland name&quot;}]&#39;</span> http://brainiak.semantica.dev.globoi.com/place/City/globoland
-</pre></div>
-</div>
-<div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 200 OK
+
+HTTP/1.1 200 OK
 Server: nginx
-Date: Tue, 29 Jul 2014 14:23:10 GMT
-Content-Type: text/html; charset=UTF-8
+Date: Mon, 14 Jul 2014 14:55:33 GMT
+Content-Type: text/html; <span class="nv">charset</span><span class="o">=</span>UTF-8
 Content-Length: 0
 Connection: keep-alive
-Max-Age: 0
-Cache-Control: private
 Access-Control-Allow-Origin: *
 </pre></div>
 </div>
@@ -264,32 +258,32 @@ As <strong>class_prefix</strong> was defined, the class URI will be: <a class="r
 <p>If there are unknown parameters in the request, the response status code
 is 400 and the body contains a JSON containing valid and invalid parameters.</p>
 <p>The 400 status may also happen when the JSON provided is invalid:</p>
-<blockquote>
-<div>$ curl -i -s  -X PATCH -d &#8216;[{&#8220;op&#8221;: &#8220;replace&#8221;, &#8220;path&#8221;: &#8220;inexistent:property&#8221;, &#8220;value&#8221;: 123}]&#8217; http://brainiak.semantica.dev.globoi.com/place/City/globoland</div></blockquote>
-<div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 400 Bad Request
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -s  -X PATCH -d <span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;inexistent:property&quot;, &quot;value&quot;: &quot;República Federativa do Brasil&quot;}]&#39;</span> http://brainiak.semantica.dev.globoi.com/place/City/globoland
+
+HTTP/1.1 400 Bad Request
 Server: nginx
-Date: Tue, 29 Jul 2014 14:23:10 GMT
-Content-Type: application/json; charset=UTF-8
+Date: Mon, 14 Jul 2014 14:55:33 GMT
+Content-Type: application/json; <span class="nv">charset</span><span class="o">=</span>UTF-8
 Content-Length: 196
 Connection: keep-alive
 Access-Control-Allow-Origin: *
 
-{&quot;errors&quot;: [&quot;Propriedade inexistente (inexistent:property) na classe (http://semantica.globo.com/place/City), usada para criar a inst\u00e2ncia (http://semantica.globo.com/place/City/globoland)&quot;]}
+<span class="o">{</span><span class="s2">&quot;errors&quot;</span>: <span class="o">[</span><span class="s2">&quot;Inexistent property (inexistent:property) in the schema (http://semantica.globo.com/place/City), used to create instance (http://semantica.globo.com/place/City/globoland)&quot;</span><span class="o">]}</span>
 </pre></div>
 </div>
 <p><strong>Status 404</strong></p>
 <p>If the instance does not exist, the response status code is 404.</p>
-<blockquote>
-<div>$ curl -i -s  -X PATCH -d &#8216;[{&#8220;op&#8221;: &#8220;replace&#8221;, &#8220;path&#8221;: &#8220;upper:name&#8221;, &#8220;value&#8221;: &#8220;Some new name&#8221;}]&#8217; http://brainiak.semantica.dev.globoi.com/place/City/InexistentCity</div></blockquote>
-<div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 404 Not Found
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -s  -X PATCH -d <span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;upper:name&quot;, &quot;value&quot;: &quot;Some new name&quot;}]&#39;</span> http://brainiak.semantica.dev.globoi.com/place/City/InexistentCity
+
+HTTP/1.1 404 Not Found
 Server: nginx
-Date: Tue, 29 Jul 2014 14:23:10 GMT
-Content-Type: application/json; charset=UTF-8
+Date: Mon, 14 Jul 2014 15:05:10 GMT
+Content-Type: application/json; <span class="nv">charset</span><span class="o">=</span>UTF-8
 Content-Length: 52
 Connection: keep-alive
 Access-Control-Allow-Origin: *
 
-{&quot;errors&quot;: [&quot;HTTP error: 404\nInexistent instance&quot;]}
+<span class="o">{</span><span class="s2">&quot;errors&quot;</span>: <span class="o">[</span><span class="s2">&quot;HTTP error: 404\nInexistent instance&quot;</span><span class="o">]}</span>
 </pre></div>
 </div>
 <p><strong>Status 500</strong></p>
