@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Patch an Instance &mdash; brainiak 2.6.0 documentation</title>
+    <title>Patch an Instance &mdash; brainiak 2.7.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.6.0',
+        VERSION:     '2.7.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="brainiak 2.6.0 documentation" href="../../index.html" />
+    <link rel="top" title="brainiak 2.7.0 documentation" href="../../index.html" />
     <link rel="up" title="Managing Instances" href="instance.html" />
     <link rel="next" title="Search" href="../search/search.html" />
     <link rel="prev" title="Edit a Instance" href="edit_instance.html" />
@@ -53,7 +53,7 @@
       </button>
 
       <a class="brand" href="../../index.html">Brainiak</a>
-      <span class="navbar-text pull-left"><b>2.6.0</b></span>
+      <span class="navbar-text pull-left"><b>2.7.0</b></span>
 
       <div class="nav-collapse">
         <ul class="nav">
@@ -66,6 +66,7 @@
   <ul class="dropdown-menu globaltoc"
     ><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-6-0-2014-07-07">Version 2.6.0 - 2014/07/07</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-1-2014-06-06">Version 2.5.1 - 2014/06/06</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-0-2014-05-19">Version 2.5.0 - 2014/05/19</a></li>
@@ -201,16 +202,16 @@
 </div>
 <div class="highlight-text"><div class="highlight"><pre>{
     &quot;@id&quot;: &quot;http://semantica.globo.com/place/City/globoland&quot;,
-    &quot;@type&quot;: &quot;place:City&quot;,
+    &quot;@type&quot;: &quot;http://semantica.globo.com/place/City&quot;,
     &quot;_base_url&quot;: &quot;http://brainiak.semantica.dev.globoi.com/place/City/globoland/&quot;,
     &quot;_instance_prefix&quot;: &quot;http://semantica.globo.com/place/City/&quot;,
     &quot;_resource_id&quot;: &quot;globoland&quot;,
     &quot;_type_title&quot;: &quot;Cidade&quot;,
-    &quot;place:latitude&quot;: -22.9583,
-    &quot;place:longitude&quot;: -43.4071,
-    &quot;place:partOfState&quot;: &quot;base:UF_RJ&quot;,
-    &quot;upper:fullName&quot;: &quot;Globoland (RJ)&quot;,
-    &quot;upper:name&quot;: &quot;Globoland&quot;
+    &quot;http://semantica.globo.com/place/latitude&quot;: -22.9583,
+    &quot;http://semantica.globo.com/place/longitude&quot;: -43.4071,
+    &quot;http://semantica.globo.com/place/partOfState&quot;: &quot;http://semantica.globo.com/base/UF_RJ&quot;,
+    &quot;http://semantica.globo.com/upper/fullName&quot;: &quot;Globoland (RJ)&quot;,
+    &quot;http://semantica.globo.com/upper/name&quot;: &quot;Globoland&quot;
 }
 </pre></div>
 </div>
@@ -223,10 +224,12 @@
 </div>
 <div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 200 OK
 Server: nginx
-Date: Thu, 03 Jul 2014 21:00:39 GMT
+Date: Tue, 29 Jul 2014 14:23:10 GMT
 Content-Type: text/html; charset=UTF-8
 Content-Length: 0
 Connection: keep-alive
+Max-Age: 0
+Cache-Control: private
 Access-Control-Allow-Origin: *
 </pre></div>
 </div>
@@ -265,7 +268,7 @@ is 400 and the body contains a JSON containing valid and invalid parameters.</p>
 <div>$ curl -i -s  -X PATCH -d &#8216;[{&#8220;op&#8221;: &#8220;replace&#8221;, &#8220;path&#8221;: &#8220;inexistent:property&#8221;, &#8220;value&#8221;: 123}]&#8217; http://brainiak.semantica.dev.globoi.com/place/City/globoland</div></blockquote>
 <div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 400 Bad Request
 Server: nginx
-Date: Thu, 03 Jul 2014 21:00:39 GMT
+Date: Tue, 29 Jul 2014 14:23:10 GMT
 Content-Type: application/json; charset=UTF-8
 Content-Length: 196
 Connection: keep-alive
@@ -280,7 +283,7 @@ Access-Control-Allow-Origin: *
 <div>$ curl -i -s  -X PATCH -d &#8216;[{&#8220;op&#8221;: &#8220;replace&#8221;, &#8220;path&#8221;: &#8220;upper:name&#8221;, &#8220;value&#8221;: &#8220;Some new name&#8221;}]&#8217; http://brainiak.semantica.dev.globoi.com/place/City/InexistentCity</div></blockquote>
 <div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 404 Not Found
 Server: nginx
-Date: Thu, 03 Jul 2014 21:00:39 GMT
+Date: Tue, 29 Jul 2014 14:23:10 GMT
 Content-Type: application/json; charset=UTF-8
 Content-Length: 52
 Connection: keep-alive

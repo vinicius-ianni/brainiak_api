@@ -56,6 +56,13 @@ def filter_query_string_by_key_prefix(query_string, include_prefixes=[], query_p
     return urlencode(relevant_params, doseq=True)
 
 
+def append_param(query_string, param_string):
+    if not query_string:
+        return param_string
+    else:
+        return query_string + "&" + param_string
+
+
 def remove_last_slash(url):
     if url.endswith("/"):
         return url[:-1]
@@ -198,16 +205,21 @@ def build_class_url(query_params, include_query_string=False):
     return class_url
 
 
-def build_schema_url(query_params):
+def build_schema_url(query_params, propagate_params=False):
     base_url = remove_last_slash(query_params.base_url)
     query_string = filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"], query_params)
-    schema_url = assemble_url(u'{0}/_schema_list'.format(base_url), query_string)
-    return schema_url
+    return assemble_schema_url(u'{0}/_schema_list', base_url, propagate_params, query_params, query_string)
 
 
-def build_schema_url_for_instance(query_params, class_url):
+def build_schema_url_for_instance(query_params, class_url, propagate_params=True):
     query_string = filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"], query_params)
-    schema_url = assemble_url(u'{0}/_schema'.format(class_url), query_string)
+    return assemble_schema_url(u'{0}/_schema', class_url, propagate_params, query_params, query_string)
+
+
+def assemble_schema_url(base_url_template, class_url, propagate_params, query_params, query_string):
+    if propagate_params and ('expand_uri' in query_params):
+        query_string = append_param(query_string, 'expand_uri={0}'.format(query_params['expand_uri']))
+    schema_url = assemble_url(base_url_template.format(class_url), query_string)
     return schema_url
 
 

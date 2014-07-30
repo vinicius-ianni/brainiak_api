@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
-from brainiak.utils.links import merge_schemas, pagination_schema
+from brainiak.utils.links import merge_schemas, pagination_schema, append_param
 from brainiak.search.json_schema import SEARCH_PARAM_SCHEMA
 from brainiak.schema.get_class import get_cached_schema
+from brainiak.prefixes import shorten_uri
 
 
 def schema(query_params):
     context_name = query_params['context_name']
     class_name = query_params['class_name']
     class_prefix = query_params.get('class_prefix', None)
+
+    if (class_prefix is not None) and query_params.get('expand_uri') == '0':
+        class_prefix = shorten_uri(class_prefix)
+
     args = (context_name, class_name, class_prefix)
 
     class_schema = get_cached_schema(query_params)
@@ -15,11 +20,16 @@ def schema(query_params):
     if class_prefix is not None:
         schema_ref = u"/{0}/{1}/_schema?class_prefix={2}".format(*args)
         href = u"/{0}/{1}?class_prefix={2}".format(*args)
-        link = u"/{0}/{1}/{{resource_id}}?class_prefix={{class_prefix}}&instance_prefix={{instance_prefix}}".format(*args)
     else:
         schema_ref = u'/{0}/{1}/_schema'.format(*args)
         href = u'/{0}/{1}'.format(*args)
-        link = u"/{0}/{1}/{{resource_id}}?class_prefix={{class_prefix}}&instance_prefix={{instance_prefix}}".format(*args)
+
+    if 'expand_uri' in query_params:
+        expand_uri_param = 'expand_uri={0}'.format(query_params['expand_uri'])
+        schema_ref = append_param(schema_ref, expand_uri_param)
+        href = append_param(href, expand_uri_param)
+
+    link = build_link(query_params)
 
     base = {
         "$schema": "http://json-schema.org/draft-04/schema#",
@@ -99,3 +109,14 @@ def schema(query_params):
     pagination_dict = pagination_schema(base_pagination_url, extra_url_params)
     merge_schemas(base, pagination_dict)
     return base
+
+
+def build_link(query_params):
+    context_name = query_params['context_name']
+    class_name = query_params['class_name']
+    expand_uri = query_params.get('expand_uri', None)
+
+    link = u"/{0}/{1}/{{resource_id}}?class_prefix={{class_prefix}}&instance_prefix={{instance_prefix}}".format(context_name, class_name)
+    if expand_uri is not None:
+        link = append_param(link, 'expand_uri={0}'.format(query_params['expand_uri']))
+    return link

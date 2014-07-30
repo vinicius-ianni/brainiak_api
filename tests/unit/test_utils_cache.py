@@ -254,7 +254,7 @@ class CacheUtilsTestCase(unittest.TestCase):
         handler = MockHandler(**url_params)
         params = ParamDict(handler, **url_params)
         computed = build_instance_key(params)
-        expected = "_@@_@@instance@@expand_uri=0&instance_uri=instance&lang=pt##instance"
+        expected = "_@@_@@instance@@expand_uri=1&instance_uri=instance&lang=pt##instance"
         self.assertEqual(computed, expected)
 
     @patch("brainiak.utils.cache.delete")

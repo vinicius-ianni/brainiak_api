@@ -19,7 +19,7 @@ class PatchInstanceTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
             "graph": "http://on.to/",
             "meta": "0"
         }
-        url = '/_/_/_/?graph_uri={graph}&class_uri={class}&instance_uri={instance}&meta_properties={meta}&lang=en'
+        url = '/_/_/_/?graph_uri={graph}&class_uri={class}&instance_uri={instance}&meta_properties={meta}&lang=en&expand_uri=0'
         url = url.format(**data)
 
         # Check original state

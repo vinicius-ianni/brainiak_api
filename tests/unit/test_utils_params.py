@@ -2,7 +2,7 @@ from unittest import TestCase
 from brainiak import settings
 
 from brainiak.utils import params
-from brainiak.prefixes import ROOT_CONTEXT, SHORTEN
+from brainiak.prefixes import ROOT_CONTEXT, EXPAND
 from brainiak.settings import URI_PREFIX
 from brainiak.utils.params import ParamDict, InvalidParam, DefaultParamsDict, LIST_PARAMS, INSTANCE_PARAMS, PAGING_PARAMS, RequiredParamsDict, optionals, RequiredParamMissing
 from tests.mocks import MockHandler
@@ -274,20 +274,20 @@ class ParamsTestCase(TestCase):
         url_params = {}
         handler = MockHandler(**url_params)
         pd = ParamDict(handler, **url_params)
-        self.assertEquals(pd.to_string(), "expand_uri=0&lang=pt")
+        self.assertEquals(pd.to_string(), "expand_uri=1&lang=pt")
 
-    def test_to_string_witn_non_default_params(self):
+    def test_to_string_with_non_default_params(self):
         url_params = dict(page="1", sort_by="rdfs:label", per_page="10")
         handler = MockHandler(**url_params)
         pd = ParamDict(handler, **url_params)
-        self.assertEquals(pd.to_string(), "expand_uri=0&lang=pt&page=1&per_page=10&sort_by=rdfs:label")
+        self.assertEquals(pd.to_string(), "expand_uri=1&lang=pt&page=1&per_page=10&sort_by=rdfs:label")
 
 
 class ExpandUriTestCase(TestCase):
 
     def test_default_value_for_param_expand_uri(self):
         handler = MockHandler()
-        params = ParamDict(handler, expand_uri=SHORTEN)
+        params = ParamDict(handler, expand_uri=EXPAND)
         self.assertEqual(params["expand_uri"], settings.DEFAULT_URI_EXPANSION)
 
     def test_set_param_expand_uri(self):
