@@ -4,7 +4,7 @@
 
     {
         "search": {
-            "pattern": "Ronaldo",
+            "pattern": "united",
             "target": "http://semantica.globo.com/base/cita_a_entidade",
             "fields": ["http://semantica.globo.com/upper/name",
                        "http://semantica.globo.com/upper/fullName",

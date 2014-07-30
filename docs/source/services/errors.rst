@@ -15,15 +15,19 @@ Client-side Errors
 
 There are some possible types of client errors on API calls that receive request bodies, the most common are:
 
-Sending the unknown parameters in the request, the response is a 400 with a JSON informing the wrong parameters and the accepted ones.
+Sending and unknown parameters in the request, the response is a 400 with a JSON informing the wrong parameters and the accepted ones.
 
 .. code-block:: bash
 
  HTTP/1.1 400 Bad Request
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/Brazil?invalid_param=1' | python -mjson.tool
-  :shell:
+.. code-block:: json
 
+    {
+        "errors": [
+            "HTTP error: 400\nArgument invalid_param is not supported. The supported querystring arguments are: do_item_count, expand_uri, graph_uri, lang, page, per_page, sort_by, sort_include_empty, sort_order."
+        ]
+    }
 
 If the instance does not exist, the response is a 404 with a JSON informing the error
 
@@ -50,4 +54,4 @@ All error objects have resource and field properties so that your client can tel
 Server-side Errors
 ------------------
 
-TODO
+Server side errors will show a 500 status code with a stack trace to better debugging the error cause.
