@@ -12,8 +12,16 @@ To check if cache is enabled for some resource, run:
 
   $ curl -i -X OPTIONS http://brainiak.semantica.dev.globoi.com/
 
-.. program-output:: curl -i -s -X OPTIONS http://brainiak.semantica.dev.globoi.com/
-  :shell:
+  HTTP/1.1 204 No Content
+  Server: nginx
+  Date: Thu, 03 Jul 2014 21:00:33 GMT
+  Content-Type: text/html; charset=UTF-8
+  Content-Length: 0
+  Connection: keep-alive
+  Access-Control-Allow-Methods: GET, OPTIONS, PURGE
+  Access-Control-Max-Age: 86400
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Headers: Content-Type, Authorization, Backstage-Client-Id
 
 If cache is enabled, ``PURGE`` will be shown on the response header ``Access-Control-Allow-Methods``.
 
@@ -35,8 +43,16 @@ The first time a URL is accessed, there will be no cache - so ``X-Cache``  will 
 
   $ curl -i -X GET http://brainiak.semantica.dev.globoi.com/
 
-.. program-output:: curl -s -X PURGE http://brainiak.semantica.dev.globoi.com/; curl -i -s -X GET http://brainiak.semantica.dev.globoi.com/ | head -n 10
-  :shell:
+  HTTP/1.1 200 OK
+  Server: nginx
+  Date: Thu, 03 Jul 2014 21:00:35 GMT
+  Content-Type: application/json; profile=http://brainiak.semantica.dev.globoi.com/_schema_list
+  Content-Length: 1008
+  Connection: keep-alive
+  X-Cache: MISS from brainiak.semantica.dev.globoi.com
+  Last-Modified: Thu, 03 Jul 2014 18:00:35 -0300
+  Etag: "4d53e4145ce64273c7604ad86c4cc81d5dddbb05"
+  Access-Control-Allow-Origin: *
 
 From the second time on, ``X-Cache`` will contain ``HIT`` and ``Last-Modified`` will be the same:
 
@@ -44,9 +60,16 @@ From the second time on, ``X-Cache`` will contain ``HIT`` and ``Last-Modified`` 
 
   $ curl -i -X GET http://brainiak.semantica.dev.globoi.com/
 
-.. program-output:: sleep 1; curl -i -s -X GET http://brainiak.semantica.dev.globoi.com/ | head -n 10
-  :shell:
-
+  HTTP/1.1 200 OK
+  Server: nginx
+  Date: Thu, 03 Jul 2014 21:00:36 GMT
+  Content-Type: application/json; profile=http://brainiak.semantica.dev.globoi.com/_schema_list
+  Content-Length: 1008
+  Connection: keep-alive
+  X-Cache: HIT from brainiak.semantica.dev.globoi.com
+  Last-Modified: Thu, 03 Jul 2014 18:00:35 -0300
+  Etag: "f288c34015f52392c33fd6bffd95e7bfb25c4a0a"
+  Access-Control-Allow-Origin: *
 
 Purge
 -----
@@ -69,9 +92,13 @@ Example:
 
   $ curl -i -X PURGE http://brainiak.semantica.dev.globoi.com/
 
-.. program-output:: curl -i -s -X PURGE http://brainiak.semantica.dev.globoi.com/
-  :shell:
-
+  HTTP/1.1 200 OK
+  Server: nginx
+  Date: Thu, 03 Jul 2014 21:00:36 GMT
+  Content-Type: text/html; charset=UTF-8
+  Content-Length: 0
+  Connection: keep-alive
+  Access-Control-Allow-Origin: *
 
 Purge Instance
 --------------

@@ -100,10 +100,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../first_steps.html">First Steps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization using Accounts</a></li>
-</ul>
-</li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../services.html">Services</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../context/context.html">Managing Contexts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../prefix/prefix.html">Managing Prefixes</a></li>
@@ -127,6 +123,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshoot.html">Troubleshooting</a><ul>
@@ -192,39 +189,22 @@ The type of query used is a <a class="reference external" href="http://www.elast
 <p><strong>graph_uri</strong>: Set the graph URI, defining a subset of classes belonging to the search scope.</p>
 <p><strong>class_uri</strong>: Defines the URI of a given class, whose instances&#8217; labels should be searched.</p>
 <p><strong>Basic usage</strong></p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -s -X GET <span class="s1">&#39;http://brainiak.semantica.dev.globoi.com/_search?graph_uri=glb&amp;class_uri=base:Pais&amp;pattern=unido&#39;</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -s -X GET <span class="s1">&#39;http://brainiak.semantica.dev.globoi.com/_search?graph_uri=glb&amp;class_uri=place:Country&amp;pattern=united&#39;</span>
 </pre></div>
 </div>
-<div class="highlight-text"><div class="highlight"><pre>{
-    &quot;@context&quot;: {
-        &quot;@language&quot;: &quot;pt&quot;
-    },
-    &quot;_base_url&quot;: &quot;http://brainiak.semantica.dev.globoi.com/glb/Pais/_search/&quot;,
-    &quot;_class_prefix&quot;: &quot;http://semantica.globo.com/base/&quot;,
-    &quot;_class_uri&quot;: &quot;http://semantica.globo.com/base/Pais&quot;,
-    &quot;_first_args&quot;: &quot;pattern=unido&amp;graph_uri=glb&amp;page=1&amp;class_uri=base:Pais&quot;,
-    &quot;_graph_uri&quot;: &quot;http://semantica.globo.com/&quot;,
-    &quot;_next_args&quot;: &quot;pattern=unido&amp;graph_uri=glb&amp;page=2&amp;class_uri=base:Pais&quot;,
-    &quot;items&quot;: [
-        {
-            &quot;id&quot;: &quot;http://semantica.globo.com/base/Pais_estados-unidos-da-america&quot;,
-            &quot;title&quot;: &quot;Estados Unidos&quot;
-        },
-        {
-            &quot;id&quot;: &quot;http://semantica.globo.com/base/Pais_reino-unido&quot;,
-            &quot;title&quot;: &quot;Reino Unido&quot;
-        },
-        {
-            &quot;id&quot;: &quot;http://semantica.globo.com/base/Pais_ilhas-virgens-estados-unidos&quot;,
-            &quot;title&quot;: &quot;Ilhas Virgens dos Estados Unidos&quot;
-        },
-        {
-            &quot;id&quot;: &quot;http://semantica.globo.com/base/Pais_ilhas-menores-dos-estados-unidos&quot;,
-            &quot;title&quot;: &quot;Ilhas Menores dos Estados Unidos&quot;
-        }
-    ],
-    &quot;pattern&quot;: &quot;unido&quot;
-}
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://test.com/united-states&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;United States&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://test.com/united-arab-emirates&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;United Arab Emirates&quot;</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;united&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="section" id="possible-responses">

@@ -12,8 +12,56 @@ In this service, we can get a class defined in some context.
 
   $ curl -s 'http://brainiak.semantica.dev.globoi.com/place/City/_schema'
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/City/_schema' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+    {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "@context": {
+            "@language": "pt"
+        },
+        "description": "Lugar perene e urbanizado onde pessoas habitam.",
+        "id": "http://semantica.globo.com/place/City",
+        "links": [
+            {
+                "href": "{+_base_url}",
+                "method": "GET",
+                "rel": "self"
+            },
+            {
+                "href": "/place/City/_schema",
+                "method": "GET",
+                "rel": "class"
+            },
+            {
+                "href": "/place/City?class_prefix=http://semantica.globo.com/place/",
+                "method": "POST",
+                "rel": "create",
+                "schema": {
+                    "$ref": "{+_base_url}"
+                }
+            }]
+        "properties": {
+            "http://semantica.globo.com/place/latitude": {
+                "class": "http://semantica.globo.com/place/Place",
+                "datatype": "http://www.w3.org/2001/XMLSchema#float",
+                "description": "Coordenada de latitude de acordo com WGS84.",
+                "graph": "http://semantica.globo.com/place/",
+                "title": "Latitude",
+                "type": "number"
+            },
+            "http://semantica.globo.com/place/longitude": {
+                "class": "http://semantica.globo.com/place/Place",
+                "datatype": "http://www.w3.org/2001/XMLSchema#float",
+                "description": "Coordenada de longitude de acordo com WGS84.",
+                "graph": "http://semantica.globo.com/place/",
+                "title": "Longitude",
+                "type": "number"
+            },
+        },
+        "title": "Cidade",
+        "type": "object"
+    }
+
 
 Why _schema? In our data model we have a clear distinction between class
 (structure of data) and instances (the data content itself), and by using a request like
@@ -46,9 +94,56 @@ If the class exists, the response body is a JSON representing the class definiti
 
   $ curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/_schema'
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/Country/_schema' | python -mjson.tool
-  :shell:
+.. code-block:: json
 
+    {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "@context": {
+            "@language": "pt"
+        },
+        "description": "A relatively large and permanent settlement, particularly a large urban settlement.",
+        "id": "http://semantica.globo.com/place/City",
+        "links": [
+            {
+                "href": "{+_base_url}",
+                "method": "GET",
+                "rel": "self"
+            },
+            {
+                "href": "/place/City/_schema",
+                "method": "GET",
+                "rel": "class"
+            },
+            {
+                "href": "/place/City",
+                "method": "POST",
+                "rel": "create",
+                "schema": {
+                    "$ref": "{+_base_url}"
+                }
+            }
+        ],
+        "properties": {
+            "http://semantica.globo.com/place/latitude": {
+                "class": "http://semantica.globo.com/place/Place",
+                "datatype": "http://www.w3.org/2001/XMLSchema#float",
+                "description": "Coordenada de latitude de acordo com WGS84.",
+                "graph": "http://semantica.globo.com/place/",
+                "title": "Latitude",
+                "type": "number"
+            },
+            "http://semantica.globo.com/place/longitude": {
+                "class": "http://semantica.globo.com/place/Place",
+                "datatype": "http://www.w3.org/2001/XMLSchema#float",
+                "description": "Coordenada de longitude de acordo com WGS84.",
+                "graph": "http://semantica.globo.com/place/",
+                "title": "Longitude",
+                "type": "number"
+            }
+        },
+        "title": "City",
+        "type": "object"
+    }
 
 **Status 400**
 

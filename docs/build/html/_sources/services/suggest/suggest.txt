@@ -36,14 +36,27 @@ Here is a minimal example of the request body:
 
 **Basic usage**
 
+Considering example above as a file ``suggest_search.json`` (in -d parameter):
 
 .. code-block:: bash
 
-  $ curl -s -XPOST 'http://brainiak.semantica.dev.globoi.com/_suggest' -T "suggest_search.json"
+  $ curl -s -XPOST 'http://brainiak.semantica.dev.globoi.com/_suggest' -d '{"search": {"united": "united", "target": "place:partOfCountry"}}'
 
-.. program-output:: curl -s -X POST 'http://brainiak.semantica.dev.globoi.com/_suggest' -T "services/suggest/examples/suggest_minimal_example.json" | python -mjson.tool
-  :shell:
 
+.. code-block:: json
+
+    {
+        "items": [
+            {
+                "id": "http://test.com/united-states",
+                "title": "United States"
+            },
+            {
+                "id": "http://test.com/united-arab-emirates",
+                "title": "United Arab Emirates"
+            }
+        ]
+    }
 
 .. _optional_body_parameters:
 
