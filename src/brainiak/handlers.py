@@ -26,7 +26,7 @@ from brainiak.instance.delete_instance import delete_instance
 from brainiak.instance.edit_instance import edit_instance, instance_exists
 from brainiak.instance.get_instance import get_instance
 from brainiak.instance.patch_instance import apply_patch
-from brainiak.prefixes import normalize_all_uris_recursively, list_prefixes, SHORTEN, EXPAND
+from brainiak.prefixes import normalize_all_uris_recursively, list_prefixes, SHORTEN
 from brainiak.root.get_root import list_all_contexts
 from brainiak.root.json_schema import schema as root_schema
 from brainiak.schema import get_class as schema_resource
@@ -345,7 +345,7 @@ class ClassHandler(BrainiakRequestHandler):
 
         try:
             response = schema_resource.get_cached_schema(self.query_params, include_meta=True)
-        except schema_resource.SchemaNotFound, e:
+        except schema_resource.SchemaNotFound as e:
             raise HTTPError(404, log_message=e.message)
 
         if self.query_params['expand_uri'] == "0":
@@ -359,7 +359,10 @@ class CollectionJsonSchemaHandler(BrainiakRequestHandler):
     @greenlet_asynchronous
     def get(self, context_name, class_name):
         query_params = ParamDict(self, context_name=context_name, class_name=class_name)
-        self.finalize(collection_schema(query_params))
+        try:
+            self.finalize(collection_schema(query_params))
+        except schema_resource.SchemaNotFound as e:
+            raise HTTPError(404, log_message=e.message)
 
 
 class CollectionHandler(BrainiakRequestHandler):
