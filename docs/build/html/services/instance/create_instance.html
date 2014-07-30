@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Create an Instance &mdash; brainiak 2.6.0 documentation</title>
+    <title>Create an Instance &mdash; brainiak 2.7.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.6.0',
+        VERSION:     '2.7.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="brainiak 2.6.0 documentation" href="../../index.html" />
+    <link rel="top" title="brainiak 2.7.0 documentation" href="../../index.html" />
     <link rel="up" title="Managing Instances" href="instance.html" />
     <link rel="next" title="List of Instances" href="list_instance.html" />
     <link rel="prev" title="Managing Instances" href="instance.html" />
@@ -53,7 +53,7 @@
       </button>
 
       <a class="brand" href="../../index.html">Brainiak</a>
-      <span class="navbar-text pull-left"><b>2.6.0</b></span>
+      <span class="navbar-text pull-left"><b>2.7.0</b></span>
 
       <div class="nav-collapse">
         <ul class="nav">
@@ -66,6 +66,7 @@
   <ul class="dropdown-menu globaltoc"
     ><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-6-0-2014-07-07">Version 2.6.0 - 2014/07/07</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-1-2014-06-06">Version 2.5.1 - 2014/06/06</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-0-2014-05-19">Version 2.5.0 - 2014/05/19</a></li>
@@ -99,10 +100,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../first_steps.html">First Steps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization using Accounts</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../services.html">Services</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../context/context.html">Managing Contexts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../prefix/prefix.html">Managing Prefixes</a></li>
@@ -126,6 +123,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshoot.html">Troubleshooting</a><ul>
@@ -183,16 +181,15 @@
 <p>This service allows the creation of a new instance, provided its context, class name and JSON.</p>
 <p><strong>Basic usage</strong></p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -X POST -T <span class="s2">&quot;new_york_city.json&quot;</span> http://brainiak.semantica.dev.globoi.com/place/City
-</pre></div>
-</div>
-<div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 201 Created
+
+HTTP/1.1 201 Created
 Server: nginx
-Date: Thu, 03 Jul 2014 21:00:38 GMT
-Content-Type: application/json; profile=http://brainiak.semantica.dev.globoi.com/place/City/_schema_list
+Date: Mon, 14 Jul 2014 14:09:27 GMT
+Content-Type: application/json; <span class="nv">profile</span><span class="o">=</span>http://brainiak.semantica.dev.globoi.com/place/City/_schema_list
 Content-Length: 0
 Connection: keep-alive
-X-Brainiak-Resource-Uri: http://semantica.globo.com/place/City/d6ef9900-6f4f-4fe1-a5d0-a6b5d6b54f24
-Location: http://brainiak.semantica.dev.globoi.com/place/City/d6ef9900-6f4f-4fe1-a5d0-a6b5d6b54f24
+X-Brainiak-Resource-Uri: http://semantica.globo.com/place/City/38cea15a-d122-4e53-9214-13c00aec9969
+Location: http://brainiak.semantica.dev.globoi.com/place/City/38cea15a-d122-4e53-9214-13c00aec9969
 Access-Control-Allow-Origin: *
 </pre></div>
 </div>
@@ -212,8 +209,11 @@ In order to avoid that, either remove the last &#8220;/&#8221; or use &#8216;-d 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that prefixes are defined in the &#8220;&#64;context&#8221; section.
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note that prefixes are defined in the &#8220;&#64;context&#8221; section.
 <a class="reference external" href="http://brainiak.semantica.dev.globoi.com/_prefixes">Default prefixes</a> are implicit and don&#8217;t need to be declared.</p>
+</div>
 <p>Besides using <tt class="docutils literal"><span class="pre">POST</span></tt> to create new instances, it is also possible to use <tt class="docutils literal"><span class="pre">PUT</span></tt> (for more information, see <a class="reference internal" href="edit_instance.html#edit-instance"><em>Edit a Instance</em></a>).
 In this case, the <tt class="docutils literal"><span class="pre">instance_id</span></tt> should be provided, which must be unique in the specified context.
 The recommended policy is to use <tt class="docutils literal"><span class="pre">POST</span></tt>, as it will assure uniqueness of the identifiers.</p>
@@ -237,29 +237,23 @@ the HTTP response.</p>
 <p>Note that the URI of a instance is not the same as the URL to retrieve
 a instance from the API. For retrieving it, use the retrieve instance primitive &lt;&gt;.</p>
 <p><strong>Status 400</strong></p>
-<p>If there are unknown parameters in the request, the response status code
-is 400 and the body contains a JSON containing valid and invalid parameters.</p>
-<div class="highlight-text"><div class="highlight"><pre>{
-    &quot;errors&quot;: [
-        &quot;HTTP error: 400\nO argumento invalid_param n\u00e3o \u00e9 suportado. Os argumentos de querystring suportados s\u00e3o: class_prefix, class_uri, expand_object_properties, expand_uri, graph_uri, instance_prefix, instance_uri, lang, meta_properties.&quot;
-    ]
-}
-</pre></div>
-</div>
+<p>If there are unknown parameters in the request, the response status code is 400.</p>
 <p>The 400 status may also happen when the JSON provided is invalid:</p>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
-
     <span class="nt">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;HTTP error: 400\nNo JSON object could be decoded&quot;</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p><strong>Status 404</strong></p>
 <p>If the class does not exist, the response status code is 404.</p>
-<div class="highlight-text"><div class="highlight"><pre>{
-    &quot;errors&quot;: [
-        &quot;HTTP error: 404\nA classe http://semantica.globo.com/place/Person n\u00e3o existe no contexto http://semantica.globo.com/place/.&quot;
-    ]
-}
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -X POST -T <span class="s2">&quot;new_york_city.json&quot;</span> http://brainiak.semantica.dev.globoi.com/place/Person
+</pre></div>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;HTTP error: 404\nClass http://semantica.globo.com/place/Person doesn&#39;t exist in context http://semantica.globo.com/place/.&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p><strong>Status 500</strong></p>

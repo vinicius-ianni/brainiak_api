@@ -24,8 +24,21 @@ Consider you have an existing instance:
 
   $ curl -s http://brainiak.semantica.dev.globoi.com/place/City/globoland
 
-.. program-output:: curl -s -X PUT -T "services/instance/examples/new_city.json" http://brainiak.semantica.dev.globoi.com/place/City/globoland; curl -s http://brainiak.semantica.dev.globoi.com/place/City/globoland | python -m json.tool
-  :shell:
+.. code-block:: json
+
+  {
+    "@id": "http://semantica.globo.com/place/City/globoland",
+    "@type": "place:City",
+    "_base_url": "http://brainiak.semantica.dev.globoi.com/place/City/globoland/",
+    "_instance_prefix": "http://semantica.globo.com/place/City/",
+    "_resource_id": "globoland",
+    "_type_title": "Cidade",
+    "place:latitude": -22.9583,
+    "place:longitude": -43.4071,
+    "place:partOfState": "base:UF_RJ",
+    "upper:fullName": "Globoland (RJ)",
+    "upper:name": "Globoland"
+  }
 
 Note that prefixes, such as "upper", are defined in the "@context" section:
 `Default prefixes  <http://brainiak.semantica.dev.globoi.com/_prefixes>`_ are implicit and don't need to be declared.
@@ -38,8 +51,13 @@ To patch this instance **replacing** some existing property's value, do:
 
   $ curl -i -s -X PATCH -d '[{"op": "replace", "path": "upper:name", "value": "New Globoland name"}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
 
-.. program-output:: curl -i -s -X PATCH -d '[{"op": "replace", "path": "upper:name", "value": "República Federativa do Brasil"}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
-  :shell:
+  HTTP/1.1 200 OK
+  Server: nginx
+  Date: Mon, 14 Jul 2014 14:55:33 GMT
+  Content-Type: text/html; charset=UTF-8
+  Content-Length: 0
+  Connection: keep-alive
+  Access-Control-Allow-Origin: *
 
 
 **Remove**
@@ -87,19 +105,39 @@ is 400 and the body contains a JSON containing valid and invalid parameters.
 
 The 400 status may also happen when the JSON provided is invalid:
 
-  $ curl -i -s  -X PATCH -d '[{"op": "replace", "path": "inexistent:property", "value": 123}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
+.. code-block:: bash
 
-.. program-output:: curl -i -s  -X PATCH -d '[{"op": "replace", "path": "inexistent:property", "value": "República Federativa do Brasil"}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
-  :shell:
+  $ curl -i -s  -X PATCH -d '[{"op": "replace", "path": "inexistent:property", "value": "República Federativa do Brasil"}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
+
+  HTTP/1.1 400 Bad Request
+  Server: nginx
+  Date: Mon, 14 Jul 2014 14:55:33 GMT
+  Content-Type: application/json; charset=UTF-8
+  Content-Length: 196
+  Connection: keep-alive
+  Access-Control-Allow-Origin: *
+
+  {"errors": ["Inexistent property (inexistent:property) in the schema (http://semantica.globo.com/place/City), used to create instance (http://semantica.globo.com/place/City/globoland)"]}
+
 
 **Status 404**
 
 If the instance does not exist, the response status code is 404.
 
+.. code-block:: bash
+
+
   $ curl -i -s  -X PATCH -d '[{"op": "replace", "path": "upper:name", "value": "Some new name"}]' http://brainiak.semantica.dev.globoi.com/place/City/InexistentCity
 
-.. program-output:: curl -i -s -X PATCH -d '[{"op": "replace", "path": "upper:name", "value": "República Federativa do Brasil"}]' http://brainiak.semantica.dev.globoi.com/place/City/InexistentCity
-  :shell:
+  HTTP/1.1 404 Not Found
+  Server: nginx
+  Date: Mon, 14 Jul 2014 15:05:10 GMT
+  Content-Type: application/json; charset=UTF-8
+  Content-Length: 52
+  Connection: keep-alive
+  Access-Control-Allow-Origin: *
+
+  {"errors": ["HTTP error: 404\nInexistent instance"]}
 
 **Status 500**
 

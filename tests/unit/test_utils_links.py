@@ -41,6 +41,23 @@ class TestBuildSchema(unittest.TestCase):
         expected = 'http://any.uri/graph/Class/_schema_list?class_prefix=class_prefix'
         self.assertEqual(expected, computed)
 
+    def test_build_schema_url_with_querystring_and_propagate(self):
+        params = {
+            'page': 1,
+            'per_page': 2,
+            'class_prefix': 'http://any.uri/prefix',
+            'class_uri': 'http://any.uri/prefix/Class',
+            'class_name': 'Class',
+            'context_name': 'graph',
+            'expand_uri': 1,
+            'graph_uri': 'http://any.uri/graph'
+        }
+        handler = MockHandler(uri="http://any.uri/graph/Class", querystring="class_prefix=class_prefix")
+        query_params = ParamDict(handler, **params)
+        computed = build_schema_url(query_params, propagate_params=True)
+        expected = 'expand_uri=1'
+        self.assertIn(expected, computed)
+
     def test_self_url(self):
         params = {'page': 1, 'per_page': 2}
         handler = MockHandler(uri="http://any.uri")
@@ -292,7 +309,7 @@ class CrudLinksTestCase(unittest.TestCase):
         computed = crud_links(query_params, 'http://any.uri/context/Class')
         expected = [
             {'href': 'http://any.uri/context/Class/{_resource_id}', 'method': 'DELETE', 'rel': 'delete'},
-            {'href': 'http://any.uri/context/Class/{_resource_id}', 'method': 'PUT', 'rel': 'update', 'schema': {'$ref': 'http://any.uri/context/Class/_schema'}}]
+            {'href': 'http://any.uri/context/Class/{_resource_id}', 'method': 'PUT', 'rel': 'update', 'schema': {'$ref': 'http://any.uri/context/Class/_schema?expand_uri=1'}}]
         self.assertEqual(sorted(computed), sorted(expected))
 
     def test_crud_links_with_params_ok(self):
@@ -303,7 +320,7 @@ class CrudLinksTestCase(unittest.TestCase):
         computed = crud_links(query_params, class_url)
         expected = [
             {'href': 'http://any.uri/context/Class/{_resource_id}?instance_prefix={_instance_prefix}&lang=en', 'method': 'DELETE', 'rel': 'delete'},
-            {'href': 'http://any.uri/context/Class/{_resource_id}?instance_prefix={_instance_prefix}&lang=en', 'method': 'PUT', 'rel': 'update', 'schema': {'$ref': 'http://any.uri/context/Class/_schema'}}]
+            {'href': 'http://any.uri/context/Class/{_resource_id}?instance_prefix={_instance_prefix}&lang=en', 'method': 'PUT', 'rel': 'update', 'schema': {'$ref': 'http://any.uri/context/Class/_schema?expand_uri=1'}}]
         self.assertEqual(sorted(computed), sorted(expected))
 
 
@@ -349,13 +366,14 @@ class BuildClassUrlTestCase(unittest.TestCase):
             query = "?instance_uri=ignore_me&class_prefix=include_me"
 
         query_params = UserDict(
+            expand_uri=0,
             context_name="place",
             class_name="City")
         query_params.request = MockRequest()
 
         class_url = build_class_url(query_params)
         computed = build_schema_url_for_instance(query_params, class_url)
-        expected = "https://dot.net/place/City/_schema?class_prefix=include_me"
+        expected = "https://dot.net/place/City/_schema?expand_uri=0&class_prefix=include_me"
         self.assertEqual(computed, expected)
 
     def test_build_schema_url_with_class_uri(self):

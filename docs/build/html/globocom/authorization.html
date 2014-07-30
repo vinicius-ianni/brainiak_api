@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Authorization using Accounts &mdash; brainiak 2.6.0 documentation</title>
+    <title>Authorization &mdash; brainiak 2.7.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.6.0',
+        VERSION:     '2.7.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -30,10 +30,10 @@
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="brainiak 2.6.0 documentation" href="../index.html" />
-    <link rel="up" title="First Steps" href="../first_steps.html" />
-    <link rel="next" title="Services" href="../services.html" />
-    <link rel="prev" title="First Steps" href="../first_steps.html" />
+    <link rel="top" title="brainiak 2.7.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="../tutorials.html" />
+    <link rel="next" title="Troubleshooting" href="../troubleshoot.html" />
+    <link rel="prev" title="Building Brainiak in your local environment" href="../tutorials/building_local_dev_environment.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -53,7 +53,7 @@
       </button>
 
       <a class="brand" href="../index.html">Brainiak</a>
-      <span class="navbar-text pull-left"><b>2.6.0</b></span>
+      <span class="navbar-text pull-left"><b>2.7.0</b></span>
 
       <div class="nav-collapse">
         <ul class="nav">
@@ -66,6 +66,7 @@
   <ul class="dropdown-menu globaltoc"
     ><ul>
 <li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-6-0-2014-07-07">Version 2.6.0 - 2014/07/07</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-5-1-2014-06-06">Version 2.5.1 - 2014/06/06</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-5-0-2014-05-19">Version 2.5.0 - 2014/05/19</a></li>
@@ -99,10 +100,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../first_steps.html">First Steps</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">Authorization using Accounts</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../services.html">Services</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../services/context/context.html">Managing Contexts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../services/prefix/prefix.html">Managing Prefixes</a></li>
@@ -124,8 +121,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../services.html#service-examples">Service Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Authorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../troubleshoot.html">Troubleshooting</a><ul>
@@ -142,17 +140,17 @@
             <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"><ul>
-<li><a class="reference internal" href="#">Authorization using Accounts</a></li>
+<li><a class="reference internal" href="#">Authorization</a></li>
 </ul>
 </ul>
 </li>
           
           
             
-  <li><a href="../first_steps.html"
-         title="previous chapter">&laquo; First Steps</a></li>
-  <li><a href="../services.html"
-         title="next chapter">Services &raquo;</a></li>
+  <li><a href="../tutorials/building_local_dev_environment.html"
+         title="previous chapter">&laquo; Building Brainiak in your local environment</a></li>
+  <li><a href="../troubleshoot.html"
+         title="next chapter">Troubleshooting &raquo;</a></li>
           
           
             <li>
@@ -174,9 +172,10 @@
   </div>
 
   
-  <div class="section" id="authorization-using-accounts">
-<h1>Authorization using Accounts<a class="headerlink" href="#authorization-using-accounts" title="Permalink to this headline">¶</a></h1>
-<p>To use Brainiak in Globo.com infra one does not simply walk into production with no authentication.</p>
+  <div class="section" id="authorization">
+<h1>Authorization<a class="headerlink" href="#authorization" title="Permalink to this headline">¶</a></h1>
+<p>To use Brainiak in Globo.com infra one does not simply walk into production with no authentication.
+Talk to the team.</p>
 </div>
 
 

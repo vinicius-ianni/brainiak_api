@@ -91,6 +91,9 @@ class BrainiakRequestHandler(CorsMixin, RequestHandler):
     def __init__(self, *args, **kwargs):
         super(BrainiakRequestHandler, self).__init__(*args, **kwargs)
 
+    def compute_etag(self):
+        return None
+
     def get_cache_path(self):
         raise Exception(u"Method get_cache_path should be overwritten for caching & purging purposes")
 
@@ -230,6 +233,10 @@ class RootJsonSchemaHandler(BrainiakRequestHandler):
             raise HTTPError(404, log_message=_("Failed to retrieve json-schema"))
 
         self.add_cache_headers(response['meta'])
+        # FIXME: handle cache policy uniformly
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
+
         self.finalize(response['body'])
 
 
@@ -264,9 +271,14 @@ class RootHandler(BrainiakRequestHandler):
         self.finalize(response['body'])
 
     def finalize(self, response):
+        # FIXME: handle cache policy uniformly
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
+
         if isinstance(response, dict):
             self.write(response)
-            self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+            url_schema = build_schema_url(self.query_params, propagate_params=True)
+            self.set_header("Content-Type", content_type_profile(url_schema))
 
 
 class ContextJsonSchemaHandler(BrainiakRequestHandler):
@@ -294,7 +306,11 @@ class ContextHandler(BrainiakRequestHandler):
 
     def finalize(self, response):
         self.write(response)
-        self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+        url_schema = build_schema_url(self.query_params, propagate_params=True)
+        self.set_header("Content-Type", content_type_profile(url_schema))
+        # FIXME: handle cache policy uniformly
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
 
 
 class ClassHandler(BrainiakRequestHandler):
@@ -418,6 +434,11 @@ class CollectionHandler(BrainiakRequestHandler):
         self.finalize(201)
 
     def finalize(self, response):
+
+        # FIXME: handle cache policy uniformly
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
+
         if response is None:
             # TODO separate filter message logic (e.g. if response is None and ("p" in self.query_params or "o" in self.query_params))
             filter_message = []
@@ -444,7 +465,8 @@ class CollectionHandler(BrainiakRequestHandler):
         else:
             self.write(response)
 
-        self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+        url_schema = build_schema_url(self.query_params, propagate_params=True)
+        self.set_header("Content-Type", content_type_profile(url_schema))
 
 
 class InstanceHandler(BrainiakRequestHandler):
@@ -636,6 +658,10 @@ class InstanceHandler(BrainiakRequestHandler):
         self.finalize(response)
 
     def finalize(self, response):
+        # FIXME: handle uniformly cache policy
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
+
         if isinstance(response, dict):
             self.write(response)
             class_url = build_class_url(self.query_params)
@@ -681,12 +707,17 @@ class SuggestHandler(BrainiakRequestHandler):
         self.finalize(response)
 
     def finalize(self, response):
+        # FIXME: handle cache policy uniformly
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
+
         if response is None:
             msg = _("There were no search results.")
             raise HTTPError(404, log_message=msg)
         elif isinstance(response, dict):
             self.write(response)
-            self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+            url_schema = build_schema_url(self.query_params, propagate_params=True)
+            self.set_header("Content-Type", content_type_profile(url_schema))
         elif isinstance(response, int):  # status code
             self.set_status(response)
             # A call to finalize() was removed from here! -- rodsenra 2013/04/25
@@ -714,8 +745,13 @@ class SearchHandler(BrainiakRequestHandler):
         self.finalize(response)
 
     def finalize(self, response):
+        # FIXME: handle cache policy uniformly
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
+
         self.write(response)
-        self.set_header("Content-Type", content_type_profile(build_schema_url(self.query_params)))
+        url_schema = build_schema_url(self.query_params, propagate_params=True)
+        self.set_header("Content-Type", content_type_profile(url_schema))
 
 
 class PrefixHandler(BrainiakRequestHandler):
@@ -836,6 +872,10 @@ class StoredQueryCRUDHandler(BrainiakRequestHandler):
         self.finalize(204)
 
     def finalize(self, response):
+        # FIXME: handle cache policy uniformly
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", "0")
+
         if isinstance(response, dict):
             self.write(response)
             # TODO json schema navigation?

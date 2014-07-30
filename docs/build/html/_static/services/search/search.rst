@@ -21,17 +21,27 @@ The mandatory parameters are:
 
 **class_uri**: Defines the URI of a given class, whose instances' labels should be searched.
 
-
 **Basic usage**
-
 
 .. code-block:: bash
 
-  $ curl -s -X GET 'http://brainiak.semantica.dev.globoi.com/_search?graph_uri=glb&class_uri=base:Pais&pattern=unido'
+  $ curl -s -X GET 'http://brainiak.semantica.dev.globoi.com/_search?graph_uri=glb&class_uri=place:Country&pattern=united'
 
-.. program-output:: curl -s -X GET 'http://brainiak.semantica.dev.globoi.com/glb/Pais/_search?graph_uri=glb&class_uri=base:Pais&pattern=unido' | python -mjson.tool
-  :shell:
+.. code-block:: json
 
+    {
+        "items": [
+            {
+                "id": "http://test.com/united-states",
+                "title": "United States"
+            },
+            {
+                "id": "http://test.com/united-arab-emirates",
+                "title": "United Arab Emirates"
+            },
+        ],
+        "pattern": "united"
+    }
 
 Possible responses
 ------------------

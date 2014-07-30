@@ -45,8 +45,8 @@ def _build_elasticsearch_request_url(indexes):
     return request_url
 
 
-def run_analyze(target, analyzer, indexes):
-    request_url = _build_elasticsearch_analyze_url(indexes, analyzer, target)
+def run_analyze(target):
+    request_url = _build_elasticsearch_analyze_url(target)
     request_params = {
         "url": unicode(request_url),
         "method": "GET",
@@ -54,24 +54,16 @@ def run_analyze(target, analyzer, indexes):
     }
 
     response = _get_response(request_params)
-
     return json.loads(response.body)
 
 
-def _build_elasticsearch_analyze_url(indexes, analyzer, target):
-    index_path = ",".join(indexes) if isinstance(indexes, list) else indexes
-
+def _build_elasticsearch_analyze_url(target):
     if isinstance(target, unicode):
         target = urllib.quote_plus(target.encode('utf-8'))
     else:
         target = urllib.quote_plus(target)
 
-    if analyzer != "default":
-        request_url = "http://{0}/{1}/_analyze?analyzer={2}&text={3}".format(
-            ELASTICSEARCH_ENDPOINT, index_path, analyzer, target)
-    else:
-        request_url = "http://{0}/{1}/_analyze?text={2}".format(
-            ELASTICSEARCH_ENDPOINT, index_path, target)
+    request_url = "http://{0}/_analyze?text={1}".format(ELASTICSEARCH_ENDPOINT, target)
     return request_url
 
 

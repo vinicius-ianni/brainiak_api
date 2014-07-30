@@ -7,7 +7,7 @@ from brainiak.suggest.json_schema import SUGGEST_PARAM_SCHEMA
 from brainiak.type_mapper import DATATYPE_PROPERTY, OBJECT_PROPERTY, _MAP_EXPAND_XSD_TO_JSON_TYPE
 from brainiak.utils.i18n import _
 from brainiak.utils.cache import build_key_for_class, memoize
-from brainiak.utils.links import assemble_url, add_link, crud_links, build_relative_class_url
+from brainiak.utils.links import assemble_url, add_link, crud_links, build_relative_class_url, append_param
 from brainiak.utils.resources import LazyObject
 from brainiak.utils.sparql import add_language_support, filter_values, get_one_value, get_super_properties, InstanceError, bindings_to_dict
 
@@ -56,9 +56,13 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
                         {"class_prefix": query_params.get("class_prefix", "")})
 
     href_class = assemble_url(schema_url, {"class_prefix": query_params.get("class_prefix", "")})
-
     # {value} is used here for CMAaaS integration
     instance_href = u"/_/_/_?instance_uri={value}"
+
+    if 'expand_uri' in query_params:
+        expand_uri_param = 'expand_uri={0}'.format(query_params['expand_uri'])
+        href_class = append_param(href_class, expand_uri_param)
+        instance_href = append_param(instance_href, expand_uri_param)
 
     links = [
         {

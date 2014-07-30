@@ -24,16 +24,26 @@ Possible responses
 The response body is a JSON containing the prefixes in a "@context" section
 and the root context, which is a context whose name is not in the prefix URI.
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/_prefixes' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+    {
+        "@context": {
+            "dbpedia": "http://dbpedia.org/ontology/",
+            "dc": "http://purl.org/dc/elements/1.1/"
+        }
+    }
 
 **Status 400**
 
 If there are unknown parameters in the request query string, the response status code is 400.
 A JSON containing both the wrong parameters and the accepted ones is returned.
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/prefixes?invalid_param=1' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+    {
+        "errors": [
+            "HTTP error: 400\nO argumento invalid_param não é suportado. Os argumentos de querystring suportados são: do_item_count, expand_uri, graph_uri, lang, page, per_page, sort_by, sort_include_empty, sort_order."]
+    }
 
 **Status 500**
 

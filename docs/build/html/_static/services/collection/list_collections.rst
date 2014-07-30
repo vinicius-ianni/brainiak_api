@@ -12,8 +12,31 @@ The results are paginated.
 
 This will retrieve all classes in the ``place`` graph.
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+  {
+    "@context": {
+        "@language": "pt"
+    },
+    "@id": "http://semantica.globo.com/place/",
+    "_base_url": "http://brainiak.semantica.dev.globoi.com/place",
+    "_first_args": "page=1",
+    "_next_args": "page=2",
+    "items": [
+        {
+            "@id": "http://semantica.globo.com/place/City",
+            "class_prefix": "http://semantica.globo.com/place/",
+            "resource_id": "City",
+            "title": "Cidade"
+        },
+        {
+            "@id": "http://semantica.globo.com/place/Country",
+            "class_prefix": "http://semantica.globo.com/place/",
+            "resource_id": "Country",
+            "title": "Pa\u00eds"
+        }
+    ]
+  }
 
 
 Optional parameters
@@ -37,8 +60,31 @@ By default, the first page containing 10 items is returned (``?page=1&per_page=1
 
   $ curl -s 'http://brainiak.semantica.dev.globoi.com/place/?page=1&per_page=10'
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/?page=1&per_page=10' | python -mjson.tool
-  :shell:
+.. code-block:: json
+
+  {
+    "@context": {
+        "@language": "pt"
+    },
+    "@id": "http://semantica.globo.com/place/",
+    "_base_url": "http://brainiak.semantica.dev.globoi.com/place",
+    "_first_args": "page=1",
+    "_next_args": "page=2",
+    "items": [
+        {
+            "@id": "http://semantica.globo.com/place/City",
+            "class_prefix": "http://semantica.globo.com/place/",
+            "resource_id": "City",
+            "title": "Cidade"
+        },
+        {
+            "@id": "http://semantica.globo.com/place/Country",
+            "class_prefix": "http://semantica.globo.com/place/",
+            "resource_id": "Country",
+            "title": "Pa\u00eds"
+        }
+    ]
+  }
 
 If there are no classes for this graph, the response will contain a warning and a items list empty.
 
@@ -50,9 +96,13 @@ If there are no classes for this graph, the response will contain a warning and 
 If there are unknown parameters in the request query string, the response status code is 400.
 A JSON containing both the wrong parameters and the accepted ones is returned.
 
-.. program-output:: curl -s 'http://brainiak.semantica.dev.globoi.com/place/?invalid_param=1' | python -mjson.tool
-  :shell:
+.. code-block:: json
 
+    {
+        "errors": [
+            "HTTP error: 400\nArgument invalid_param is not supported. The supported querystring arguments are: do_item_count, expand_uri, graph_uri, lang, page, per_page, sort_by, sort_include_empty, sort_order."
+        ]
+    }
 
 **Status 404**
 

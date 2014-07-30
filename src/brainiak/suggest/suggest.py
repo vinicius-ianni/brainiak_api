@@ -40,7 +40,7 @@ def do_suggest(query_params, suggest_params):
     #     search_fields,
     #     response_fields)
 
-    analyze_response = run_analyze(search_params["pattern"], settings.ES_ANALYZER, indexes)
+    analyze_response = run_analyze(search_params["pattern"])
     tokens = analyze_response["tokens"]
 
     request_body = _build_body_query_compatible_with_uatu_and_es_19_in_envs(
@@ -91,18 +91,24 @@ QUERY_PREDICATE_RANGES = u"""
 SELECT DISTINCT ?range ?range_label ?range_graph {
   {
     <%(target)s> rdfs:range ?root_range .
+    FILTER (!isBlank(?root_range))
+    ?range rdfs:subClassOf ?root_range OPTION(TRANSITIVE, t_min (0)) .
+    ?range rdfs:label ?range_label .
+    GRAPH ?range_graph { ?range a owl:Class } .
   }
   UNION {
     <%(target)s> rdfs:range ?blank .
     ?blank a owl:Class .
     ?blank owl:unionOf ?enumeration .
-    OPTIONAL { ?enumeration rdf:rest ?list_node OPTION(TRANSITIVE, t_min (0)) } .
-    OPTIONAL { ?list_node rdf:first ?root_range } .
+    OPTIONAL {
+        ?enumeration rdf:rest ?list_node OPTION(TRANSITIVE, t_min (0)) .
+        ?list_node rdf:first ?root_range .
+        FILTER (!isBlank(?root_range)) .
+        ?range rdfs:subClassOf ?root_range OPTION(TRANSITIVE, t_min (0)) .
+        ?range rdfs:label ?range_label .
+        GRAPH ?range_graph { ?range a owl:Class } .
+    }
   }
-  FILTER (!isBlank(?root_range))
-  ?range rdfs:subClassOf ?root_range OPTION(TRANSITIVE, t_min (0)) .
-  ?range rdfs:label ?range_label .
-  GRAPH ?range_graph { ?range a owl:Class } .
   %(lang_filter_range_label)s
 }
 """
