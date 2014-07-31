@@ -164,7 +164,7 @@ def bindings_to_dict(key_name, bindings):
     return bindings_by_predicate
 
 
-def compress_keys_and_values(result_dict, keymap={}, ignore_keys=[], context=None, expand_uri=False):
+def compress_keys_and_values(result_dict, keymap={}, ignore_keys=[], context=None, do_expand_uri=False):
     """
     Return a list of compressed items of the 'bindings' list of a Virtuoso response dict.
 
@@ -201,8 +201,10 @@ def compress_keys_and_values(result_dict, keymap={}, ignore_keys=[], context=Non
             if key not in ignore_keys:
                 value = item[key]['value']
                 effective_key = keymap.get(key, key)
-                if item[key]['type'] == 'uri' and context and effective_key != '@id' and not expand_uri:
+                if item[key]['type'] == 'uri' and context and effective_key != '@id' and not do_expand_uri:
                     value = context.shorten_uri(value)
+                if do_expand_uri:
+                    effective_key = expand_uri(effective_key)
                 row[effective_key] = value
         result_list.append(row)
     return result_list

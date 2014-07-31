@@ -3,10 +3,9 @@ import urllib
 
 from mock import patch, PropertyMock
 
-from brainiak import triplestore, settings
+from brainiak import settings
 from brainiak.collection import get_collection
-from brainiak.collection.get_collection import query_filter_instances, Query
-from brainiak.utils import sparql
+from brainiak.collection.get_collection import Query
 from tests.mocks import Params
 from tests.sparql import QueryTestCase
 from tests.utils import URLTestCase
@@ -28,6 +27,32 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
     def test_filter_with_invalid_query_string(self, log):
         response = self.fetch('/person/Gender/?love=u', method='GET')
         self.assertEqual(response.code, 400)
+
+    def test_filter_with_expanded_predicate(self):
+        response = self.fetch('/person/Gender/?p=upper:name&expand_uri=1', method='GET')
+        expected_items = [
+              {u'@id': u'http://semantica.globo.com/person/Gender/Female',
+               u'class_prefix': u'http://semantica.globo.com/person/',
+               u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+               u'resource_id': u'Female',
+               u'title': u'Feminino',
+               u'http://semantica.globo.com/upper/name': u'Feminino'},
+              {u'@id': u'http://semantica.globo.com/person/Gender/Male',
+               u'class_prefix': u'http://semantica.globo.com/person/',
+               u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+               u'resource_id': u'Male',
+               u'title': u'Masculino',
+               u'http://semantica.globo.com/upper/name': u'Masculino'},
+              {u'@id': u'http://semantica.globo.com/person/Gender/Transgender',
+               u'class_prefix': u'http://semantica.globo.com/person/',
+               u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+               u'resource_id': u'Transgender',
+               u'title': u'Transg\xeanero',
+               u'http://semantica.globo.com/upper/name': u'Transg\xeanero'}
+        ]
+        received_response = json.loads(response.body)
+        self.assertEqual(response.code, 200)
+        self.assertEqual(sorted(received_response['items']), sorted(expected_items))
 
     def test_filter_without_predicate_and_object(self):
         response = self.fetch('/person/Gender/?expand_uri=1', method='GET')
@@ -152,7 +177,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         ]
         self.assertEqual(received_response['items'], expected_items)
 
-    def test_filter_with_object_as_string(self):
+    def test_filter_with_object_as_string_expand_uri0(self):
         response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=0', method='GET')
         expected_items = [
             {
@@ -167,6 +192,24 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
         self.assertEqual(sorted(received_response['items']), sorted(expected_items))
+
+
+    def test_filter_with_object_as_string_expand_uri1(self):
+        response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=1', method='GET')
+        expected_items = [
+            {
+                u'title': u'Masculino',
+                u'@id': settings.URI_PREFIX + u'person/Gender/Male',
+                u'resource_id': u'Male',
+                u'class_prefix': u'http://semantica.globo.com/person/',
+                u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+                u'p': [u'http://semantica.globo.com/upper/name', u'http://www.w3.org/2000/01/rdf-schema#label']
+            }
+        ]
+        received_response = json.loads(response.body)
+        self.assertEqual(response.code, 200)
+        self.assertEqual(sorted(received_response['items']), sorted(expected_items))
+
 
     def test_filter_with_predicate_as_uri(self):
         url = urllib.quote("http://www.w3.org/2000/01/rdf-schema#label")

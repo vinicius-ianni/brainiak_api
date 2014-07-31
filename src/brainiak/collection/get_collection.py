@@ -277,7 +277,11 @@ def filter_instances(query_params):
     if not result_dict or not result_dict['results']['bindings']:
         return None
 
-    items_list = compress_keys_and_values(result_dict, keymap=keymap, ignore_keys=["total"])
+    items_list = compress_keys_and_values(result_dict,
+                                          keymap=keymap,
+                                          ignore_keys=["total"],
+                                          do_expand_uri=query_params['expand_uri']==u"1")
+
     items_list = merge_by_id(items_list)
     for item in items_list:
         uri = item["@id"]

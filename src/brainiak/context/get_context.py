@@ -33,7 +33,7 @@ def assemble_list_json(query_params, query_result_dict):
         query_result_dict,
         keymap={"class": "@id", "label": "title"},
         context=context,
-        expand_uri=should_expand_uri)
+        do_expand_uri=should_expand_uri)
     items_list = compress_duplicated_ids(items_list)
     decorate_with_resource_id(items_list)
     decorate_with_class_prefix(items_list, should_expand_uri)
