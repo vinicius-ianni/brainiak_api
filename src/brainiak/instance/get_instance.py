@@ -129,7 +129,6 @@ def assemble_instance_json(query_params, query_result_dict, class_schema):
             "_instance_prefix": instance_prefix,
             "_resource_id": instance_id,
             "@id": instance_uri,
-            "id": instance_uri,
             "@type": query_params["class_uri"],
             "_type_title": class_schema["title"]
         }
