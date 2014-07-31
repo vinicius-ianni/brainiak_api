@@ -374,8 +374,7 @@ def build_json(items_list, query_params):
         '_base_url': remove_last_slash(query_params.base_url),
         'items': items_list,
         '@context': {"@language": query_params.get("lang")},
-        '@id': query_params['class_uri'],
-        'id': query_params['class_uri']
+        '@id': query_params['class_uri']
     }
 
     def calculate_total_items():
