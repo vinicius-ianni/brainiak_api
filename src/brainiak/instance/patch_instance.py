@@ -56,7 +56,7 @@ def apply_patch(instance_data, patch_list):
             value = item['value']
             patch_data[predicate] = value
         elif operation == 'remove':
-            original_data.pop(predicate)
+            original_data.pop(predicate, None)
         elif operation == 'add':
             new_values = item['value']
             if not isinstance(new_values, list):

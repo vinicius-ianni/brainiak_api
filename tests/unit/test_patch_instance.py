@@ -76,6 +76,20 @@ class PatchTestCase(unittest.TestCase):
         }
         self.assertEqual(computed, expected)
 
+    def test_apply_patch_remove_succeeds_for_inexistent_key(self):
+        instance_data = {
+            'http://on.to/name': u'Flipper',
+            'http://on.to/weight': 200.0
+        }
+        patch_list = [
+            {
+                u'path': 'http://on.to/age',
+                u'op': u'remove'
+            }
+        ]
+        computed = apply_patch(instance_data, patch_list)
+        self.assertEqual(computed, instance_data)
+
     def test_apply_patch_remove_succeeds_for_expanded_uri(self):
         instance_data = {
             'http://dbpedia.org/ontology/name': u'Francis'
