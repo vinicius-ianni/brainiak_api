@@ -1,5 +1,3 @@
-import unittest
-
 from mock import patch
 from tornado.httpclient import HTTPError as ClientHTTPError
 from tornado.web import HTTPError
@@ -12,7 +10,7 @@ from tests.sparql import QueryTestCase
 from tests.tornado_cases import TornadoAsyncTestCase
 
 
-SIMPLE_QUERY = "ASK {<SomeInstance> a <SomeClass>}"
+SIMPLE_QUERY = "ASK {?s a owl:Class}"
 
 
 class TriplestoreTestCase(TornadoAsyncTestCase, QueryTestCase):
@@ -36,19 +34,6 @@ class TriplestoreTestCase(TornadoAsyncTestCase, QueryTestCase):
         modified_dict = triplestore_config.copy()
         modified_dict["auth_username"] = 'inexistent'
         self.assertRaises(HTTPError, triplestore.query_sparql, SIMPLE_QUERY, modified_dict)
-
-    @patch("brainiak.triplestore.greenlet_fetch", return_value=None)
-    @patch("brainiak.triplestore.log.logger.info")
-    @patch("brainiak.triplestore.time.time", return_value=0)
-    def test_authenticated_access_to_not_authenticated_endpoint(self, time, info, greenlet_fetch):
-        response = triplestore.query_sparql(SIMPLE_QUERY, triplestore_config)
-        self.assertEqual(response, None)
-        self.assertEqual(info.call_count, 1)
-        log_msg = "POST - http://localhost:8890/sparql-auth - None - dba [tempo: 0] - QUERY - SELECT COUNT(*) WHERE {?s a owl:Class}"
-        self.assertTrue(info.call_args, log_msg)
-        with self.assertRaises(HTTPError) as error:
-            triplestore.query_sparql(SIMPLE_QUERY, modified_dict)
-        self.assertEqual(error.status_code, 401)
 
     @greenlet_tornado.greenlet_test
     def test_authenticated_access_to_not_authenticated_endpoint(self):
