@@ -3,7 +3,7 @@ from copy import copy
 from tornado.web import HTTPError
 
 from brainiak import settings, triplestore
-from brainiak.prefixes import uri_to_slug, safe_slug_to_prefix
+from brainiak.prefixes import uri_to_slug, safe_slug_to_prefix, shorten_uri
 from brainiak.schema.get_class import get_cached_schema
 from brainiak.search_engine import run_search, run_analyze
 from brainiak.utils import resources
@@ -366,7 +366,7 @@ def get_instance_class_schema(es_response_item, query_params):
     return schema
 
 
-def get_instance_fields(item, class_schema):
+def get_instance_fields(query_params, item, class_schema):
     """
     Assemble an instance's properties data (instance_fields) provided:
         item: ElasticSearch response item (available inside "hits")
@@ -388,7 +388,7 @@ def get_instance_fields(item, class_schema):
             object_title = object_.get("title") if isinstance(object_, dict) else object_
             field = {
                 'object_title': object_title,
-                'predicate_id': property_uri,
+                'predicate_id': property_uri if query_params['expand_uri']==u"1" else shorten_uri(property_uri),
                 'predicate_title': property_title,
                 'required': required
             }
@@ -443,7 +443,7 @@ def _build_items(query_params, result, title_fields, class_fields):
             "_type_title": class_schema["title"]
         }
 
-        instance_fields = get_instance_fields(item, class_schema)
+        instance_fields = get_instance_fields(query_params, item, class_schema)
         if instance_fields:
             item_dict["instance_fields"] = instance_fields
 

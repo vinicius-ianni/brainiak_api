@@ -10,7 +10,7 @@ from brainiak.greenlet_tornado import greenlet_fetch
 from brainiak.settings import ELASTICSEARCH_ENDPOINT
 
 
-REQUEST_LOG_FORMAT = u"ELASTICSEARCH - %(method)s - %(url)s - %(status)s - [time: %(time_diff)s] - REQUEST BODY - %(request_body)s - RESPONSE BODY - %(response_body)s"
+REQUEST_LOG_FORMAT = u"ELASTICSEARCH - {method} - {url} - {status} - [time: {time_diff}] - REQUEST BODY - {request_body} - RESPONSE BODY - {response_body}"
 
 
 class ElasticSearchException(Exception):
@@ -145,10 +145,10 @@ def _do_request(request_params):
 
     request_params["status"] = response.code
     request_params["time_diff"] = time_diff
-    request_params["response_body"] = response.body
+    request_params["response_body"] = response.body.decode("utf-8")
     request_params["request_body"] = request_params.get("body", "")
 
-    log_msg = REQUEST_LOG_FORMAT % request_params
+    log_msg = REQUEST_LOG_FORMAT.format(**request_params)
     log.logger.info(log_msg)
 
     return response

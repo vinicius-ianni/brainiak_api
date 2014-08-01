@@ -90,7 +90,7 @@ console:
 
 check_services:
 	@echo "Check if all services used by Brainiak are up"
-	@nosetests -s tests/integration/test_dependencies_tests.py
+	@nosetests -s tests/integration/test_services.py
 
 # i18n #0
 # If "string" should be translated, wrap it using _("string")
