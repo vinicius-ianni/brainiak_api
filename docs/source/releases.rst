@@ -1,7 +1,7 @@
 Releases
 ========
 
-Version 2.7.2 - 2014//
+Version 2.7.2 - 2014/08/01
 --------------------------
 
 
@@ -10,6 +10,7 @@ ___________________
 
 - When using filters, the additional predicates listed did not obey the expand_uri parameter
 - There was an inconsistency with any schema definition that was cached due to an instance being fetched by /_/_/_?instance_uri
+- Suggest now supports expand_uri to compress results if necessary
 
 
 Version 2.7.1 - 2014/07/30

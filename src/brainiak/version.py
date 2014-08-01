@@ -1,1 +1,1 @@
-RELEASE = '2.7.1'
+RELEASE = '2.7.2'
