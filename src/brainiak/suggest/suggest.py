@@ -12,13 +12,17 @@ from brainiak.utils.sparql import is_result_empty, add_language_support, \
     filter_values, LABEL_PROPERTIES, get_subproperties
 
 
+def raise_no_results(msg):
+    raise HTTPError(400, msg)
+
+
 def do_suggest(query_params, suggest_params):
     search_params = suggest_params["search"]
     range_result = _get_predicate_ranges(query_params, search_params)
     if is_result_empty(range_result):
         message = _(u"Either the predicate {0} does not exists or it does not have any rdfs:range defined in the triplestore")
         message = message.format(search_params["target"])
-        raise HTTPError(400, message)
+        raise_no_results(message)
 
     classes = _validate_class_restriction(query_params, range_result)
     graphs = _validate_graph_restriction(query_params, range_result)
@@ -62,6 +66,10 @@ def do_suggest(query_params, suggest_params):
     assert not "sort" in request_body  # Read comments above
 
     elasticsearch_result = run_search(request_body, indexes=indexes)
+    if elasticsearch_result is None:
+        message = _(u"There were no search results.")
+        raise_no_results(message)
+
     class_fields = response_params.get("class_fields", [])
 
     total_items = elasticsearch_result["hits"]["total"]
@@ -388,7 +396,7 @@ def get_instance_fields(query_params, item, class_schema):
             object_title = object_.get("title") if isinstance(object_, dict) else object_
             field = {
                 'object_title': object_title,
-                'predicate_id': property_uri if query_params['expand_uri']==u"1" else shorten_uri(property_uri),
+                'predicate_id': property_uri if query_params['expand_uri'] == u"1" else shorten_uri(property_uri),
                 'predicate_title': property_title,
                 'required': required
             }

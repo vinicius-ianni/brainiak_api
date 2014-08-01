@@ -254,6 +254,7 @@ SELECT DISTINCT ?field_value {
     # get_instance_fields
 
     def test_get_instance_fields_for_not_required_object_property(self):
+        query_params = {'expand_uri': u"0"}
         class_schema = {
             "properties": {
                 "http://predicate2": {"title": "predicate2_title"}
@@ -267,7 +268,7 @@ SELECT DISTINCT ?field_value {
                 }
             }
         }
-        computed = suggest.get_instance_fields(elastic_search_item, class_schema)
+        computed = suggest.get_instance_fields(query_params, elastic_search_item, class_schema)
         expected = [
             {
                 "predicate_id": "http://predicate2",
@@ -280,6 +281,7 @@ SELECT DISTINCT ?field_value {
         self.assertEqual(computed, expected)
 
     def test_get_instance_fields_for_property_with_multiple_objects(self):
+        query_params = {'expand_uri': u"0"}
         class_schema = {
             "properties": {
                 ":hasParent": {
@@ -290,7 +292,7 @@ SELECT DISTINCT ?field_value {
         elastic_search_item = {
             "fields": {":hasParent": ["Marry", "Harry"]}
         }
-        computed = suggest.get_instance_fields(elastic_search_item, class_schema)
+        computed = suggest.get_instance_fields(query_params, elastic_search_item, class_schema)
         expected = [
             {
                 "predicate_id": ":hasParent",
@@ -308,6 +310,7 @@ SELECT DISTINCT ?field_value {
         self.assertEqual(computed, expected)
 
     def test_get_instance_fields_for_required_datatype_property(self):
+        query_params = {'expand_uri': u"1"}
         class_schema = {
             "properties": {
                 "http://predicate1": {
@@ -319,7 +322,7 @@ SELECT DISTINCT ?field_value {
         elastic_search_item = {
             "fields": {"http://predicate1": "predicate1_value"}
         }
-        computed = suggest.get_instance_fields(elastic_search_item, class_schema)
+        computed = suggest.get_instance_fields(query_params, elastic_search_item, class_schema)
         expected = [
             {
                 "predicate_id": "http://predicate1",
@@ -331,6 +334,7 @@ SELECT DISTINCT ?field_value {
         self.assertEqual(computed, expected)
 
     def test_get_instance_fields_for_multiple_fields(self):
+        query_params = {'expand_uri': u"0"}
         class_schema = {
             "properties": {
                 ":atContry": {"title": "Place is inside country"},
@@ -343,7 +347,7 @@ SELECT DISTINCT ?field_value {
                 ":hasMainLanguage": "Spanish"
             }
         }
-        computed = suggest.get_instance_fields(elastic_search_item, class_schema)
+        computed = suggest.get_instance_fields(query_params, elastic_search_item, class_schema)
         expected = [
             {
                 "predicate_id": ":hasMainLanguage",

@@ -29,7 +29,8 @@ def run_search(body, indexes=None):
 
     response = _get_response(request_params)
 
-    return json.loads(response.body)
+    if response is not None:
+        return json.loads(response.body)
 
 
 def _build_elasticsearch_request_url(indexes):
