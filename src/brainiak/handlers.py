@@ -45,7 +45,8 @@ from brainiak.utils.cache import memoize, build_instance_key
 from brainiak.utils.i18n import _
 from brainiak.utils.json import validate_json_schema, get_json_request_as_dict
 from brainiak.utils.links import build_schema_url_for_instance, content_type_profile, build_schema_url, build_class_url
-from brainiak.utils.params import CLASS_PARAMS, InvalidParam, LIST_PARAMS, GRAPH_PARAMS, INSTANCE_PARAMS, PAGING_PARAMS, DEFAULT_PARAMS, SEARCH_PARAMS, RequiredParamMissing, DefaultParamsDict, ParamDict, CLIENT_ID_HEADER
+from brainiak.utils.params import CLASS_PARAMS, InvalidParam, LIST_PARAMS, GRAPH_PARAMS, INSTANCE_PARAMS, PAGING_PARAMS, DEFAULT_PARAMS, SEARCH_PARAMS, RequiredParamMissing, DefaultParamsDict, ParamDict, CLIENT_ID_HEADER, \
+    EXPAND_URI
 from brainiak.utils.params import QueryExecutionParamDict
 from brainiak.utils.resources import check_messages_when_port_is_mentioned, LazyObject, build_resource_url
 from brainiak.utils.sparql import extract_po_tuples, clean_up_reserved_attributes, InstanceError
@@ -686,7 +687,7 @@ class SuggestHandler(BrainiakRequestHandler):
 
     @greenlet_asynchronous
     def post(self):
-        valid_params = PAGING_PARAMS
+        valid_params = PAGING_PARAMS + EXPAND_URI
 
         with safe_params(valid_params):
 
