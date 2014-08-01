@@ -26,6 +26,26 @@ class PatchTestCase(unittest.TestCase):
         }
         self.assertEqual(computed, expected)
 
+    def test_apply_patch_replace_with_add_semantics(self):
+        instance_data = {
+            u'http://on.to/name': u'Flipper',
+            u'http://on.to/age': 4
+        }
+        patch_list = [
+            {
+                u'path': u'http://on.to/birthDate',
+                u'value': '2014-08-01',
+                u'op': u'replace'
+            }
+        ]
+        computed = apply_patch(instance_data, patch_list)
+        expected = {
+            u'http://on.to/name': u'Flipper',
+            u'http://on.to/age': 4,
+            u'http://on.to/birthDate': '2014-08-01'
+        }
+        self.assertEqual(computed, expected)
+
     def test_apply_patch_with_wrong_keys_raises_400(self):
         instance_data = {}
         patch_list = [
