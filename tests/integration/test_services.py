@@ -6,7 +6,6 @@ from dad.mom import Middleware
 from requests.auth import HTTPDigestAuth
 
 from brainiak import settings
-from brainiak import event_bus
 
 
 class ServicesTestCase(unittest.TestCase):
