@@ -280,7 +280,7 @@ def filter_instances(query_params):
     items_list = compress_keys_and_values(result_dict,
                                           keymap=keymap,
                                           ignore_keys=["total"],
-                                          do_expand_uri=query_params['expand_uri']==u"1")
+                                          do_expand_uri=query_params['expand_uri'] == u"1")
 
     items_list = merge_by_id(items_list)
     for item in items_list:

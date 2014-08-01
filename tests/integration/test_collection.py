@@ -31,24 +31,30 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
     def test_filter_with_expanded_predicate(self):
         response = self.fetch('/person/Gender/?p=upper:name&expand_uri=1', method='GET')
         expected_items = [
-              {u'@id': u'http://semantica.globo.com/person/Gender/Female',
-               u'class_prefix': u'http://semantica.globo.com/person/',
-               u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
-               u'resource_id': u'Female',
-               u'title': u'Feminino',
-               u'http://semantica.globo.com/upper/name': u'Feminino'},
-              {u'@id': u'http://semantica.globo.com/person/Gender/Male',
-               u'class_prefix': u'http://semantica.globo.com/person/',
-               u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
-               u'resource_id': u'Male',
-               u'title': u'Masculino',
-               u'http://semantica.globo.com/upper/name': u'Masculino'},
-              {u'@id': u'http://semantica.globo.com/person/Gender/Transgender',
-               u'class_prefix': u'http://semantica.globo.com/person/',
-               u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
-               u'resource_id': u'Transgender',
-               u'title': u'Transg\xeanero',
-               u'http://semantica.globo.com/upper/name': u'Transg\xeanero'}
+                {
+                    u'@id': u'http://semantica.globo.com/person/Gender/Female',
+                    u'class_prefix': u'http://semantica.globo.com/person/',
+                    u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+                    u'resource_id': u'Female',
+                    u'title': u'Feminino',
+                    u'http://semantica.globo.com/upper/name': u'Feminino'
+                },
+                {
+                    u'@id': u'http://semantica.globo.com/person/Gender/Male',
+                    u'class_prefix': u'http://semantica.globo.com/person/',
+                    u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+                    u'resource_id': u'Male',
+                    u'title': u'Masculino',
+                    u'http://semantica.globo.com/upper/name': u'Masculino'
+                },
+                {
+                    u'@id': u'http://semantica.globo.com/person/Gender/Transgender',
+                    u'class_prefix': u'http://semantica.globo.com/person/',
+                    u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+                    u'resource_id': u'Transgender',
+                    u'title': u'Transg\xeanero',
+                    u'http://semantica.globo.com/upper/name': u'Transg\xeanero'
+                }
         ]
         received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
@@ -193,7 +199,6 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(response.code, 200)
         self.assertEqual(sorted(received_response['items']), sorted(expected_items))
 
-
     def test_filter_with_object_as_string_expand_uri1(self):
         response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=1', method='GET')
         expected_items = [
@@ -209,7 +214,6 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
         self.assertEqual(sorted(received_response['items']), sorted(expected_items))
-
 
     def test_filter_with_predicate_as_uri(self):
         url = urllib.quote("http://www.w3.org/2000/01/rdf-schema#label")
@@ -470,7 +474,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
         computed_items = json.loads(response.body)["items"]
         expected_items = [
             {
-                u'dbpedia:nickname': u'JJ',
+                u'http://dbpedia.org/ontology/nickname': u'JJ',
                 u'resource_id': u'john',
                 u'class_prefix': u'http://tatipedia.org/',
                 u'instance_prefix': u'http://tatipedia.org/',
@@ -478,7 +482,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
                 u'title': u'John Jones'
             },
             {
-                u'dbpedia:nickname': u'ML',
+                u'http://dbpedia.org/ontology/nickname': u'ML',
                 u'resource_id': u'mary',
                 u'class_prefix': u'http://tatipedia.org/',
                 u'instance_prefix': u'http://tatipedia.org/',

@@ -57,6 +57,8 @@ def optionals(*args):
 # The parameters below as given to ParamDict with other keyword arguments,
 # but they are not URL arguments because they are part of the URL path
 
+EXPAND_URI = optionals('expand_uri')
+
 DEFAULT_PARAMS = optionals('lang', 'graph_uri', 'expand_uri')
 
 NON_ARGUMENT_PARAMS = ('context_name', 'class_name', 'instance_id')
