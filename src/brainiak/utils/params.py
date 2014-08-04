@@ -263,6 +263,7 @@ class ParamDict(dict):
         self._set_if_optional("class_name", self.optionals.get("class_name", "invalid_class"))
         self._set_if_optional("instance_id", self.optionals.get("instance_id", "invalid_instance"))
 
+
         self["expand_uri"] = self.optionals.get("expand_uri", settings.DEFAULT_URI_EXPANSION)
 
         # if the context name is defined, the graph_uri should follow it by default, but it can be overriden

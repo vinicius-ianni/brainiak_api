@@ -687,9 +687,10 @@ class SuggestHandler(BrainiakRequestHandler):
 
     @greenlet_asynchronous
     def post(self):
-        valid_params = PAGING_PARAMS + EXPAND_URI
+        valid_params = PAGING_PARAMS
 
         with safe_params(valid_params):
+            self.query_params = ParamDict(self, **valid_params)
 
             try:
                 raw_body_params = json.loads(self.request.body)
@@ -703,7 +704,6 @@ class SuggestHandler(BrainiakRequestHandler):
 
             validate_json_schema(body_params, SUGGEST_PARAM_SCHEMA)
 
-            self.query_params = ParamDict(self, **valid_params)
 
         response = do_suggest(self.query_params, body_params)
         if self.query_params['expand_uri'] == "0":
