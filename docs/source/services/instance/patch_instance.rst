@@ -1,14 +1,16 @@
 Patch an Instance
 ==================
 
-Edit a part of an existing instance, providing:
+Edit a part of an instance, providing:
 
 - context (graph)
 - class (schema)
 - instance identifier (id or uri)
 - patch body or payload (JSON)
 
-The body must be a **list** and respect RFC-6902: http://tools.ietf.org/html/rfc6902.
+The body must be a **list** and it is based on RFC-6902: http://tools.ietf.org/html/rfc6902.
+
+Differently from the specification, we also use PATCH to create instances: provided that patch operations will create a valid instance.
 
 Currently the following operations are supported:
 
@@ -16,7 +18,8 @@ Currently the following operations are supported:
 2. **add**: add a new property and its value
 3. **remove**: remove some existing property (and therefore its value)
 
-**Basic usage**
+Basic usage
+-----------
 
 Consider you have an existing instance:
 
@@ -29,10 +32,6 @@ Consider you have an existing instance:
   {
     "@id": "http://semantica.globo.com/place/City/globoland",
     "@type": "place:City",
-    "_base_url": "http://brainiak.semantica.dev.globoi.com/place/City/globoland/",
-    "_instance_prefix": "http://semantica.globo.com/place/City/",
-    "_resource_id": "globoland",
-    "_type_title": "Cidade",
     "place:latitude": -22.9583,
     "place:longitude": -43.4071,
     "place:partOfState": "base:UF_RJ",
@@ -42,6 +41,14 @@ Consider you have an existing instance:
 
 Note that prefixes, such as "upper", are defined in the "@context" section:
 `Default prefixes  <http://brainiak.semantica.dev.globoi.com/_prefixes>`_ are implicit and don't need to be declared.
+
+**Add**
+
+To patch this instance **adding** some property and value, do:
+
+.. code-block:: bash
+
+  $ curl -i -s -X PATCH -d '[{"op": "add", "path": "place:latitude", "value": 11.785}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
 
 **Replace**
 
@@ -59,6 +66,7 @@ To patch this instance **replacing** some existing property's value, do:
   Connection: keep-alive
   Access-Control-Allow-Origin: *
 
+Note that our implementation differs a bit from specification in the sense that ``replace`` have ``add`` semantics when the key is not present in target instance.
 
 **Remove**
 
@@ -68,17 +76,6 @@ To patch this instance **removing** some property (and its existing values), do:
 
   $ curl -i -s -X PATCH -d '[{"op": "remove", "path": "place:latitude"}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
 
-
-**Add**
-
-To patch this instance **adding** some property and value, do:
-
-.. code-block:: bash
-
-  $ curl -i -s -X PATCH -d '[{"op": "add", "path": "place:latitude", "value": 11.785}]' http://brainiak.semantica.dev.globoi.com/place/City/globoland
-
-
-..
 
 Optional query string parameters
 --------------------------------

@@ -66,6 +66,7 @@
   <ul class="dropdown-menu globaltoc"
     ><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-xxx-2014">Version XXX - 2014//</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-2-2014-08-01">Version 2.7.2 - 2014/08/01</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-1-2014-07-30">Version 2.7.1 - 2014/07/30</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
@@ -144,6 +145,7 @@
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"><ul>
 <li><a class="reference internal" href="#">Patch an Instance</a><ul>
+<li><a class="reference internal" href="#basic-usage">Basic usage</a></li>
 <li><a class="reference internal" href="#optional-query-string-parameters">Optional query string parameters</a></li>
 <li><a class="reference internal" href="#possible-responses">Possible responses</a></li>
 </ul>
@@ -181,21 +183,23 @@
   
   <div class="section" id="patch-an-instance">
 <h1>Patch an Instance<a class="headerlink" href="#patch-an-instance" title="Permalink to this headline">¶</a></h1>
-<p>Edit a part of an existing instance, providing:</p>
+<p>Edit a part of an instance, providing:</p>
 <ul class="simple">
 <li>context (graph)</li>
 <li>class (schema)</li>
 <li>instance identifier (id or uri)</li>
 <li>patch body or payload (JSON)</li>
 </ul>
-<p>The body must be a <strong>list</strong> and respect RFC-6902: <a class="reference external" href="http://tools.ietf.org/html/rfc6902">http://tools.ietf.org/html/rfc6902</a>.</p>
+<p>The body must be a <strong>list</strong> and it is based on RFC-6902: <a class="reference external" href="http://tools.ietf.org/html/rfc6902">http://tools.ietf.org/html/rfc6902</a>.</p>
+<p>Differently from the specification, we also use PATCH to create instances: provided that patch operations will create a valid instance.</p>
 <p>Currently the following operations are supported:</p>
 <ol class="arabic simple">
 <li><strong>replace</strong>: change a property value</li>
 <li><strong>add</strong>: add a new property and its value</li>
 <li><strong>remove</strong>: remove some existing property (and therefore its value)</li>
 </ol>
-<p><strong>Basic usage</strong></p>
+<div class="section" id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
 <p>Consider you have an existing instance:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -s http://brainiak.semantica.dev.globoi.com/place/City/globoland
 </pre></div>
@@ -203,10 +207,6 @@
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
   <span class="nt">&quot;@id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City/globoland&quot;</span><span class="p">,</span>
   <span class="nt">&quot;@type&quot;</span><span class="p">:</span> <span class="s2">&quot;place:City&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;_base_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://brainiak.semantica.dev.globoi.com/place/City/globoland/&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;_instance_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City/&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;_resource_id&quot;</span><span class="p">:</span> <span class="s2">&quot;globoland&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;_type_title&quot;</span><span class="p">:</span> <span class="s2">&quot;Cidade&quot;</span><span class="p">,</span>
   <span class="nt">&quot;place:latitude&quot;</span><span class="p">:</span> <span class="mf">-22.9583</span><span class="p">,</span>
   <span class="nt">&quot;place:longitude&quot;</span><span class="p">:</span> <span class="mf">-43.4071</span><span class="p">,</span>
   <span class="nt">&quot;place:partOfState&quot;</span><span class="p">:</span> <span class="s2">&quot;base:UF_RJ&quot;</span><span class="p">,</span>
@@ -217,6 +217,11 @@
 </div>
 <p>Note that prefixes, such as &#8220;upper&#8221;, are defined in the &#8220;&#64;context&#8221; section:
 <a class="reference external" href="http://brainiak.semantica.dev.globoi.com/_prefixes">Default prefixes</a> are implicit and don&#8217;t need to be declared.</p>
+<p><strong>Add</strong></p>
+<p>To patch this instance <strong>adding</strong> some property and value, do:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -s -X PATCH -d <span class="s1">&#39;[{&quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;place:latitude&quot;, &quot;value&quot;: 11.785}]&#39;</span> http://brainiak.semantica.dev.globoi.com/place/City/globoland
+</pre></div>
+</div>
 <p><strong>Replace</strong></p>
 <p>To patch this instance <strong>replacing</strong> some existing property&#8217;s value, do:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -s -X PATCH -d <span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;upper:name&quot;, &quot;value&quot;: &quot;New Globoland name&quot;}]&#39;</span> http://brainiak.semantica.dev.globoi.com/place/City/globoland
@@ -230,15 +235,12 @@ Connection: keep-alive
 Access-Control-Allow-Origin: *
 </pre></div>
 </div>
+<p>Note that our implementation differs a bit from specification in the sense that <tt class="docutils literal"><span class="pre">replace</span></tt> have <tt class="docutils literal"><span class="pre">add</span></tt> semantics when the key is not present in target instance.</p>
 <p><strong>Remove</strong></p>
 <p>To patch this instance <strong>removing</strong> some property (and its existing values), do:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -s -X PATCH -d <span class="s1">&#39;[{&quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;place:latitude&quot;}]&#39;</span> http://brainiak.semantica.dev.globoi.com/place/City/globoland
 </pre></div>
 </div>
-<p><strong>Add</strong></p>
-<p>To patch this instance <strong>adding</strong> some property and value, do:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -s -X PATCH -d <span class="s1">&#39;[{&quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;place:latitude&quot;, &quot;value&quot;: 11.785}]&#39;</span> http://brainiak.semantica.dev.globoi.com/place/City/globoland
-</pre></div>
 </div>
 <div class="section" id="optional-query-string-parameters">
 <h2>Optional query string parameters<a class="headerlink" href="#optional-query-string-parameters" title="Permalink to this headline">¶</a></h2>

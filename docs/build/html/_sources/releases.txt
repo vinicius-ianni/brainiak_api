@@ -1,6 +1,18 @@
 Releases
 ========
 
+Version XXX - 2014//
+------------------------
+
+Fixes, Improvements
+___________________
+
+- Changes when patching an instance (see :doc:`/services/instance/patch_instance`)
+    - Operation ``delete`` is now safe in PATCH (i.e. if key does not exist, there is no error)
+    - Patching an unexistent instance will now create it using add/replace patches
+    - There is now a validation for expected parameters in ``op`` values, only ``add``, ``replace``, and ``remove`` are accepted
+
+
 Version 2.7.2 - 2014/08/01
 --------------------------
 
@@ -9,7 +21,7 @@ Fixes, Improvements
 ___________________
 
 - When using filters, the additional predicates listed did not obey the expand_uri parameter
-- There was an inconsistency with any schema definition that was cached due to an instance being fetched by /_/_/_?instance_uri
+- There was an inconsistency with any schema definition that was cached due to an instance being fetched by ``/_/_/_?instance_uri``
 - Suggest now supports expand_uri to compress results if necessary
 
 
@@ -19,8 +31,8 @@ Version 2.7.1 - 2014/07/30
 Fixes, Improvements
 ___________________
 
-- corrections in the documentation
-- SchemaNotFound returning 404 instead of 500 http error
+- Corrections in the documentation
+- SchemaNotFound returning 404 instead of 500 HTTP error
 
 
 Version 2.7.0 - 2014/07/29
@@ -29,7 +41,7 @@ Version 2.7.0 - 2014/07/29
 New Features
 ____________
 
-- expand_uri=1 is the default now instead of expand_uri=0 (default in versions < 2.7.0)
+- Querystring parameter expand_uri=1 is the default now instead of expand_uri=0 (default in versions < 2.7.0)
 
 
 Fixes, Improvements
