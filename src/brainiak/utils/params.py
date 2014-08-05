@@ -111,7 +111,7 @@ VALID_PATTERNS = (
 def safe_split():
     try:
         yield
-    except IndexError as ex:
+    except IndexError:
         pass
 
 
@@ -263,7 +263,6 @@ class ParamDict(dict):
         self._set_if_optional("class_name", self.optionals.get("class_name", "invalid_class"))
         self._set_if_optional("instance_id", self.optionals.get("instance_id", "invalid_instance"))
 
-
         self["expand_uri"] = self.optionals.get("expand_uri", settings.DEFAULT_URI_EXPANSION)
 
         # if the context name is defined, the graph_uri should follow it by default, but it can be overriden
@@ -332,7 +331,7 @@ class ParamDict(dict):
         "Check if all required params specified by required_spec are indeed present in the request"
         arguments = self._make_arguments_dict(handler).keys()
         for required_param in required_spec.required:
-            if not required_param in arguments:
+            if required_param not in arguments:
                 raise RequiredParamMissing(required_param)
 
     def set_aux_param(self, key, value):
