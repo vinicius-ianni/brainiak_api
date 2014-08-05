@@ -15,6 +15,22 @@ class LazyObject(object):
         return object.__getattribute__(obj, item)
 
 
+def profile_function(f):
+    def _wrapped(*args, **kw):
+        import cProfile, pstats, StringIO
+        pr = cProfile.Profile()
+        pr.enable()
+        result = f(*args, **kw)
+        pr.disable()
+        s = StringIO.StringIO()
+        sortby = 'cumulative'
+        ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+        ps.print_stats()
+        print(s.getvalue())
+        return result
+    return _wrapped
+
+
 def build_resource_url(protocol, host, request_uri, resource_id, query):
     try:
         pos = request_uri.index("?")
