@@ -1,12 +1,13 @@
 Releases
 ========
 
-Version XXX - 2014//
-------------------------
+Version 2.7.3 - 2014/08/05
+--------------------------
 
 Fixes, Improvements
 ___________________
 
+- _suggest service has expand_uri=1 as the default
 - Changes when patching an instance (see :doc:`/services/instance/patch_instance`)
     - Operation ``delete`` is now safe in PATCH (i.e. if key does not exist, there is no error)
     - Patching an unexistent instance will now create it using add/replace patches

@@ -546,9 +546,9 @@ class InstanceHandler(BrainiakRequestHandler):
 
         # Retrieve original data
         instance_data = memoize(self.query_params,
-                           get_instance,
-                           key=build_instance_key(self.query_params),
-                           function_arguments=self.query_params)
+                                get_instance,
+                                key=build_instance_key(self.query_params),
+                                function_arguments=self.query_params)
         try:
             instance_data = instance_data['body']
         except TypeError:
@@ -703,7 +703,6 @@ class SuggestHandler(BrainiakRequestHandler):
                 del body_params['@context']
 
             validate_json_schema(body_params, SUGGEST_PARAM_SCHEMA)
-
 
         response = do_suggest(self.query_params, body_params)
         if self.query_params['expand_uri'] == "0":
