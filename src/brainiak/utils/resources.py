@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import cProfile, pstats, StringIO
 from brainiak.prefixes import expand_uri, is_compressed_uri, ROOT_CONTEXT, shorten_uri
 from brainiak.utils.links import pagination_items
 from brainiak.settings import EVENT_BUS_PORT
@@ -15,9 +16,8 @@ class LazyObject(object):
         return object.__getattribute__(obj, item)
 
 
-def profile_function(f):
+def profile_decorator(f):
     def _wrapped(*args, **kw):
-        import cProfile, pstats, StringIO
         pr = cProfile.Profile()
         pr.enable()
         result = f(*args, **kw)
