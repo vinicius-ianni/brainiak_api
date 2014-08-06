@@ -10,7 +10,7 @@ from tornado.web import HTTPError
 from brainiak import settings
 from brainiak.prefixes import expand_uri, safe_slug_to_prefix, extract_prefix
 from brainiak.utils.i18n import _
-from brainiak.utils.sparql import PATTERN_O, PATTERN_P
+from brainiak.utils.sparql import PATTERN_O, PATTERN_P, find_graph_from_class, find_graph_and_class_from_instance
 from brainiak.utils.config_parser import ConfigParserNoSectionError, parse_section
 
 
@@ -293,7 +293,7 @@ class ParamDict(dict):
                     raise RequiredParamMissing(unicode(ex))
 
     def _post_override(self):
-        "This method is called after override_with() is called to do any post processing"
+        "This method is called after override_with()  to do any post processing"
         if self.get("lang", '') == "undefined":
             self["lang"] = ""  # empty string is False -> lang not set
 
@@ -304,6 +304,18 @@ class ParamDict(dict):
 
         if "sort_order" in self.arguments:
             self["sort_order"] = self["sort_order"].upper()
+
+        # expand underscores from given information through queries
+        if self.get("instance_uri", '_') != '_' and (self.get("graph_uri") == '_' or self.get("class_uri") == '_/_'):
+            candidate_graph_uri, candidate_class_uri = find_graph_and_class_from_instance(self["instance_uri"])
+            if candidate_graph_uri and candidate_class_uri:
+                self["graph_uri"] = candidate_graph_uri
+                self["class_uri"] = candidate_class_uri
+
+        elif self.get("class_uri", '_') != '_' and self.get("graph_uri") == '_':
+            candidate_graph_uri = find_graph_from_class(self["class_uri"])
+            if candidate_graph_uri:
+                self["graph_uri"] = candidate_graph_uri
 
     def to_string(self):
         "Return all parameters as param_name=param_value separated by &"

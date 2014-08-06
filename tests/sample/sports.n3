@@ -20,3 +20,6 @@ brmedia:related_to rdf:type owl:ObjectProperty ;
     rdfs:label "Relation between news and some sport" ;
     rdfs:domain dbpedia:News ;
     rdfs:range dbpedia:Sport .
+
+dbpedia:Aikido a dbpedia:Sport ;
+             rdfs:label "Aikido" .

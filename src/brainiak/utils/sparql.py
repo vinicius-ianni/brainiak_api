@@ -746,3 +746,47 @@ def are_there_label_properties_in(instance_data):
         if label_property in instance_data:
             return True
     return False
+
+
+QUERY_FIND_GRAPH_FROM_CLASS = u"""
+SELECT DISTINCT ?graph
+WHERE {GRAPH ?graph { <%(class_uri)s> a owl:Class }}
+"""
+
+
+def find_graph_from_class(class_uri):
+    query = QUERY_FIND_GRAPH_FROM_CLASS % {'class_uri': class_uri}
+    result_dict = query_sparql(query,
+                               config_parser.parse_section(),
+                               async=False)
+    graphs = filter_values(result_dict, 'graph')
+    try:
+        return graphs[0] if (len(graphs) == 1) else None
+    except IndexError:
+        return None
+
+
+QUERY_FIND_GRAPH_AND_CLASS_FROM_INSTANCE = u"""
+SELECT DISTINCT ?graph ?class
+WHERE {GRAPH ?graph { ?class a owl:Class. <%(instance_uri)s> a ?class . }}
+"""
+
+
+def find_graph_and_class_from_instance(instance_uri):
+    query = QUERY_FIND_GRAPH_AND_CLASS_FROM_INSTANCE % {'instance_uri': instance_uri}
+    result_dict = query_sparql(query,
+                               config_parser.parse_section(),
+                               async=False)
+    graphs = filter_values(result_dict, 'graph')
+    classes = filter_values(result_dict, 'class')
+    try:
+        graph_uri = graphs[0] if (len(graphs) == 1) else None
+    except IndexError:
+        graph_uri = None
+
+    try:
+        class_uri = classes[0] if (len(classes) == 1) else None
+    except IndexError:
+        class_uri = None
+
+    return graph_uri, class_uri
