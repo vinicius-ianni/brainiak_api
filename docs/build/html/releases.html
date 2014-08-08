@@ -312,11 +312,14 @@
 <dt>Changes when patching an instance (see <a class="reference internal" href="services/instance/patch_instance.html"><em>Patch an Instance</em></a>)</dt>
 <dd><ul class="first last simple">
 <li>Operation <tt class="docutils literal"><span class="pre">delete</span></tt> is now safe in PATCH (i.e. if key does not exist, there is no error)</li>
-<li>Patching an unexistent instance will now create it using add/replace patches</li>
+<li>Patching an unexistent instance will now create it using add/replace patches.
+It works like <tt class="docutils literal"><span class="pre">PUT</span></tt>, Brainiak will not create the URI.</li>
 <li>There is now a validation for expected parameters in <tt class="docutils literal"><span class="pre">op</span></tt> values, only <tt class="docutils literal"><span class="pre">add</span></tt>, <tt class="docutils literal"><span class="pre">replace</span></tt>, and <tt class="docutils literal"><span class="pre">remove</span></tt> are accepted</li>
 </ul>
 </dd>
 </dl>
+</li>
+<li><p class="first">Fixed broken <tt class="docutils literal"><span class="pre">expand_uri</span></tt> for suggest</p>
 </li>
 </ul>
 </div>
