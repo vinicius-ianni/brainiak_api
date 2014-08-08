@@ -2,7 +2,8 @@ import unittest
 
 from tornado.web import HTTPError
 
-from brainiak.instance.patch_instance import apply_patch
+from brainiak.instance.patch_instance import apply_patch, _get_value, \
+    _get_operation_and_predicate, get_instance_data_from_patch_list
 
 
 class PatchTestCase(unittest.TestCase):
@@ -53,11 +54,7 @@ class PatchTestCase(unittest.TestCase):
                 'wrong key': 'any value'
             }
         ]
-        with self.assertRaises(HTTPError) as error:
-            apply_patch(instance_data, patch_list)
-        msg = str(error.exception)
-        expected = "HTTP 400: Bad Request (Incorrect patch item. Every object in the list must contain the following keys: ['op', 'path'])"
-        self.assertEqual(msg, expected)
+        self.assertRaises(HTTPError, apply_patch, instance_data, patch_list)
 
     def test_apply_patch_remove_succeeds(self):
         instance_data = {
@@ -136,3 +133,47 @@ class PatchTestCase(unittest.TestCase):
             u'http://on.to/children': ['Dave', 'Eric', 'John', 'Mary'],
         }
         self.assertEqual(computed, expected)
+
+    def test_apply_patch_replace_unsupported_operation(self):
+        instance_data = {
+            'http://on.to/children': ['Dave', 'Eric']
+        }
+        patch_list = [
+            {
+                u'path': 'http://on.to/children',
+                u'op': u'unsupported',
+                u'value': [u'Mary', u'John']
+            }
+        ]
+        self.assertRaises(HTTPError, apply_patch, instance_data, patch_list)
+
+    def test_get_value(self):
+        item = {"op": "replace", "path": "", "value": "test:123"}
+        expected = "test:123"
+        result = _get_value(item)
+        self.assertEqual(result, expected)
+
+    def test_get_value_raises_400(self):
+        item = {"op": "replace", "path": ""}
+        self.assertRaises(HTTPError, _get_value, item)
+
+    def test_get_operation_and_predicate(self):
+        item = {"op": "replace", "path": "test:path", "value": "test:123"}
+        expected = ("replace", "test:path")
+        result = _get_operation_and_predicate(item)
+        self.assertEqual(result, expected)
+
+    def test_get_operation_and_predicate_raises_400(self):
+        item = {"missing_keys_op_path": 123, "value": "test:123"}
+        self.assertRaises(HTTPError, _get_operation_and_predicate, item)
+
+    def test_get_instance_data_from_patch_list(self):
+        patch_list = [
+            {"op": "replace", "path": "test:mother", "value": "test:mother_123"},
+            {"op": "add", "path": "test:age", "value": 26}]
+        expected = {
+            "test:mother": "test:mother_123",
+            "test:age": 26
+        }
+        result = get_instance_data_from_patch_list(patch_list)
+        self.assertEqual(result, expected)
