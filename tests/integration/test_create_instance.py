@@ -1,6 +1,5 @@
 import json
 from mock import patch
-from brainiak.instance import create_instance
 from brainiak.instance.get_instance import QUERY_ALL_PROPERTIES_AND_OBJECTS_TEMPLATE
 from brainiak.schema import get_class as schema_resource
 from tests.tornado_cases import TornadoAsyncHTTPTestCase
@@ -178,7 +177,7 @@ class CreateInstanceTestCaseWithoutMocks(TornadoAsyncHTTPTestCase, QueryTestCase
             u'http://on.to/isHuman': True,
             u'http://on.to/name': u'Rubens Azambuja',
             u'http://on.to/age': 40,
-            u'rdfs:type': "http://on.to/Person"
+            u'rdf:type': "http://on.to/Person"
         }
 
         response = self.fetch(url, method='PUT', body=json.dumps(data))
@@ -203,11 +202,11 @@ class CreateInstanceTestCaseWithoutMocks(TornadoAsyncHTTPTestCase, QueryTestCase
             u'http://on.to/isHuman': True,
             u'http://on.to/name': u'Rubens Azambuja',
             u'http://on.to/age': 40,
-            u'rdfs:type': "http://on.to/Manager"
+            u'rdf:type': "http://on.to/Manager"
         }
 
         response = self.fetch(url, method='PUT', body=json.dumps(data))
         self.assertEqual(response.code, 400)
         computed = json.loads(response.body)
-        expected = {"errors": ["HTTP error: 400\nIncompatible values for rdfs:type <http://on.to/Manager> and class URI <http://on.to/Person>"]}
+        expected = {"errors": ["HTTP error: 400\nIncompatible values for rdf:type <http://on.to/Manager> and class URI <http://on.to/Person>"]}
         self.assertEqual(computed, expected)
