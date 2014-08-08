@@ -45,7 +45,8 @@ from brainiak.utils.cache import memoize, build_instance_key
 from brainiak.utils.i18n import _
 from brainiak.utils.json import validate_json_schema, get_json_request_as_dict
 from brainiak.utils.links import build_schema_url_for_instance, content_type_profile, build_schema_url, build_class_url
-from brainiak.utils.params import CLASS_PARAMS, InvalidParam, LIST_PARAMS, GRAPH_PARAMS, INSTANCE_PARAMS, PAGING_PARAMS, DEFAULT_PARAMS, SEARCH_PARAMS, RequiredParamMissing, DefaultParamsDict, ParamDict, CLIENT_ID_HEADER
+from brainiak.utils.params import CLASS_PARAMS, InvalidParam, LIST_PARAMS, GRAPH_PARAMS, INSTANCE_PARAMS, PAGING_PARAMS, \
+    DEFAULT_PARAMS, SEARCH_PARAMS, RequiredParamMissing, DefaultParamsDict, ParamDict, CLIENT_ID_HEADER
 from brainiak.utils.params import QueryExecutionParamDict
 from brainiak.utils.resources import check_messages_when_port_is_mentioned, LazyObject, build_resource_url
 from brainiak.utils.sparql import extract_po_tuples, clean_up_reserved_attributes, InstanceError, is_rdf_type_invalid
@@ -671,6 +672,8 @@ class InstanceHandler(BrainiakRequestHandler):
 
     def finalize(self, response):
         # FIXME: handle uniformly cache policy
+        # Meanwhile we do not have a consitent external cache handling policy
+        # this avoids a client (such as chrome browser) caching a resource for ever
         self.set_header("Cache-control", "private")
         self.set_header("max-age", "0")
 
