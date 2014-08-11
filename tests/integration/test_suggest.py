@@ -90,9 +90,9 @@ class SuggestIntegrationTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
     def test_successful_request_with_non_default_field(self, mocked_uri_to_slug, mock_safe_slug_to_prefix):
         params = {
             'search': {
-            'pattern': 'foss',
-            'target': 'http://example.onto/birthPlace',
-            'fields': ["http://example.onto/description"]
+                'pattern': 'york',
+                'target': 'http://example.onto/birthPlace',
+                'fields': ["http://example.onto/description"]
             }
         }
         expected_items = [
@@ -493,25 +493,3 @@ class SuggestIntegrationElasticSearchComplexQueriesTestCase(ElasticSearchQueryTe
         self.assertEqual(response["hits"]["total"], 11)
         self.assertEqual(response["hits"]["hits"][0]["_id"], u"http://sports.onto/Team/123")
         self.assertEqual(response["hits"]["hits"][0]["fields"]["title"], u"Flamengo")
-
-
-#class SuggestIntegrationElasticSearchDevQueryTestCase(ElasticSearchQueryTestCase):
-#    # ElasticSearch 0.90.5
-#    host = "http://esearch.dev.globoi.com/"
-#    analyzer = "globo_analyzer"
-#    index = "semantica.esportes"
-
-#    def test_flame_returns_flamengo(self):
-#        query_params = {"page": "0"}
-#        classes = ["http://semantica.globo.com/esportes/Equipe"]
-#        search_fields = ["http://www.w3.org/2000/01/rdf-schema#label", "http://semantica.globo.com/upper/name"]
-#        response_fields = [
-#            "http://semantica.globo.com/esportes/esta_na_edicao_do_campeonato",
-#            "http://semantica.globo.com/base/localizacao",
-#            "http://semantica.globo.com/esportes/sigla"
-#        ]
-#        pattern = "Flam"
-#        tokens = self.tokenize(pattern, self.analyzer)["tokens"]
-#        query = _build_body_query_compatible_with_uatu_and_es_19_in_envs(query_params, tokens, classes, search_fields, response_fields, pattern)
-#        response = self.search(query)
-#        self.assertTrue(response["hits"]["total"])
