@@ -920,7 +920,8 @@ class StoredQueryExecutionHandler(BrainiakRequestHandler):
 class UnmatchedHandler(BrainiakRequestHandler):
 
     def default_action(self):
-        raise HTTPError(404, log_message=_(u"The URL ({0}) is not recognized.").format(self.request.full_url()))
+        raise HTTPError(404,
+                        log_message=_(u"The URL ({0}) is not recognized.").format(self.request.full_url()))
 
     @greenlet_asynchronous
     def get(self):
