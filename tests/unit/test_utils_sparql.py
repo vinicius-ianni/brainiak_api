@@ -1144,3 +1144,30 @@ class RdfsLabelValidationTestCase(TestCase):
             u"a:property": "a value"
         }
         self.assertFalse(are_there_label_properties_in(instance_data))
+
+
+class RdfTypeValidationTestCase(TestCase):
+
+    def test_is_rdf_type_valid(self):
+        query_params = {
+            "class_uri": "http://on.to/Animal"
+        }
+
+        instance_data = {
+            "http://www.w3.org/2000/01/rdf-schema#type": "http://on.to/Animal"
+        }
+
+        result = is_rdf_type_invalid(query_params, instance_data)
+        self.assertFalse(result)
+
+    def test_is_rdf_type_valid_returns_error_message(self):
+        query_params = {
+            "class_uri": "http://on.to/Animal"
+        }
+
+        instance_data = {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://on.to/AnotherClass"
+        }
+
+        result = is_rdf_type_invalid(query_params, instance_data)
+        self.assertIn("Incompatible values for rdf:type", result)

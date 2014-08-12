@@ -119,7 +119,7 @@ Each item has several parameters:
 
 ``title`` string that represents the instance label (``rdfs:label``)
 
-``@type`` class from which the item was instantiated (``rdfs:type``)
+``@type`` class from which the item was instantiated (``rdf:type``)
 
 ``type_title`` label (``rdfs:label``) associated to the instance's class
 

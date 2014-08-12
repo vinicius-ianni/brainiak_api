@@ -25,7 +25,7 @@ from brainiak.instance.create_instance import create_instance
 from brainiak.instance.delete_instance import delete_instance
 from brainiak.instance.edit_instance import edit_instance, instance_exists
 from brainiak.instance.get_instance import get_instance
-from brainiak.instance.patch_instance import apply_patch
+from brainiak.instance.patch_instance import apply_patch, get_instance_data_from_patch_list
 from brainiak.prefixes import normalize_all_uris_recursively, list_prefixes, SHORTEN
 from brainiak.root.get_root import list_all_contexts
 from brainiak.root.json_schema import schema as root_schema
@@ -49,7 +49,7 @@ from brainiak.utils.params import CLASS_PARAMS, InvalidParam, LIST_PARAMS, GRAPH
     DEFAULT_PARAMS, SEARCH_PARAMS, RequiredParamMissing, DefaultParamsDict, ParamDict, CLIENT_ID_HEADER
 from brainiak.utils.params import QueryExecutionParamDict
 from brainiak.utils.resources import check_messages_when_port_is_mentioned, LazyObject, build_resource_url
-from brainiak.utils.sparql import extract_po_tuples, clean_up_reserved_attributes, InstanceError
+from brainiak.utils.sparql import extract_po_tuples, clean_up_reserved_attributes, InstanceError, is_rdf_type_invalid
 
 
 logger = LazyObject(get_logger)
@@ -549,24 +549,41 @@ class InstanceHandler(BrainiakRequestHandler):
                                 get_instance,
                                 key=build_instance_key(self.query_params),
                                 function_arguments=self.query_params)
-        try:
+
+        if instance_data is not None:
+            # Editing an instance
             instance_data = instance_data['body']
-        except TypeError:
-            raise HTTPError(404, log_message=_("Inexistent instance"))
+            instance_data.pop('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', None)
 
-        instance_data.pop('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', None)
+            # compute patch
+            changed_data = apply_patch(instance_data, patch_list)
 
-        # compute patch
-        changed_data = apply_patch(instance_data, patch_list)
+            # Try to put
+            edit_instance(self.query_params, changed_data)
+            status = 200
 
-        # Try to put
-        edit_instance(self.query_params, changed_data)
-        status = 200
+            # Clear cache
+            cache.purge_an_instance(self.query_params['instance_uri'])
 
-        # Clear cache
-        cache.purge_an_instance(self.query_params['instance_uri'])
+            self.finalize(status)
+        else:
+            # Creating a new instance from patch list
+            instance_data = get_instance_data_from_patch_list(patch_list)
+            instance_data = normalize_all_uris_recursively(instance_data)
 
-        self.finalize(status)
+            rdf_type_error = is_rdf_type_invalid(self.query_params, instance_data)
+            if rdf_type_error:
+                raise HTTPError(400, log_message=rdf_type_error)
+
+            instance_uri, instance_id = create_instance(self.query_params,
+                                                        instance_data,
+                                                        self.query_params["instance_uri"])
+            resource_url = self.request.full_url()
+            status = 201
+            self.set_header("location", resource_url)
+            self.set_header("X-Brainiak-Resource-URI", instance_uri)
+
+            self.finalize(status)
 
     @greenlet_asynchronous
     def put(self, context_name, class_name, instance_id):
@@ -588,17 +605,9 @@ class InstanceHandler(BrainiakRequestHandler):
 
         instance_data = normalize_all_uris_recursively(instance_data)
 
-        RDFS_TYPE = "http://www.w3.org/2000/01/rdf-schema#type"
-        rdfs_type = instance_data.get(RDFS_TYPE)
-
-        if rdfs_type:
-            class_uri = self.query_params["class_uri"]
-            if (rdfs_type == class_uri):
-                instance_data.pop(RDFS_TYPE)
-            else:
-                msg = u"Incompatible values for rdfs:type <{0}> and class URI <{1}>"
-                msg = msg.format(rdfs_type, class_uri)
-                raise HTTPError(400, log_message=msg)
+        rdf_type_error = is_rdf_type_invalid(self.query_params, instance_data)
+        if rdf_type_error:
+            raise HTTPError(400, log_message=rdf_type_error)
 
         try:
             if not instance_exists(self.query_params):
@@ -911,7 +920,8 @@ class StoredQueryExecutionHandler(BrainiakRequestHandler):
 class UnmatchedHandler(BrainiakRequestHandler):
 
     def default_action(self):
-        raise HTTPError(404, log_message=_(u"The URL ({0}) is not recognized.").format(self.request.full_url()))
+        raise HTTPError(404,
+                        log_message=_(u"The URL ({0}) is not recognized.").format(self.request.full_url()))
 
     @greenlet_asynchronous
     def get(self):
