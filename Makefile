@@ -65,7 +65,7 @@ run: check_services
 gunicorn:
 	@echo "Running with gunicorn..."
 	@pip install gunicorn
-	PYTHONPATH="$(NEW_PYTHONPATH)" gunicorn -k egg:gunicorn#tornado brainiak.server:application -w 10
+	PYTHONPATH="$(NEW_PYTHONPATH)" gunicorn -k tornado brainiak.server:application -w 10
 
 nginx:
 	sudo nginx -c $(HOME_BRAINIAK)/config/local/nginx.conf # run on 0.0.0.0:80
