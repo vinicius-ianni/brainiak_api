@@ -76,9 +76,8 @@ def get_instance_data_from_patch_list(patch_list):
     instance_data = {}
     for item in patch_list:
         operation, predicate = _get_operation_and_predicate(item)
-        value = _get_value(item)
-
         if operation in ("replace", "add"):
+            value = _get_value(item)
             instance_data[predicate] = value
 
     return instance_data
