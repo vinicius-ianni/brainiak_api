@@ -134,8 +134,8 @@ class ParamDict(dict):
 
         # preserve the specified optional parameters
         self.optionals = copy(kw)
-
-        self.base_url = "{0}://{1}{2}".format(request.protocol, request.host, normalize_last_slash(request.path))
+        protocol = request.headers.get("X-Forwarded-Proto", "http")
+        self.base_url = "{0}://{1}{2}".format(protocol, request.host, normalize_last_slash(request.path))
         self.resource_url = self.base_url + "{resource_id}"
 
         # Set params with value None first, just to mark them as valid parameters
