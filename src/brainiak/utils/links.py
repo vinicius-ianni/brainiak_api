@@ -194,8 +194,9 @@ def build_relative_class_url(query_params, include_query_string=False):
 
 
 def build_class_url(query_params, include_query_string=False):
+    protocol = query_params.request.headers.get("X-Forwarded-Proto", "http")
     class_url = u"{0}://{1}/{2}/{3}".format(
-        query_params.request.protocol,
+        protocol,
         query_params.request.host,
         query_params.get('context_name', ''),
         query_params.get('class_name', ''))

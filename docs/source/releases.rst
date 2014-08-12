@@ -3,11 +3,19 @@ Releases
 
 Version 2.7.4 - 2014/08/XX
 --------------------------
+
+Fixes, Improvements
+___________________
+
 - Changes when patching an instance (see :doc:`/services/instance/patch_instance`)
     - Operation ``delete`` is now safe in PATCH (i.e. if key does not exist, there is no error)
     - Patching an unexistent instance will now create it using add/replace patches.
       It works like ``PUT``, Brainiak will not create the URI.
     - There is now a validation for expected parameters in ``op`` values, only ``add``, ``replace``, and ``remove`` are accepted
+
+- handling of https respecting X-Forwarded-For header
+
+
 
 Version 2.7.3 - 2014/08/05
 --------------------------
