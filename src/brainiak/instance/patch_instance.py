@@ -3,7 +3,9 @@ from tornado.web import HTTPError
 from brainiak.prefixes import normalize_uri, EXPAND
 
 
-error_msg = u"Incorrect patch item. Every object in the list must contain the following keys: {}"
+MISSING_REQUIRED_PATCH_KEY = u"Incorrect patch item. Every object in the list must contain the following keys: [op, path]"
+MISSING_VALUE_KEY = u"Objects in 'replace' or 'add' operations must have a 'value' entry"
+UNSUPPORTED_OPERATION = u"Unsupported value in 'op': Supported operations are [add, replace, remove]"
 
 
 def apply_patch(instance_data, patch_list):
@@ -44,13 +46,8 @@ def apply_patch(instance_data, patch_list):
     original_data = instance_data.copy()
     patch_data = {}
     for item in patch_list:
-        try:
-            operation = item['op']
-            predicate = item['path']
-        except KeyError:
-            raise HTTPError(400, log_message=error_msg.format(['op', 'path']))
-        else:
-            predicate = normalize_uri(predicate, EXPAND)
+        operation, predicate = _get_operation_and_predicate(item)
+        predicate = normalize_uri(predicate, EXPAND)
 
         if operation == 'replace':
             value = item['value']
@@ -67,7 +64,36 @@ def apply_patch(instance_data, patch_list):
 
             values.extend(new_values)
             patch_data[predicate] = sorted(list(set(values)))
+        else:
+            raise HTTPError(400, log_message=UNSUPPORTED_OPERATION)
 
     patch_data = patch_data
     changed_data = dict(original_data, **patch_data)
     return changed_data
+
+
+def get_instance_data_from_patch_list(patch_list):
+    instance_data = {}
+    for item in patch_list:
+        operation, predicate = _get_operation_and_predicate(item)
+        if operation in ("replace", "add"):
+            value = _get_value(item)
+            instance_data[predicate] = value
+
+    return instance_data
+
+
+def _get_operation_and_predicate(item):
+    try:
+        operation = item['op']
+        predicate = item['path']
+    except KeyError:
+        raise HTTPError(400, log_message=MISSING_REQUIRED_PATCH_KEY)
+    return operation, predicate
+
+
+def _get_value(item):
+    value = item.get("value", None)
+    if value is None:
+        raise HTTPError(400, log_message=MISSING_VALUE_KEY)
+    return value

@@ -28,6 +28,8 @@ XML_LITERAL = u'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral'
 
 RDFS_LABEL = u'http://www.w3.org/2000/01/rdf-schema#label'
 
+RDF_TYPE = u"http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+
 IGNORED_DATATYPES = [XML_LITERAL, XSD_STRING]
 
 
@@ -790,3 +792,17 @@ def find_graph_and_class_from_instance(instance_uri):
         class_uri = None
 
     return graph_uri, class_uri
+
+
+def is_rdf_type_invalid(query_params, instance_data):
+    rdf_type = instance_data.get(RDF_TYPE)
+
+    if rdf_type:
+        class_uri = query_params["class_uri"]
+        if (rdf_type == class_uri):
+            instance_data.pop(RDF_TYPE)
+        else:
+            msg = u"Incompatible values for rdf:type <{0}> and class URI <{1}>"
+            msg = msg.format(rdf_type, class_uri)
+            return msg
+    return None

@@ -329,14 +329,10 @@ class BuildClassUrlTestCase(unittest.TestCase):
 
     def test_build_class_url_without_querystring(self):
 
-        class MockRequest(object):
-            protocol = "https"
-            host = "dot.net"
-
         query_params = UserDict(
             context_name="place",
             class_name="City")
-        query_params.request = MockRequest()
+        query_params.request = Mock(protocol="https", host="dot.net", headers={'X-Forwarded-Proto': 'https'})
 
         computed = build_class_url(query_params)
         expected = "https://dot.net/place/City"
@@ -344,15 +340,13 @@ class BuildClassUrlTestCase(unittest.TestCase):
 
     def test_build_class_url_with_querystring(self):
 
-        class MockRequest(object):
-            protocol = "https"
-            host = "dot.net"
-            query = "?instance_uri=ignore_me&class_prefix=include_me"
-
         query_params = UserDict(
             context_name="place",
             class_name="City")
-        query_params.request = MockRequest()
+        query_params.request = Mock(protocol="https",
+                                    host="dot.net",
+                                    query="?instance_uri=ignore_me&class_prefix=include_me",
+                                    headers={'X-Forwarded-Proto': 'https'})
 
         computed = build_class_url(query_params, include_query_string=True)
         expected = "https://dot.net/place/City?class_prefix=include_me"
@@ -360,16 +354,15 @@ class BuildClassUrlTestCase(unittest.TestCase):
 
     def test_build_schema_url(self):
 
-        class MockRequest(object):
-            protocol = "https"
-            host = "dot.net"
-            query = "?instance_uri=ignore_me&class_prefix=include_me"
-
         query_params = UserDict(
             expand_uri=0,
             context_name="place",
             class_name="City")
-        query_params.request = MockRequest()
+
+        query_params.request = Mock(protocol="https",
+                                    host="dot.net",
+                                    query="?instance_uri=ignore_me&class_prefix=include_me",
+                                    headers={'X-Forwarded-Proto': 'https'})
 
         class_url = build_class_url(query_params)
         computed = build_schema_url_for_instance(query_params, class_url)
@@ -378,16 +371,15 @@ class BuildClassUrlTestCase(unittest.TestCase):
 
     def test_build_schema_url_with_class_uri(self):
 
-        class MockRequest(object):
-            protocol = "https"
-            host = "dot.net"
-            query = "?instance_uri=ignore_me"
-
         query_params = UserDict(
             context_name="place",
             class_uri="place:City",
             class_name="_")
-        query_params.request = MockRequest()
+
+        query_params.request = Mock(protocol="https",
+                                    host="dot.net",
+                                    query="?instance_uri=ignore_me",
+                                    headers={'X-Forwarded-Proto': 'https'})
 
         class_url = build_class_url(query_params)
         computed = build_schema_url_for_instance(query_params, class_url)
@@ -396,17 +388,16 @@ class BuildClassUrlTestCase(unittest.TestCase):
 
     def test_build_schema_url_with_graph_uri_and_class_uri(self):
 
-        class MockRequest(object):
-            protocol = "https"
-            host = "dot.net"
-            query = "?instance_uri=ignore_me"
-
         query_params = UserDict(
             context_name="_",
             graph_uri="place",
             class_uri="place:City",
             class_name="_")
-        query_params.request = MockRequest()
+
+        query_params.request = Mock(protocol="https",
+                                    host="dot.net",
+                                    query="?instance_uri=ignore_me",
+                                    headers={'X-Forwarded-Proto': 'https'})
 
         class_url = build_class_url(query_params)
         computed = build_schema_url_for_instance(query_params, class_url)
