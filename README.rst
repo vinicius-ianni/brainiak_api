@@ -3,11 +3,14 @@ Brainiak
 
 Brainiak is a Linked Data RESTful API to provide transparent access to SPARQL endpoints.
 
-This project was created by `Globo.com <http://globo.com/>`_'s engineers to enhace its semantic platform.
+This project was created by `Globo.com <http://globo.com/>`_'s engineers to its semantic platform.
 
 We are releasing this as an open-source project in order to give something back to the software community.
 
-Learn more about Brainiak at `this slideshare presentation <http://www.slideshare.net/semantic_team/semantic-day-2013-linked-data-at-globocom>`_.
+Learn more about Brainiak in our recent presentations
+
+- `Linked Data at Globo.com @ WoLE workshop (WWW 2013) <http://www.slideshare.net/icaromedeiros/linked-data-at-globocom>`_.
+- `Semantic Day @ Globo.com <http://www.slideshare.net/semantic_team/semantic-day-2013-linked-data-at-globocom>`_.
 
 
 DISCLAIMER
@@ -17,11 +20,15 @@ The project is released as it is.
 This means you might have to tweak it, in order to meet your purpose.
 People can contribute to turn this project more adoption-friendly outside its original context of creation and use.
 
-For this purpose, use the forum https://groups.google.com/forum/#!forum/brainiak_api_users to discuss ideas and ask questions.
+For this purpose, use the forum https://groups.google.com/forum/#!forum/brainiak_api_users to 
+discuss ideas and ask questions.
 
-We use the twitter `@brainiak_api <https://twitter.com/brainiak_api>`_'s to broadcast information about the project and related subjects.
+We use the twitter `@brainiak_api <https://twitter.com/brainiak_api>`_'s to broadcast information 
+about the project and related subjects.
 
 And we also have a facebook page at https://www.facebook.com/brainiakapi .
+
+The team email semantica@corp.globo.com is also available for contact.
 
 Motivation
 ==========
