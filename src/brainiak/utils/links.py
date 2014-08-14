@@ -40,7 +40,7 @@ def assemble_url(url="", params={}):
 
 
 # TODO: refactor and add to a method similar to utils.params.args
-def filter_query_string_by_key_prefix(query_string, include_prefixes=[], query_params={}):
+def _filter_query_string_by_key_prefix(query_string, include_prefixes=[], query_params={}):
     query_string_dict = parse_qs(query_string)
     relevant_params = {}
     for key, value in query_string_dict.items():
@@ -188,7 +188,7 @@ def build_relative_class_url(query_params, include_query_string=False):
         query_params.get('context_name', '_'),
         query_params.get('class_name', '_'))
     if include_query_string:
-        query_string = filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"])
+        query_string = _filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"])
         class_url = assemble_url(class_url, query_string)
     return class_url
 
@@ -201,19 +201,19 @@ def build_class_url(query_params, include_query_string=False):
         query_params.get('context_name', ''),
         query_params.get('class_name', ''))
     if include_query_string:
-        query_string = filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"])
+        query_string = _filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"])
         class_url = assemble_url(class_url, query_string)
     return class_url
 
 
 def build_schema_url(query_params, propagate_params=False):
     base_url = remove_last_slash(query_params.base_url)
-    query_string = filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"], query_params)
+    query_string = _filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"], query_params)
     return assemble_schema_url(u'{0}/_schema_list', base_url, propagate_params, query_params, query_string)
 
 
 def build_schema_url_for_instance(query_params, class_url, propagate_params=True):
-    query_string = filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"], query_params)
+    query_string = _filter_query_string_by_key_prefix(query_params.request.query, ["class", "graph"], query_params)
     return assemble_schema_url(u'{0}/_schema', class_url, propagate_params, query_params, query_string)
 
 

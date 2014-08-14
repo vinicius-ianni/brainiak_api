@@ -8,7 +8,7 @@ from contextlib import contextmanager
 from tornado.web import HTTPError
 
 from brainiak import settings
-from brainiak.prefixes import expand_uri, safe_slug_to_prefix, extract_prefix
+from brainiak.prefixes import expand_uri, safe_slug_to_prefix, extract_prefix, _MAP_PREFIX_TO_SLUG
 from brainiak.utils.i18n import _
 from brainiak.utils.sparql import PATTERN_O, PATTERN_P, find_graph_from_class, find_graph_and_class_from_instance
 from brainiak.utils.config_parser import ConfigParserNoSectionError, parse_section
@@ -199,7 +199,7 @@ class ParamDict(dict):
             with safe_split():
                 if graph_uri_value and _key_is_undefined('context_name'):
                     # FIXME: the code below should disappear after #10602 - Normalização no tratamento de parâmetros no Brainiak
-                    context_name_value = graph_uri_value.split("/")[-2]
+                    context_name_value = _MAP_PREFIX_TO_SLUG.get(graph_uri_value, '_')
                     dict.__setitem__(self, 'context_name', context_name_value)
 
         elif key == 'class_uri':
@@ -250,7 +250,6 @@ class ParamDict(dict):
         else:
             dict.__setitem__(self, key, value)
 
-    # FIXME: test
     def _set_if_optional(self, key, value):
         if (key in self.optionals) and (value is not None):
             self[key] = value
@@ -305,7 +304,7 @@ class ParamDict(dict):
         if "sort_order" in self.arguments:
             self["sort_order"] = self["sort_order"].upper()
 
-        # expand underscores from given information through queries
+        # expand underscores in path variables from _uri given params
         if self.get("instance_uri", '_') != '_' and (self.get("graph_uri") == '_' or self.get("class_uri") == '_/_'):
             candidate_graph_uri, candidate_class_uri = find_graph_and_class_from_instance(self["instance_uri"])
             if candidate_graph_uri and candidate_class_uri:

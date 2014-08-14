@@ -27,4 +27,5 @@ class ParamsResolvingUnderscoresTestCase(TornadoAsyncHTTPTestCase, QueryTestCase
         self.assertEqual(response['graph_uri'], 'http://dbpedia.org/ontology/')
         self.assertEqual(response['class_name'], 'Sport')
         self.assertEqual(response['class_uri'], 'http://dbpedia.org/ontology/Sport')
-        self.assertEqual(response['context_name'], 'ontology')
+        # when the graph_uri is not registered in prefixes.py then context_name should be '_'
+        self.assertEqual(response['context_name'], 'dbpedia')
