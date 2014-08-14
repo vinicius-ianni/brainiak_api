@@ -1,7 +1,7 @@
 Releases
 ========
 
-Version 2.7.4 - 2014/08/XX
+Version 2.7.4 - 2014/08/14
 --------------------------
 
 Fixes, Improvements
@@ -15,6 +15,7 @@ ___________________
 
 - handling of https respecting X-Forwarded-For header
 
+- Fixes several hyperlinks when passing *_uri arguments and omitting slugs with '_'
 
 
 Version 2.7.3 - 2014/08/05
