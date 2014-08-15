@@ -5,6 +5,10 @@ install:
 	@pip install -r requirements_doc.txt
 
 run: html
+	@echo "Building and opening HTML on your default browser..."
+	open build/html/index.html
+
+open:
 	@echo "Opening HTML on your default browser..."
 	open build/html/index.html
 

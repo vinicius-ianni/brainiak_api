@@ -15,7 +15,7 @@ ___________________
 
 - handling of https respecting X-Forwarded-For header
 
-- Fixes several hyperlinks when passing *_uri arguments and omitting slugs with '_'
+- Fixes several hyperlinks when passing `_uri` arguments and omitting slugs with '_'
 
 
 Version 2.7.3 - 2014/08/05
