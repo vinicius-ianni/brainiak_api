@@ -12,44 +12,22 @@ Learn more about Brainiak in our recent presentations
 - `Linked Data at Globo.com @ WoLE workshop (WWW 2013) <http://www.slideshare.net/icaromedeiros/linked-data-at-globocom>`_.
 - `Semantic Day @ Globo.com <http://www.slideshare.net/semantic_team/semantic-day-2013-linked-data-at-globocom>`_.
 
+Documentation
+=============
 
-DISCLAIMER
-==========
-
-The project is released as it is.
-This means you might have to tweak it, in order to meet your purpose.
-People can contribute to turn this project more adoption-friendly outside its original context of creation and use.
-
-For this purpose, use the forum https://groups.google.com/forum/#!forum/brainiak_api_users to 
-discuss ideas and ask questions.
-
-We use the twitter `@brainiak_api <https://twitter.com/brainiak_api>`_'s to broadcast information 
-about the project and related subjects.
-
-And we also have a facebook page at https://www.facebook.com/brainiakapi .
-
-The team email semantica@corp.globo.com is also available for contact.
+Brainiak full documentation can be found in http://brainiak.readthedocs.org
 
 Motivation
 ==========
 
 The following topics motivated the development of Brainiak:
 
+
 * Lower the barrier to use semantic technlogies
 * Encapsulate the access to triple stores compatible with RDF/TURTLE and SPARQL (e.g. `OpenLink Virtuoso <http://virtuoso.openlinksw.com/>`_, `Sesame <http://www.aduna-software.com/technology/sesame>`_, `AllegroGraph <http://www.franz.com/agraph/allegrograph/>`_, `Ontotext OWLIM <http://www.ontotext.com/owlim>`_)
 * Enhance data management to triple stores
 * Provide a unique and coherent interface to other database backends, including non triple stores (e.g.: `ElasticSearch <http://www.elasticsearch.org/>`_).
 
-Documentation
-=============
-
-Internally at Globo.com, the docs are available at http://brainiak.semantica.globoi.com/docs/
-
-The documentation source is available at `brainiak_api/docs` directory.
-It was developed using `Sphinx <http://sphinx-doc.org/>`_ and
-`Program output plugin <https://pythonhosted.org/sphinxcontrib-programoutput/>`_.
-
-The documentation build is also temporarily available at `brainiak_api/docs`.
 
 Running
 =======
@@ -126,6 +104,24 @@ To run all tests, and check how much of the code is covered with tests: ::
 
 We expect contributions to have related tests, so we can keep up test code
 coverage to more than 90%.
+
+DISCLAIMER
+==========
+
+The project is released as it is.
+This means you might have to tweak it, in order to meet your purpose.
+People can contribute to turn this project more adoption-friendly outside its original context of creation and use.
+
+For this purpose, use the forum https://groups.google.com/forum/#!forum/brainiak_api_users to 
+discuss ideas and ask questions.
+
+We use the twitter `@brainiak_api <https://twitter.com/brainiak_api>`_'s to broadcast information 
+about the project and related subjects.
+
+And we also have a facebook page at https://www.facebook.com/brainiakapi .
+
+The team email semantica@corp.globo.com is also available for contact.
+
 
 License
 =======
