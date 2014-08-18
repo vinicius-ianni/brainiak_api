@@ -889,6 +889,8 @@ class StoredQueryCRUDHandler(BrainiakRequestHandler):
 
 class StoredQueryExecutionHandler(BrainiakRequestHandler):
 
+    DEFAULT_TIME_TO_LIVE = 60 * 5  # In seconds (5 minutes)
+
     @greenlet_asynchronous
     def get(self, query_id):
         stored_query = get_stored_query(query_id)
@@ -902,8 +904,9 @@ class StoredQueryExecutionHandler(BrainiakRequestHandler):
         with safe_params(valid_params):
             self.query_params = QueryExecutionParamDict(self)
             response = execute_query(query_id, stored_query, self.query_params)
+            time_to_live = stored_query.get("time_to_live", None) or self.DEFAULT_TIME_TO_LIVE
 
-        return self.finalize_with_cache(response, 120)
+        return self.finalize_with_cache(response, time_to_live)
 
 
 class UnmatchedHandler(BrainiakRequestHandler):
