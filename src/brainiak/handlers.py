@@ -37,7 +37,7 @@ from brainiak.search.json_schema import schema as search_schema
 from brainiak.stored_query.collection import get_stored_queries
 from brainiak.stored_query.crud import store_query, get_stored_query, delete_stored_query, validate_headers
 from brainiak.stored_query.execution import execute_query
-from brainiak.stored_query.json_schema import query_crud_schema
+from brainiak.stored_query.json_schema import stored_query_crud_schema
 from brainiak.suggest.json_schema import SUGGEST_PARAM_SCHEMA
 from brainiak.suggest.suggest import do_suggest
 from brainiak.utils import cache
@@ -854,7 +854,7 @@ class StoredQueryCRUDHandler(BrainiakRequestHandler):
         client_id_dict = {"client_id": client_id}
 
         json_payload_object = get_json_request_as_dict(self.request.body)
-        validate_json_schema(json_payload_object, query_crud_schema)
+        validate_json_schema(json_payload_object, stored_query_crud_schema)
         json_payload_object.update(client_id_dict)
 
         # TODO return instance data when editing it?
