@@ -214,7 +214,7 @@ class BrainiakRequestHandler(CorsMixin, RequestHandler):
         # self.finish() -- this is automagically called by greenlet_asynchronous
 
     def finalize_with_cache(self, response, max_age):
-        self.set_header("max-age", str(max_age))
+        self.set_header("Cache-control", "max-age={0}".format(str(max_age)))
 
         self.finalize(response)
 
