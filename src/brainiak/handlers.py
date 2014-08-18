@@ -409,11 +409,7 @@ class CollectionHandler(BrainiakRequestHandler):
             graph_uri = self.query_params["graph_uri"]
             raise HTTPError(404, log_message=_(u"Class {0} doesn't exist in context {1}.").format(class_uri, graph_uri))
 
-        try:
-            instance_data = json.loads(self.request.body)
-        except ValueError:
-            raise HTTPError(400, log_message=_(u"No JSON object could be decoded"))
-
+        instance_data = get_json_request_as_dict(self.request.body)
         instance_data = normalize_all_uris_recursively(instance_data)
 
         try:
@@ -539,10 +535,7 @@ class InstanceHandler(BrainiakRequestHandler):
         del class_name
         del instance_id
 
-        try:
-            patch_list = json.loads(self.request.body)
-        except ValueError:
-            raise HTTPError(400, log_message=_("No JSON object could be decoded"))
+        patch_list = get_json_request_as_dict(self.request.body)
 
         # Retrieve original data
         instance_data = memoize(self.query_params,
@@ -598,11 +591,7 @@ class InstanceHandler(BrainiakRequestHandler):
         del class_name
         del instance_id
 
-        try:
-            instance_data = json.loads(self.request.body)
-        except ValueError:
-            raise HTTPError(400, log_message=_("No JSON object could be decoded"))
-
+        instance_data = get_json_request_as_dict(self.request.body)
         instance_data = normalize_all_uris_recursively(instance_data)
 
         rdf_type_error = is_rdf_type_invalid(self.query_params, instance_data)
@@ -703,12 +692,7 @@ class SuggestHandler(BrainiakRequestHandler):
         with safe_params(valid_params):
             self.query_params = ParamDict(self, **valid_params)
 
-            try:
-                raw_body_params = json.loads(self.request.body)
-            except ValueError:
-                error_message = _("JSON malformed. Received: {0}.")
-                raise HTTPError(400, log_message=error_message.format(self.request.body))
-
+            raw_body_params = get_json_request_as_dict(self.request.body)
             body_params = normalize_all_uris_recursively(raw_body_params)
             if '@context' in body_params:
                 del body_params['@context']
