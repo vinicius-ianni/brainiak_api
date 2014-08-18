@@ -60,7 +60,7 @@ class CreateInstanceTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
                               body="invalid input")
         self.assertEqual(response.code, 400)
         body = json.loads(response.body)
-        self.assertEquals(body["errors"], ['HTTP error: 400\nNo JSON object could be decoded'])
+        self.assertEquals(body["errors"], [u'HTTP error: 400\nJSON malformed. Received: invalid input'])
 
     @patch("brainiak.utils.i18n.settings", DEFAULT_LANG="en")
     @patch("brainiak.handlers.logger")

@@ -51,3 +51,6 @@ dump.rdb
 
 # Gedit
 *~
+
+# Docs
+docs/build

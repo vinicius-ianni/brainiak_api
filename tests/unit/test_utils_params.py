@@ -261,7 +261,8 @@ class ParamsTestCase(TestCase):
         handler = MockHandler()
         pd = ParamDict(handler, graph_uri='http://somedomain/someGraphName/')
         self.assertEquals(pd["graph_uri"], "http://somedomain/someGraphName/")
-        self.assertEquals(pd["context_name"], "someGraphName")
+        # when the graph_uri is not registered in prefixes.py then context_name should be '_'
+        self.assertEquals(pd["context_name"], "_")
 
     def test_class_name_from_class_uri(self):
         handler = MockHandler()
