@@ -175,7 +175,7 @@ class SuggestIntegrationTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
                               body="Invalid JSON")
         self.assertEqual(response.code, 400)
         json_received = json.loads(response.body)
-        expected_message = "JSON malformed. Received: Invalid JSON."
+        expected_message = "JSON malformed. Received: Invalid JSON"
         self.assertIn(expected_message, json_received['errors'][0])
 
     def test_suggest_without_required_param_target(self):
