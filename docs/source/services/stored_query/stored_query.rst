@@ -193,3 +193,45 @@ SPARQL uses ``LIMIT``/``OFFSET`` query modifiers for pagination.
 
 In Brainiak, we use ``page`` and ``per_page`` as reserved pagination parameters.
 We strongly recommend that variables in query templates **DO NOT USE** these reserved names.
+
+
+Caching
+-------
+
+Stored queries can be expensive and complex.
+Therefore, we implement a caching mechanism.
+
+Queries can explictly state their cache expiration for results, by using ``time_to_live`` parameter.
+
+*Example*:
+
+.. code-block:: bash
+
+  $ curl -s -X PUT 'http://brainiak.semantica.dev.globoi.com/_query/my_query_id' -T payload.json -H "X-Brainiak-Client-Id: my_client_id"
+
+Where payload has a ``time_to_live`` parameter (in seconds).
+
+.. code-block:: json
+
+  {
+    "sparql_template": "SELECT %(class_uri)s FROM %(graph_uri)s {%(class_uri)s a owl:Class}",
+    "description": "This query is so great, it does everything I need  and it is used in apps such and such"
+    "time_to_live": 100
+  }
+
+When executing this query:
+
+.. code-block:: bash
+
+  $ curl -i -s 'http://brainiak.semantica.dev.globoi.com/_query/my_query_id/_result'
+
+Response will include a ``Max-Age`` header, explictly stating for clients (proxy servers or end-users) that this result will be cached for 100 seconds, as requested in Stored Query creation.
+
+.. code-block:: http
+
+  HTTP/1.1 200 OK
+  Content-Length: 16036
+  Max-Age: 100
+  Date: Mon, 18 Aug 2014 19:37:32 GMT
+
+  {"response_json": 1}
