@@ -213,6 +213,12 @@ class BrainiakRequestHandler(CorsMixin, RequestHandler):
         self.write(response)
         # self.finish() -- this is automagically called by greenlet_asynchronous
 
+    def finalize_with_cache(self, response, max_age):
+        self.set_header("Cache-control", "private")
+        self.set_header("max-age", str(max_age))
+
+        self.finalize(response)
+
 
 class RootJsonSchemaHandler(BrainiakRequestHandler):
 
@@ -845,7 +851,7 @@ class StoredQueryCollectionHandler(BrainiakRequestHandler):
             self.query_params = ParamDict(self, **valid_params)
             response = get_stored_queries(self.query_params)
 
-        self.write(response)
+        self.finalize_with_cache(response, 120)
 
 
 class StoredQueryCRUDHandler(BrainiakRequestHandler):
@@ -857,7 +863,7 @@ class StoredQueryCRUDHandler(BrainiakRequestHandler):
     def get(self, query_id):
         stored_query = get_stored_query(query_id)
         if stored_query is not None:
-            self.finalize(stored_query)
+            self.finalize(stored_query, 120)
         else:
             not_found_message = _("The stored query with id '{0}' was not found").format(query_id)
             raise HTTPError(404,
@@ -885,10 +891,10 @@ class StoredQueryCRUDHandler(BrainiakRequestHandler):
         delete_stored_query(query_id, client_id)
         self.finalize(204)
 
-    def finalize(self, response):
+    def finalize(self, response, max_age=0):
         # FIXME: handle cache policy uniformly
         self.set_header("Cache-control", "private")
-        self.set_header("max-age", "0")
+        self.set_header("max-age", str(max_age))
 
         if isinstance(response, dict):
             self.write(response)
@@ -913,8 +919,7 @@ class StoredQueryExecutionHandler(BrainiakRequestHandler):
             self.query_params = QueryExecutionParamDict(self)
             response = execute_query(query_id, stored_query, self.query_params)
 
-        # return result
-        return self.finalize(response)
+        return self.finalize_with_cache(response, 120)
 
 
 class UnmatchedHandler(BrainiakRequestHandler):
