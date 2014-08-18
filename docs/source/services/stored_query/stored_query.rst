@@ -225,13 +225,13 @@ When executing this query:
 
   $ curl -i -s 'http://brainiak.semantica.dev.globoi.com/_query/my_query_id/_result'
 
-Response will include a ``Max-Age`` header, explicitly stating for clients (proxy servers or end-users) that this result will be cached for 100 seconds, as requested in Stored Query creation.
+Response will include a ``Cache-Control: max-age`` header, explicitly stating for clients (proxy servers or end-users) that this result will be cached for 100 seconds, as requested in Stored Query creation.
 
 .. code-block:: http
 
   HTTP/1.1 200 OK
   Content-Length: 16036
-  Max-Age: 100
+  Cache-Control: max-age=100
   Date: Mon, 18 Aug 2014 19:37:32 GMT
 
   {"response_json": 1}
