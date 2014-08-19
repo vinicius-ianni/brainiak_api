@@ -1,6 +1,15 @@
 Releases
 ========
 
+Version 2.7.5 - 2014/08/19
+--------------------------
+
+Fixes, Improvements
+___________________
+
+- Stored queries can now register a ``time_to_live`` parameter to help cache invalidation in proxy servers. See (:doc:`/services/stored_query/stored_query`)
+
+
 Version 2.7.4 - 2014/08/14
 --------------------------
 
