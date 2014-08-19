@@ -8,7 +8,7 @@ from mock import patch
 
 from brainiak.suggest.suggest import QUERY_PREDICATE_RANGES, \
     QUERY_SUBPROPERTIES, _build_class_fields_query, \
-    _build_body_query_compatible_with_uatu_and_es_19_in_envs
+    _build_body_query
 from brainiak.utils.sparql import filter_values
 from brainiak import settings
 
@@ -235,148 +235,6 @@ class SuggestIntegrationTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
         self.assertEqual(expected, meta_field_values)
 
 
-class SuggestIntegrationElasticSearchQueryTestCase(ElasticSearchQueryTestCase):
-
-    fixtures = [
-        {
-            "type": "person",
-            "id": "1",
-            "body": {
-                "name": "James",
-                "birthDate": "Saturday - 11/05/1974"
-            }
-        },
-        {
-            "type": "person",
-            "id": "2",
-            "body": {
-                "name": "James Bond",
-                "birthDate": "Thursday - 11/11/1920"
-            }
-        },
-        {
-            "type": "person",
-            "id": "3",
-            "body": {
-                "name": "Sherlock Holmes",
-                "birthDate": "Friday - 06/01/1854"
-            }
-        }
-    ]
-    timeout = 3
-    analyzer = "my_analyzer"
-    settings = {
-        "analysis": {
-            "analyzer": {
-                "my_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "standard",
-                    "char_filter": ["html_strip"]
-                }
-            }
-        }
-    }
-    mapping = {
-        "sample.test": {
-            "person": {
-                "properties": {
-                    "birthDate": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    }
-                }
-            }
-        }
-    }
-    index = "person.sample"
-
-    def query_by_pattern(self, pattern, fields):
-        query_params = {"page": "0"}
-        classes = ["person", "pet"]
-        search_fields = fields
-        response_fields = ["name", "birthDate"]
-
-        # TODO: rollback to the query below when ES 0.90.x is in all environments
-        #query = _build_body_query(query_params, search_params, classes, search_fields, response_fields, self.analyzer)
-
-        # TODO: when the step above is done, delete the two lines of code below:
-        tokens = self.tokenize(pattern, self.analyzer)["tokens"]
-        query = _build_body_query_compatible_with_uatu_and_es_19_in_envs(query_params, tokens, classes, search_fields, response_fields, pattern)
-        return query
-
-    def test_query_returns_two_results_with_substring_capitalize(self):
-        pattern = "Jam"
-        fields = ["name"]
-        query = self.query_by_pattern(pattern, fields)
-        response = self.search(query)
-        self.assertEqual(response["hits"]["total"], 2)
-        self.assertEqual(response["hits"]["hits"][0]["_id"], u"1")
-        self.assertEqual(response["hits"]["hits"][0]["fields"]["name"], u"James")
-        self.assertEqual(response["hits"]["hits"][1]["_id"], u"2")
-        self.assertEqual(response["hits"]["hits"][1]["fields"][u"name"], u"James Bond")
-
-    def test_query_returns_two_results_with_exact_match_first(self):
-        pattern = "james"
-        fields = ["name"]
-        query = self.query_by_pattern(pattern, fields)
-        response = self.search(query)
-
-        self.assertEqual(response["hits"]["total"], 2)
-        self.assertEqual(response["hits"]["hits"][0]["_id"], u"1")
-        self.assertEqual(response["hits"]["hits"][0]["fields"]["name"], u"James")
-        self.assertEqual(response["hits"]["hits"][1]["_id"], u"2")
-        self.assertEqual(response["hits"]["hits"][1]["fields"][u"name"], u"James Bond")
-
-    def test_query_returns_exact_match_without_substrings(self):
-        pattern = "james bond"
-        fields = ["name"]
-        query = self.query_by_pattern(pattern, fields)
-        response = self.search(query)
-        self.assertEqual(response["hits"]["total"], 1)
-        self.assertEqual(response["hits"]["hits"][0]["_id"], u"2")
-        self.assertEqual(response["hits"]["hits"][0]["fields"][u"name"], u"James Bond")
-
-    def test_query_returns_slash_number_values(self):
-        pattern = "friday"
-        fields = ["birthDate"]
-        query = self.query_by_pattern(pattern, fields)
-        response = self.search(query)
-        self.assertEqual(response["hits"]["total"], 1)
-        self.assertEqual(response["hits"]["hits"][0]["_id"], u"3")
-        self.assertEqual(response["hits"]["hits"][0]["fields"]["birthDate"], u"Friday - 06/01/1854")
-
-    def test_query_returns_values_from_two_fields(self):
-        pattern = "james"
-        fields = ["birthDate", "name"]
-        query = self.query_by_pattern(pattern, fields)
-        response = self.search(query)
-
-        self.assertEqual(response["hits"]["total"], 2)
-        self.assertEqual(response["hits"]["hits"][0]["_id"], u"1")
-        self.assertEqual(response["hits"]["hits"][0]["fields"]["birthDate"], u"Saturday - 11/05/1974")
-
-    def test_query_returns_search_result_for_date_queries(self):
-        pattern = "11/05/1974"
-        fields = ["birthDate"]
-        query = self.query_by_pattern(pattern, fields)
-        response = self.search(query)
-
-        self.assertEqual(response["hits"]["total"], 1)
-        self.assertEqual(response["hits"]["hits"][0]["_id"], u"1")
-        self.assertEqual(response["hits"]["hits"][0]["fields"]["birthDate"], u"Saturday - 11/05/1974")
-
-    def test_query_returns_search_result_for_full_field(self):
-        pattern = "Saturday - 11/05/1974"
-        fields = ["birthDate"]
-        query = self.query_by_pattern(pattern, fields)
-        response = self.search(query)
-        self.assertEqual(response["hits"]["total"], 1)
-        self.assertEqual(response["hits"]["hits"][0]["_id"], u"1")
-        self.assertEqual(response["hits"]["hits"][0]["fields"]["birthDate"], u"Saturday - 11/05/1974")
-
-
 class SuggestIntegrationElasticSearchComplexQueriesTestCase(ElasticSearchQueryTestCase):
     analyzer = "my_analyzer"
     settings = {
@@ -385,7 +243,6 @@ class SuggestIntegrationElasticSearchComplexQueriesTestCase(ElasticSearchQueryTe
                 "my_analyzer": {
                     "type": "custom",
                     "tokenizer": "standard",
-                    #"filter": ["lowercase_pt", "synonym", "standard", "stopwords_pt", "stem_minimal_pt", "asciifolding"],
                     "char_filter": ["html_strip"]
                 }
             }
@@ -474,15 +331,14 @@ class SuggestIntegrationElasticSearchComplexQueriesTestCase(ElasticSearchQueryTe
 
     def query_by_pattern(self, pattern, fields):
         query_params = {"page": "0"}
+        search_params = {
+            "pattern": pattern
+        }
         classes = ["sports:Match", "sports:Team"]
         search_fields = fields
         response_fields = ["title"]
 
-        # TODO: rollback to the query below when ES 0.90.x is in all environments
-        #query = _build_body_query(query_params, search_params, classes, search_fields, response_fields, self.analyzer)
-        # TODO: when the step above is done, delete the two lines of code below:
-        tokens = self.tokenize(pattern, self.analyzer)["tokens"]
-        query = _build_body_query_compatible_with_uatu_and_es_19_in_envs(query_params, tokens, classes, search_fields, response_fields, pattern)
+        query = _build_body_query(query_params, search_params, classes, search_fields, response_fields, self.analyzer)
         return query
 
     def test_query_returns_team_flamengo_before_matches(self):

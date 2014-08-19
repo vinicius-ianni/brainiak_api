@@ -37,24 +37,12 @@ def do_suggest(query_params, suggest_params):
         classes,
         LABEL_PROPERTIES)
 
-    # request_body = _build_body_query(
-    #     query_params,
-    #     search_params,
-    #     classes,
-    #     search_fields,
-    #     response_fields)
-
-    analyze_response = run_analyze(search_params["pattern"])
-    tokens = analyze_response["tokens"]
-
-    request_body = _build_body_query_compatible_with_uatu_and_es_19_in_envs(
+    request_body = _build_body_query(
         query_params,
-        tokens,
+        search_params,
         classes,
         search_fields,
-        response_fields,
-        search_params["pattern"]
-    )
+        response_fields)
 
     # Sorting in ES is done using memory. From the docs [1]:
     # "When sorting, the relevant sorted field values are loaded into memory.
@@ -264,38 +252,6 @@ def _get_response_fields_from_classes_dict(fields_by_class_list, response_fields
         fields_by_class_set.update(set(specific_class_fields))
 
     return fields_by_class_set
-
-
-def _build_body_query_compatible_with_uatu_and_es_19_in_envs(query_params, tokens, classes, search_fields, response_fields, pattern):
-    should_list = []
-    for token in tokens:
-        token_item = token["token"]
-        should_item = {
-            "query_string": {
-                "query": '"{0}"'.format(token_item),
-                "fields": search_fields
-            }
-        }
-        should_list.append(should_item)
-
-    pattern = "*".join(pattern.split()).lower()
-    for field in search_fields:
-        should_item = {"wildcard": {str(field): "{0}*".format(pattern)}}
-        should_list.append(should_item)
-
-    body = {
-        "from": int(resources.calculate_offset(query_params)),
-        "size": int(query_params.get("per_page", settings.DEFAULT_PER_PAGE)),
-        "fields": response_fields,
-        "query": {
-            "bool": {
-                "should": should_list,
-                "minimum_should_match": len(tokens)
-            },
-        },
-        "filter": _build_type_filters(classes)
-    }
-    return body
 
 
 def _build_body_query(query_params, search_params, classes, search_fields, response_fields, analyzer=settings.ES_ANALYZER):
