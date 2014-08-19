@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ubiquitous Language &mdash; brainiak  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="brainiak  documentation" href="../index.html"/>
+        <link rel="up" title="Concepts" href="../concepts.html"/>
+        <link rel="next" title="Using HTTP methods in a RESTful way" href="rest_verbs.html"/>
+        <link rel="prev" title="Concepts" href="../concepts.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> brainiak</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Ubiquitous Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_verbs.html">Using HTTP methods in a RESTful way</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hypermedia.html">Hypermedia Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modeling.html">Modeling and Ontology Engineering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/how_to_read_this_documentation.html">How to read this documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../globocom/authorization.html">Authorization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../services.html">Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../services/context/context.html">Managing Contexts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/prefix/prefix.html">Managing Prefixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/collection/collection.html">Managing Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/schema/schema.html">Managing Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/instance/instance.html">Managing Instances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/search/search.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/suggest/suggest.html">Suggest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/stored_query/stored_query.html">Stored Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/parameters.html">Overriding URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/links.html">Hypermap of Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/links.html#links-specification">Links Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/links.html#rel-vocabulary">Rel Vocabulary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/errors.html">Handling Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/cache.html">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services.html#convention-for-url-resources">Convention for URL Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services.html#service-examples">Service Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshoot.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#i-receive-error-404-with-message-x-brainiak-client-id-is-not-known">I receive error 404 with message &#8216;X-Brainiak-Client-Id&#8217; is not known</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-backend-triplestore">How to check if Brainiak is connected with the backend triplestore?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-activemq">How to check if Brainiak is connected with the ActiveMQ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#any-service-gives-me-the-message-access-to-backend-service-failed">Any service gives me the message: &#8220;Access to backend service failed&#8221;?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#when-filtering-instances-using-p-and-o-i-only-get-http-error-404-but-when-i-only-use-p-it-lists-items-containing-the-o-i-defined-what-am-i-doing-wrong">When filtering instances using <tt class="docutils literal"><span class="pre">p</span></tt> and <tt class="docutils literal"><span class="pre">o</span></tt> I only get &#8220;HTTP error: 404&#8221;. But when I only use <tt class="docutils literal"><span class="pre">p</span></tt>, it lists items containing the <tt class="docutils literal"><span class="pre">o</span></tt> I defined. What am I doing wrong?</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-5">Version 2.7.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-4-2014-08-14">Version 2.7.4 - 2014/08/14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-3-2014-08-05">Version 2.7.3 - 2014/08/05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-2-2014-08-01">Version 2.7.2 - 2014/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-1-2014-07-30">Version 2.7.1 - 2014/07/30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-6-0-2014-07-07">Version 2.6.0 - 2014/07/07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-5-1-2014-06-06">Version 2.5.1 - 2014/06/06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-5-0-2014-05-19">Version 2.5.0 - 2014/05/19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-4-2014-02-04">Version 2.4.4 - 2014/02/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-3-2014-01-17">Version 2.4.3 - 2014/01/17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-2-2014-01-15">Version 2.4.2 - 2014/01/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-1-2014-01-10">Version 2.4.1 - 2014/01/10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-0-2013-11-28">Version 2.4.0 - 2013/11/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-8-2013-10-04">Version 2.3.8 - 2013/10/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-7-2013-10-31">Version 2.3.7 - 2013/10/31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-6-2013-10-28">Version 2.3.6 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-3-2-3-5-2013-10-28">Version 2.3.3-2.3.5 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-2-2013-10-28">Version 2.3.2 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-1-2013-10-23">Version 2.3.1 - 2013/10/23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-0-2013-10-22">Version 2.3.0 - 2013/10/22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-2-5-2013-10-15">Version 2.2.5 - 2013/10/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-2-3-2-2-4-2013-09-25">Version 2.2.3 + 2.2.4 - 2013/09/25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-2-0-2-2-2-2013-08-29">Version 2.2.0 + 2.2.2 - 2013/08/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-1-0-2013-08-01">Version 2.1.0 - 2013/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-0-0-2013-07-18">Version 2.0.0 - 2013/07/18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-1-1-0-2013-05-28">Version 1.1.0 - 2013/05/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-1-0-0-2013-04-24">Version 1.0.0  - 2013/04/24</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">brainiak</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../concepts.html">Concepts</a> &raquo;</li>
+      
+    <li>Ubiquitous Language</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/concepts/resources.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="ubiquitous-language">
+<h1>Ubiquitous Language<a class="headerlink" href="#ubiquitous-language" title="Permalink to this headline">¶</a></h1>
+<p>Here we explain the main concepts of the API, i.e. this is
+our <a class="reference external" href="http://martinfowler.com/bliki/UbiquitousLanguage.html">ubiquitous language</a>.</p>
+<div class="section" id="context">
+<span id="concept-context"></span><h2>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">Context</span></tt> is an isolated data space, defined by some unique <tt class="docutils literal"><span class="pre">context_id</span></tt>.
+This <tt class="docutils literal"><span class="pre">context_id</span></tt> will be used as a namespace.
+Each context can hold classes and instance definitions.
+A context can be used to represent, for example, some product or some app being developed.</p>
+<p>Inside the triplestore, the context is materialized as <a class="reference external" href="http://www.w3.org/TR/rdf-sparql-query/#GraphPattern">a graph</a>.
+This graph is represented internally by an <a class="reference external" href="http://www.ietf.org/rfc/rfc3986.txt">URI</a>.
+This URI is composed by adding a configurable (server-wide) URI_PREFIX to the <tt class="docutils literal"><span class="pre">context_id</span></tt>
+For example, inside Globo.com, the Brainiak server is configured with URI_PREFIX=&#8221;<a class="reference external" href="http://semantica.globo.com/">http://semantica.globo.com/</a>&#8221;.
+Thus, the graph URI implicitly associated with context &#8220;app1&#8221; would be: &#8220;<a class="reference external" href="http://semantica.globo.com/app1/">http://semantica.globo.com/app1/</a>&#8221;.
+The default prefix can be overridden if necessary using the parameter <tt class="docutils literal"><span class="pre">graph_uri</span></tt>, see more details in <a class="reference internal" href="../services/parameters.html#parametrization"><em>Overriding URIs</em></a>.</p>
+</div>
+<div class="section" id="class">
+<span id="concept-schema"></span><h2>Class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
+<p>Usually database models work with a clear distinction between instances (data) and classes (metadata).
+We also make this distinction on the API interface.</p>
+<p>A <em>Class</em> is a priviledged instance that defines the structure of the data (non-class instances) being stored.
+To avoid confusion, we avoid referring to classes calling them <em>instances</em>, a term we reserve for <em>non-class</em> instances.
+Although we prefer <tt class="docutils literal"><span class="pre">class</span></tt>, sometimes we use the term <tt class="docutils literal"><span class="pre">schema</span></tt> as a synonym.
+<tt class="docutils literal"><span class="pre">Class</span></tt> is preferable to <tt class="docutils literal"><span class="pre">schema</span></tt> in order to avoid the confusion with the listings schemas rendered in json-schema format.</p>
+<p>Classes are defined in the RDF/OWL Model, given its high expressivity and flexibility.
+Therefore, it will be possible to represent classes in different database models or even translations between them in a common language.</p>
+<p>Likewise, we expect a class to be easily written, by using the <a class="reference external" href="http://en.wikipedia.org/wiki/Turtle_(syntax)">Turtle</a>
+format, the most compact serialization for ontologies developed in the RDF/OWL model.</p>
+<div class="highlight-n3"><div class="highlight"><pre><span class="nc">:City </span><span class="o">a </span><span class="na">owl:Class </span>;
+      <span class="o">rdfs:subClassOf </span><span class="na">:Place </span>.
+</pre></div>
+</div>
+<p>The class is associated with a <tt class="docutils literal"><span class="pre">class_id</span></tt> that is unique in the particular <tt class="docutils literal"><span class="pre">context</span></tt> where it was declared.
+Therefore, the class definition belongs to a graph in the triplestore, where it is identified by an URI.
+By convention, the class URI is composed by the context&#8217;s graph URI and the class_id.
+For example, consider the class for <tt class="docutils literal"><span class="pre">Person</span></tt> declared in the context <tt class="docutils literal"><span class="pre">person</span></tt> whose graph_uri is <tt class="docutils literal"><span class="pre">http://semantica.globo.com/person</span></tt>.
+The default URI for this class would be generated as <tt class="docutils literal"><span class="pre">http://semantica.globo.com/person/Person</span></tt>.
+The class&#8217; URI can be overriden if necessary using the parameter <tt class="docutils literal"><span class="pre">class_uri</span></tt>, see more details in <a class="reference internal" href="../services/parameters.html#parametrization"><em>Overriding URIs</em></a>.</p>
+</div>
+<div class="section" id="collection">
+<span id="concept-collection"></span><h2>Collection<a class="headerlink" href="#collection" title="Permalink to this headline">¶</a></h2>
+<p>We need to distinguish the structure of an instance (class) from a group of instances with the same structure (collection).
+Therefore, for each class corresponds a unique collection adn vice-versa.
+The collection name and the class name are the same.</p>
+</div>
+<div class="section" id="instance">
+<span id="concept-instance"></span><h2>Instance<a class="headerlink" href="#instance" title="Permalink to this headline">¶</a></h2>
+<p>An instance is a set of data that is treated as a unit, whose structure is described by a class.
+The group of instances that share the same class form a collection.
+A collection subset or the whole collection is stored in a context.</p>
+<p>Instances must be easily retrieved.
+Morevoer, &#8220;instance queries&#8221; must be really simple for developers to understand as they will do way more requests on instances than on classes.
+As such, the interface for manipulating instances accepts JSON content_type as most of the RESTful APIs do.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rest_verbs.html" class="btn btn-neutral float-right" title="Using HTTP methods in a RESTful way"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../concepts.html" class="btn btn-neutral" title="Concepts"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Globo.com, Icaro Medeiros, Rodrigo Senra, Tatiana Al-Chueyr.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

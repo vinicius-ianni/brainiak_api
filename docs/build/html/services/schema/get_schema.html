@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Get a Class &mdash; brainiak  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="brainiak  documentation" href="../../index.html"/>
+        <link rel="up" title="Managing Classes" href="schema.html"/>
+        <link rel="next" title="Managing Instances" href="../instance/instance.html"/>
+        <link rel="prev" title="Managing Classes" href="schema.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> brainiak</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/resources.html">Ubiquitous Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/rest_verbs.html">Using HTTP methods in a RESTful way</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/hypermedia.html">Hypermedia Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/how_to_read_this_documentation.html">How to read this documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../services.html">Services</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../context/context.html">Managing Contexts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prefix/prefix.html">Managing Prefixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../collection/collection.html">Managing Collections</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="schema.html">Managing Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../instance/instance.html">Managing Instances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/search.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../suggest/suggest.html">Suggest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../stored_query/stored_query.html">Stored Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../parameters.html">Overriding URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../links.html">Hypermap of Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../links.html#links-specification">Links Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../links.html#rel-vocabulary">Rel Vocabulary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../errors.html">Handling Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cache.html">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services.html#convention-for-url-resources">Convention for URL Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services.html#service-examples">Service Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshoot.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#i-receive-error-404-with-message-x-brainiak-client-id-is-not-known">I receive error 404 with message &#8216;X-Brainiak-Client-Id&#8217; is not known</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-backend-triplestore">How to check if Brainiak is connected with the backend triplestore?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-activemq">How to check if Brainiak is connected with the ActiveMQ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#any-service-gives-me-the-message-access-to-backend-service-failed">Any service gives me the message: &#8220;Access to backend service failed&#8221;?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#when-filtering-instances-using-p-and-o-i-only-get-http-error-404-but-when-i-only-use-p-it-lists-items-containing-the-o-i-defined-what-am-i-doing-wrong">When filtering instances using <tt class="docutils literal"><span class="pre">p</span></tt> and <tt class="docutils literal"><span class="pre">o</span></tt> I only get &#8220;HTTP error: 404&#8221;. But when I only use <tt class="docutils literal"><span class="pre">p</span></tt>, it lists items containing the <tt class="docutils literal"><span class="pre">o</span></tt> I defined. What am I doing wrong?</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-5">Version 2.7.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-4-2014-08-14">Version 2.7.4 - 2014/08/14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-3-2014-08-05">Version 2.7.3 - 2014/08/05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-2-2014-08-01">Version 2.7.2 - 2014/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-1-2014-07-30">Version 2.7.1 - 2014/07/30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-6-0-2014-07-07">Version 2.6.0 - 2014/07/07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-1-2014-06-06">Version 2.5.1 - 2014/06/06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-0-2014-05-19">Version 2.5.0 - 2014/05/19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-4-2014-02-04">Version 2.4.4 - 2014/02/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-3-2014-01-17">Version 2.4.3 - 2014/01/17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-2-2014-01-15">Version 2.4.2 - 2014/01/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-1-2014-01-10">Version 2.4.1 - 2014/01/10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-0-2013-11-28">Version 2.4.0 - 2013/11/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-8-2013-10-04">Version 2.3.8 - 2013/10/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-7-2013-10-31">Version 2.3.7 - 2013/10/31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-6-2013-10-28">Version 2.3.6 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-3-2-3-5-2013-10-28">Version 2.3.3-2.3.5 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-2-2013-10-28">Version 2.3.2 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-1-2013-10-23">Version 2.3.1 - 2013/10/23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-0-2013-10-22">Version 2.3.0 - 2013/10/22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-2-5-2013-10-15">Version 2.2.5 - 2013/10/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-2-3-2-2-4-2013-09-25">Version 2.2.3 + 2.2.4 - 2013/09/25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-2-0-2-2-2-2013-08-29">Version 2.2.0 + 2.2.2 - 2013/08/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-1-0-2013-08-01">Version 2.1.0 - 2013/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-0-0-2013-07-18">Version 2.0.0 - 2013/07/18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-1-1-0-2013-05-28">Version 1.1.0 - 2013/05/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-1-0-0-2013-04-24">Version 1.0.0  - 2013/04/24</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">brainiak</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../services.html">Services</a> &raquo;</li>
+      
+          <li><a href="schema.html">Managing Classes</a> &raquo;</li>
+      
+    <li>Get a Class</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../../_sources/services/schema/get_schema.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="get-a-class">
+<h1>Get a Class<a class="headerlink" href="#get-a-class" title="Permalink to this headline">¶</a></h1>
+<p>A class is where the definition of the data structure resides.</p>
+<p>In this service, we can get a class defined in some context.</p>
+<p><strong>Basic usage</strong></p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -s <span class="s1">&#39;http://brainiak.semantica.dev.globoi.com/place/City/_schema&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;http://json-schema.org/draft-04/schema#&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;@context&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;@language&quot;</span><span class="p">:</span> <span class="s2">&quot;pt&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Lugar perene e urbanizado onde pessoas habitam.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;{+_base_url}&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;self&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/place/City/_schema&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;class&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/place/City?class_prefix=http://semantica.globo.com/place/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;{+_base_url}&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}]</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;http://semantica.globo.com/place/latitude&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/Place&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;datatype&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.w3.org/2001/XMLSchema#float&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Coordenada de latitude de acordo com WGS84.&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;graph&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;http://semantica.globo.com/place/longitude&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/Place&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;datatype&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.w3.org/2001/XMLSchema#float&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Coordenada de longitude de acordo com WGS84.&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;graph&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Longitude&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Cidade&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Why _schema? In our data model we have a clear distinction between class
+(structure of data) and instances (the data content itself), and by using a request like
+GET &lt;context&gt;/&lt;class&gt; we could not have a clear distinction whether we want
+the whole collection of instances or we want the definition of this class.</p>
+<p>Thus, the _schema suffix is used to distinguish the latter case from the former.
+It also serves to inform that the class definition will be given in json-schema format.</p>
+<div class="section" id="optional-parameters">
+<h2>Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h2>
+<p><strong>lang</strong>: Specify language of labels. Options: pt, en, undefined (do not filter labels)</p>
+<p><strong>expand_uri</strong>: The URIs that represent <tt class="docutils literal"><span class="pre">names</span></tt> and  <tt class="docutils literal"><span class="pre">values</span></tt> of properties in the response are either compressed (0) or expanded (1) by this parameter.</p>
+<p>By default, this parameter is set to 0, meaning that URIs are compressed for keys and values.</p>
+<p>This is going to change in future versions, and the default will be URI expansion.
+So, we ask you to use this parameter explicitly and not rely on the default behaviour.</p>
+<p>For example, <tt class="docutils literal"><span class="pre">rdfs:label</span></tt> is the compressed form, while <tt class="docutils literal"><span class="pre">http://www.w3.org/2000/01/rdf-schema#label</span></tt> is the respective expanded form.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">For the time being, URI expansion is not supported in resource listings.
+It is only supported while retrieving instances and class definition.</p>
+</div>
+<p><strong>graph_uri</strong>: Set the graph URI, for cases where the URI is not like <tt class="docutils literal"><span class="pre">http://semantica.globo.com/CONTEXT_NAME</span></tt></p>
+<p><strong>class_uri</strong>: Set the class URI, for cases where the URI is not like <tt class="docutils literal"><span class="pre">http://semantica.globo.com/CONTEXT_NAME/CLASS_NAME</span></tt></p>
+<p><strong>class_prefix</strong>: by default, the class URI is defined by the API&#8217;s convention (context_uri/class_name).
+If the convention doesn&#8217;t apply, provide class_prefix so the URI will be: class_prefix/class_name.  Example:</p>
+<div class="highlight-http"><div class="highlight"><pre>&#39;http://brainiak.semantica.dev.globoi.com/place/City/?class_prefix=http%3A//dbpedia.org/&#39;
+</pre></div>
+</div>
+<p>If no <strong>class_prefix</strong> had been provided, the class URI above would be resolved as: <a class="reference external" href="http://semantica.globo.com/place/City">http://semantica.globo.com/place/City</a>.
+As <strong>class_prefix</strong> was defined, the class URI will be: <a class="reference external" href="http://dbpedia.org/City">http://dbpedia.org/City</a>.</p>
+</div>
+<div class="section" id="possible-responses">
+<h2>Possible responses<a class="headerlink" href="#possible-responses" title="Permalink to this headline">¶</a></h2>
+<p><strong>Status 200</strong></p>
+<p>If the class exists, the response body is a JSON representing the class definition.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -s <span class="s1">&#39;http://brainiak.semantica.dev.globoi.com/place/Country/_schema&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;http://json-schema.org/draft-04/schema#&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;@context&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;@language&quot;</span><span class="p">:</span> <span class="s2">&quot;pt&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A relatively large and permanent settlement, particularly a large urban settlement.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/City&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;{+_base_url}&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;self&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/place/City/_schema&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;class&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/place/City&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;{+_base_url}&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;http://semantica.globo.com/place/latitude&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/Place&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;datatype&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.w3.org/2001/XMLSchema#float&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Coordenada de latitude de acordo com WGS84.&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;graph&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;http://semantica.globo.com/place/longitude&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/Place&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;datatype&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.w3.org/2001/XMLSchema#float&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Coordenada de longitude de acordo com WGS84.&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;graph&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Longitude&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;City&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Status 400</strong></p>
+<p>If there are unknown parameters in the request, the response is a 400
+with a JSON informing the wrong parameters and the accepted ones.</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;HTTP error: 400\nArgument &#39;wrong_param&#39; is not supported&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Status 404</strong></p>
+<p>If the class does not exist, the response is a 404 with a JSON
+informing the error</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;HTTP error: 404\nClass not found in triplestore.&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../instance/instance.html" class="btn btn-neutral float-right" title="Managing Instances"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="schema.html" class="btn btn-neutral" title="Managing Classes"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Globo.com, Icaro Medeiros, Rodrigo Senra, Tatiana Al-Chueyr.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

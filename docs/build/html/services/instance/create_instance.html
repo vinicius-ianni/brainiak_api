@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Create an Instance &mdash; brainiak  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="brainiak  documentation" href="../../index.html"/>
+        <link rel="up" title="Managing Instances" href="instance.html"/>
+        <link rel="next" title="List of Instances" href="list_instance.html"/>
+        <link rel="prev" title="Managing Instances" href="instance.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> brainiak</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/resources.html">Ubiquitous Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/rest_verbs.html">Using HTTP methods in a RESTful way</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/hypermedia.html">Hypermedia Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/how_to_read_this_documentation.html">How to read this documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../globocom/authorization.html">Authorization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../services.html">Services</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../context/context.html">Managing Contexts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prefix/prefix.html">Managing Prefixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../collection/collection.html">Managing Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../schema/schema.html">Managing Classes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="instance.html">Managing Instances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/search.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../suggest/suggest.html">Suggest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../stored_query/stored_query.html">Stored Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../parameters.html">Overriding URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../links.html">Hypermap of Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../links.html#links-specification">Links Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../links.html#rel-vocabulary">Rel Vocabulary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../errors.html">Handling Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cache.html">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services.html#convention-for-url-resources">Convention for URL Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services.html#service-examples">Service Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshoot.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#i-receive-error-404-with-message-x-brainiak-client-id-is-not-known">I receive error 404 with message &#8216;X-Brainiak-Client-Id&#8217; is not known</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-backend-triplestore">How to check if Brainiak is connected with the backend triplestore?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-activemq">How to check if Brainiak is connected with the ActiveMQ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#any-service-gives-me-the-message-access-to-backend-service-failed">Any service gives me the message: &#8220;Access to backend service failed&#8221;?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshoot.html#when-filtering-instances-using-p-and-o-i-only-get-http-error-404-but-when-i-only-use-p-it-lists-items-containing-the-o-i-defined-what-am-i-doing-wrong">When filtering instances using <tt class="docutils literal"><span class="pre">p</span></tt> and <tt class="docutils literal"><span class="pre">o</span></tt> I only get &#8220;HTTP error: 404&#8221;. But when I only use <tt class="docutils literal"><span class="pre">p</span></tt>, it lists items containing the <tt class="docutils literal"><span class="pre">o</span></tt> I defined. What am I doing wrong?</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-5">Version 2.7.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-4-2014-08-14">Version 2.7.4 - 2014/08/14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-3-2014-08-05">Version 2.7.3 - 2014/08/05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-2-2014-08-01">Version 2.7.2 - 2014/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-1-2014-07-30">Version 2.7.1 - 2014/07/30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-6-0-2014-07-07">Version 2.6.0 - 2014/07/07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-1-2014-06-06">Version 2.5.1 - 2014/06/06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-5-0-2014-05-19">Version 2.5.0 - 2014/05/19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-4-2014-02-04">Version 2.4.4 - 2014/02/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-3-2014-01-17">Version 2.4.3 - 2014/01/17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-2-2014-01-15">Version 2.4.2 - 2014/01/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-1-2014-01-10">Version 2.4.1 - 2014/01/10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-4-0-2013-11-28">Version 2.4.0 - 2013/11/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-8-2013-10-04">Version 2.3.8 - 2013/10/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-7-2013-10-31">Version 2.3.7 - 2013/10/31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-6-2013-10-28">Version 2.3.6 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-3-2-3-5-2013-10-28">Version 2.3.3-2.3.5 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-2-2013-10-28">Version 2.3.2 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-1-2013-10-23">Version 2.3.1 - 2013/10/23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-3-0-2013-10-22">Version 2.3.0 - 2013/10/22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-2-5-2013-10-15">Version 2.2.5 - 2013/10/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-2-3-2-2-4-2013-09-25">Version 2.2.3 + 2.2.4 - 2013/09/25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-2-0-2-2-2-2013-08-29">Version 2.2.0 + 2.2.2 - 2013/08/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-1-0-2013-08-01">Version 2.1.0 - 2013/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-2-0-0-2013-07-18">Version 2.0.0 - 2013/07/18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-1-1-0-2013-05-28">Version 1.1.0 - 2013/05/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../releases.html#version-1-0-0-2013-04-24">Version 1.0.0  - 2013/04/24</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">brainiak</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../services.html">Services</a> &raquo;</li>
+      
+          <li><a href="instance.html">Managing Instances</a> &raquo;</li>
+      
+    <li>Create an Instance</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../../_sources/services/instance/create_instance.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="create-an-instance">
+<h1>Create an Instance<a class="headerlink" href="#create-an-instance" title="Permalink to this headline">¶</a></h1>
+<p>This service allows the creation of a new instance, provided its context, class name and JSON.</p>
+<p><strong>Basic usage</strong></p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -X POST -T <span class="s2">&quot;new_york_city.json&quot;</span> http://brainiak.semantica.dev.globoi.com/place/City
+
+HTTP/1.1 201 Created
+Server: nginx
+Date: Mon, 14 Jul 2014 14:09:27 GMT
+Content-Type: application/json; <span class="nv">profile</span><span class="o">=</span>http://brainiak.semantica.dev.globoi.com/place/City/_schema_list
+Content-Length: 0
+Connection: keep-alive
+X-Brainiak-Resource-Uri: http://semantica.globo.com/place/City/38cea15a-d122-4e53-9214-13c00aec9969
+Location: http://brainiak.semantica.dev.globoi.com/place/City/38cea15a-d122-4e53-9214-13c00aec9969
+Access-Control-Allow-Origin: *
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When using curl, the &#8220;-T&#8221; param will append the filename to the actual URL, if the URL parameter ends with a &#8220;/&#8221;.
+In order to avoid that, either remove the last &#8220;/&#8221; or use &#8216;-d &#64;new_york_city.json&#8217; to expand the file contents.</p>
+</div>
+<p>Sample JSON &#8220;new_city.json&#8221; for the class <a class="reference external" href="http://brainiak.semantica.dev.globoi.com/place/City/_schema">City</a>:</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;upper:name&quot;</span><span class="p">:</span> <span class="s2">&quot;Globoland&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;upper:fullName&quot;</span><span class="p">:</span> <span class="s2">&quot;Globoland (RJ)&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;rdfs:comment&quot;</span><span class="p">:</span> <span class="s2">&quot;City of Globo&#39;s companies. Historically known as PROJAC.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;place:partOfState&quot;</span><span class="p">:</span> <span class="s2">&quot;base:UF_RJ&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;place:latitude&quot;</span><span class="p">:</span> <span class="mf">-22.958314</span><span class="p">,</span>
+    <span class="nt">&quot;place:longitude&quot;</span><span class="p">:</span> <span class="mf">-43.407133</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note that prefixes are defined in the &#8220;&#64;context&#8221; section.
+<a class="reference external" href="http://brainiak.semantica.dev.globoi.com/_prefixes">Default prefixes</a> are implicit and don&#8217;t need to be declared.</p>
+</div>
+<p>Besides using <tt class="docutils literal"><span class="pre">POST</span></tt> to create new instances, it is also possible to use <tt class="docutils literal"><span class="pre">PUT</span></tt> (for more information, see <a class="reference internal" href="edit_instance.html#edit-instance"><em>Edit a Instance</em></a>).
+In this case, the <tt class="docutils literal"><span class="pre">instance_id</span></tt> should be provided, which must be unique in the specified context.
+The recommended policy is to use <tt class="docutils literal"><span class="pre">POST</span></tt>, as it will assure uniqueness of the identifiers.</p>
+<div class="section" id="optional-query-string-parameters">
+<h2>Optional query string parameters<a class="headerlink" href="#optional-query-string-parameters" title="Permalink to this headline">¶</a></h2>
+<p><strong>graph_uri</strong>: Set the graph URI, for cases where the URI is not like <tt class="docutils literal"><span class="pre">http://semantica.globo.com/CONTEXT_NAME</span></tt></p>
+<p><strong>class_uri</strong>: Set the class URI, for cases where the URI is not like <tt class="docutils literal"><span class="pre">http://semantica.globo.com/CONTEXT_NAME/CLASS_NAME</span></tt></p>
+<p><strong>class_prefix</strong>: by default, the class URI is defined by the API&#8217;s convention (context_uri/class_name).
+If the convention doesn&#8217;t apply, provide class_prefix so the URI will be: class_prefix/class_name.  Example:</p>
+<div class="highlight-http"><div class="highlight"><pre>&#39;http://brainiak.semantica.dev.globoi.com/place/City/?class_prefix=http%3A//dbpedia.org/&#39;
+</pre></div>
+</div>
+<p>If no <strong>class_prefix</strong> had been provided, the class URI above would be resolved as: <a class="reference external" href="http://semantica.globo.com/place/City">http://semantica.globo.com/place/City</a>.
+As <strong>class_prefix</strong> was defined, the class URI will be: <a class="reference external" href="http://dbpedia.org/City">http://dbpedia.org/City</a>.</p>
+</div>
+<div class="section" id="possible-responses">
+<h2>Possible responses<a class="headerlink" href="#possible-responses" title="Permalink to this headline">¶</a></h2>
+<p><strong>Status 201</strong></p>
+<p>The instance was created successfully, the response body is empty.
+The URI of the new instance is identified by the &#8220;Location&#8221; header in
+the HTTP response.</p>
+<p>Note that the URI of a instance is not the same as the URL to retrieve
+a instance from the API. For retrieving it, use the retrieve instance primitive &lt;&gt;.</p>
+<p><strong>Status 400</strong></p>
+<p>If there are unknown parameters in the request, the response status code is 400.</p>
+<p>The 400 status may also happen when the JSON provided is invalid:</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;HTTP error: 400\nNo JSON object could be decoded&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Status 404</strong></p>
+<p>If the class does not exist, the response status code is 404.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -i -X POST -T <span class="s2">&quot;new_york_city.json&quot;</span> http://brainiak.semantica.dev.globoi.com/place/Person
+</pre></div>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;errors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;HTTP error: 404\nClass http://semantica.globo.com/place/Person doesn&#39;t exist in context http://semantica.globo.com/place/.&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Status 500</strong></p>
+<p>Internal server error. Please, contact the team &lt;<a class="reference external" href="mailto:semantica&#37;&#52;&#48;corp&#46;globo&#46;com">semantica<span>&#64;</span>corp<span>&#46;</span>globo<span>&#46;</span>com</a>&gt;
+and provide the URL, JSON and error message.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="list_instance.html" class="btn btn-neutral float-right" title="List of Instances"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="instance.html" class="btn btn-neutral" title="Managing Instances"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Globo.com, Icaro Medeiros, Rodrigo Senra, Tatiana Al-Chueyr.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

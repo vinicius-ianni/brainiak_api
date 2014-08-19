@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hypermap of Resources &mdash; brainiak  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="brainiak  documentation" href="../index.html"/>
+        <link rel="up" title="Services" href="../services.html"/>
+        <link rel="next" title="Pagination" href="pagination.html"/>
+        <link rel="prev" title="Overriding URIs" href="parameters.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> brainiak</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/resources.html">Ubiquitous Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/rest_verbs.html">Using HTTP methods in a RESTful way</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/hypermedia.html">Hypermedia Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/modeling.html">Modeling and Ontology Engineering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/how_to_read_this_documentation.html">How to read this documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/building_local_dev_environment.html">Building Brainiak in your local environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../globocom/authorization.html">Authorization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../services.html">Services</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="context/context.html">Managing Contexts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prefix/prefix.html">Managing Prefixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collection/collection.html">Managing Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/schema.html">Managing Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instance/instance.html">Managing Instances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="search/search.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggest.html">Suggest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stored_query/stored_query.html">Stored Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameters.html">Overriding URIs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Hypermap of Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#links-specification">Links Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rel-vocabulary">Rel Vocabulary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Handling Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services.html#convention-for-url-resources">Convention for URL Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services.html#service-examples">Service Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshoot.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#i-receive-error-404-with-message-x-brainiak-client-id-is-not-known">I receive error 404 with message &#8216;X-Brainiak-Client-Id&#8217; is not known</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-backend-triplestore">How to check if Brainiak is connected with the backend triplestore?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#how-to-check-if-brainiak-is-connected-with-the-activemq">How to check if Brainiak is connected with the ActiveMQ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#any-service-gives-me-the-message-access-to-backend-service-failed">Any service gives me the message: &#8220;Access to backend service failed&#8221;?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshoot.html#when-filtering-instances-using-p-and-o-i-only-get-http-error-404-but-when-i-only-use-p-it-lists-items-containing-the-o-i-defined-what-am-i-doing-wrong">When filtering instances using <tt class="docutils literal"><span class="pre">p</span></tt> and <tt class="docutils literal"><span class="pre">o</span></tt> I only get &#8220;HTTP error: 404&#8221;. But when I only use <tt class="docutils literal"><span class="pre">p</span></tt>, it lists items containing the <tt class="docutils literal"><span class="pre">o</span></tt> I defined. What am I doing wrong?</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-5">Version 2.7.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-4-2014-08-14">Version 2.7.4 - 2014/08/14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-3-2014-08-05">Version 2.7.3 - 2014/08/05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-2-2014-08-01">Version 2.7.2 - 2014/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-1-2014-07-30">Version 2.7.1 - 2014/07/30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-7-0-2014-07-29">Version 2.7.0 - 2014/07/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-6-0-2014-07-07">Version 2.6.0 - 2014/07/07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-5-1-2014-06-06">Version 2.5.1 - 2014/06/06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-5-0-2014-05-19">Version 2.5.0 - 2014/05/19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-4-2014-02-04">Version 2.4.4 - 2014/02/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-3-2014-01-17">Version 2.4.3 - 2014/01/17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-2-2014-01-15">Version 2.4.2 - 2014/01/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-1-2014-01-10">Version 2.4.1 - 2014/01/10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-4-0-2013-11-28">Version 2.4.0 - 2013/11/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-8-2013-10-04">Version 2.3.8 - 2013/10/04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-7-2013-10-31">Version 2.3.7 - 2013/10/31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-6-2013-10-28">Version 2.3.6 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-3-2-3-5-2013-10-28">Version 2.3.3-2.3.5 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-2-2013-10-28">Version 2.3.2 - 2013/10/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-1-2013-10-23">Version 2.3.1 - 2013/10/23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-3-0-2013-10-22">Version 2.3.0 - 2013/10/22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-2-5-2013-10-15">Version 2.2.5 - 2013/10/15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-2-3-2-2-4-2013-09-25">Version 2.2.3 + 2.2.4 - 2013/09/25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-2-0-2-2-2-2013-08-29">Version 2.2.0 + 2.2.2 - 2013/08/29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-1-0-2013-08-01">Version 2.1.0 - 2013/08/01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-2-0-0-2013-07-18">Version 2.0.0 - 2013/07/18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-1-1-0-2013-05-28">Version 1.1.0 - 2013/05/28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases.html#version-1-0-0-2013-04-24">Version 1.0.0  - 2013/04/24</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">brainiak</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../services.html">Services</a> &raquo;</li>
+      
+    <li>Hypermap of Resources</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/services/links.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="hypermap-of-resources">
+<span id="links-spec"></span><h1>Hypermap of Resources<a class="headerlink" href="#hypermap-of-resources" title="Permalink to this headline">¶</a></h1>
+<p>The image below depicts the map of hypermedia resources supported by Brainiak API.</p>
+<img alt="../_images/resource_graph.png" src="../_images/resource_graph.png" />
+</div>
+<div class="section" id="links-specification">
+<h1>Links Specification<a class="headerlink" href="#links-specification" title="Permalink to this headline">¶</a></h1>
+<p>In our API, successful responses have a <tt class="docutils literal"><span class="pre">links</span></tt> section that state possible actions for the resource being retrieved
+or access to other resources.
+For more about this concept, see <a class="reference internal" href="../concepts.html"><em>Concepts</em></a> and <a class="reference internal" href="../concepts/hypermedia.html"><em>Hypermedia Support</em></a>.</p>
+<p>For example:</p>
+<div class="highlight-json"><div class="highlight"><pre>{
+  &quot;links&quot;: [
+    {
+      &quot;href&quot;: &quot;http://brainiak.semantica.dev.globoi.com/person/Gender/Male&quot;,
+      &quot;rel&quot;: &quot;self&quot;
+    },
+    {
+      href: &quot;http://brainiak.semantica.dev.globoi.com/person/Gender&quot;,
+      method: &quot;GET&quot;,
+      rel: &quot;inCollection&quot;
+    },
+    {
+      &quot;href&quot;: &quot;http://brainiak.semantica.dev.globoi.com/person/Gender/Male&quot;,
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;schema&quot;: {&quot;$ref&quot;: &quot;http://brainiak.semantica.dev.globoi.com/person/Gender/_schema&quot;}
+      &quot;rel&quot;: &quot;update&quot;
+    },
+    {
+      &quot;href&quot;: &quot;http://brainiak.semantica.dev.globoi.com/person/Gender/Male&quot;,
+      &quot;method&quot;: &quot;DELETE&quot;,
+      &quot;rel&quot;: &quot;delete&quot;
+    }
+  ]
+}
+</pre></div>
+</div>
+<p>The URLs in <tt class="docutils literal"><span class="pre">href</span></tt> can be exact URLs or templates described by <a class="reference external" href="http://tools.ietf.org/html/rfc6570">URI template</a>.
+When they are templates, each placeholder variable of the template should have the respective variable
+defined in each entry of the <tt class="docutils literal"><span class="pre">items</span></tt> section.
+For example:</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span> <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Europa&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;instance_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/Continent/&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;@id&quot;</span><span class="p">:</span> <span class="s2">&quot;http://semantica.globo.com/place/Continent/Europe&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;resource_id&quot;</span><span class="p">:</span> <span class="s2">&quot;Europe&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;http://brainiak.semantica.dev.globoi.com/place/Continent/{resource_id}?instance_prefix={instance_prefix}&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;item&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rel-vocabulary">
+<h1>Rel Vocabulary<a class="headerlink" href="#rel-vocabulary" title="Permalink to this headline">¶</a></h1>
+<p>In the description below we use the term <tt class="docutils literal"><span class="pre">target</span></tt> to designate the resource retrieved that owns the link relations.
+Unless specified otherwise, GET is the default HTTP method used in each of the link relations.</p>
+<p>Defined by the <tt class="docutils literal"><span class="pre">rel</span></tt> key, the possible link relations are grouped in logically related links.
+We call this groups <tt class="docutils literal"><span class="pre">contracts</span></tt>.</p>
+<hr class="docutils" />
+<div class="section" id="mandatory-contract">
+<h2>Mandatory contract<a class="headerlink" href="#mandatory-contract" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">mandatory</span> <span class="pre">contract</span></tt> is a group of links that need to be present in every response.</p>
+<div class="section" id="self">
+<h3>self<a class="headerlink" href="#self" title="Permalink to this headline">¶</a></h3>
+<p>The target resource URL itself, i.e. a URL to the target resource that owns the links.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="crud-contract">
+<h2>CRUD contract<a class="headerlink" href="#crud-contract" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">CRUD</span> <span class="pre">contract</span></tt> is a group of links that represent the four basic data manipulation operations.</p>
+<div class="section" id="create">
+<h3>create<a class="headerlink" href="#create" title="Permalink to this headline">¶</a></h3>
+<p>Refers to a resource that can be used to create other resources of the same type as the target.</p>
+</div>
+<div class="section" id="edit">
+<h3>edit<a class="headerlink" href="#edit" title="Permalink to this headline">¶</a></h3>
+<p>Refers to a resource that can be used to edit incrementally the target.</p>
+<p>Method: PATCH</p>
+</div>
+<div class="section" id="update">
+<h3>update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h3>
+<p>Refers to a resource that can be used to edit the target by entirely redefining its content.
+When using <tt class="docutils literal"><span class="pre">update</span></tt>, the target will be removed and inserted again.</p>
+<p>Method: PUT</p>
+<p>More about the <a class="reference external" href="http://tools.ietf.org/html/rfc5789">difference between HTTP PUT and PATCH</a>.</p>
+</div>
+<div class="section" id="delete">
+<h3>delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h3>
+<p>Delete the target.</p>
+<p>Method: DELETE</p>
+</div>
+<div class="section" id="describedby">
+<h3>describedBy<a class="headerlink" href="#describedby" title="Permalink to this headline">¶</a></h3>
+<p>Refers to a resource providing information about the target&#8217;s type in json-schema notation.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="conceptual-contract">
+<h2>Conceptual contract<a class="headerlink" href="#conceptual-contract" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Conceptual</span> <span class="pre">contract</span></tt> is a group of links that represent the specific concepts provided by the Brainiak API.</p>
+<div class="section" id="root">
+<h3>root<a class="headerlink" href="#root" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">root</span></tt> link refers to the starting point of hypernavigation in the Brainiak API.
+The current implementation has chosen to represent a list of contexts in the <tt class="docutils literal"><span class="pre">root</span></tt>.</p>
+</div>
+<div class="section" id="context">
+<h3>context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">context</span></tt> link refers to some context.
+This concept is explained in <a class="reference internal" href="../concepts/resources.html#concept-context"><em>Context</em></a>.
+Each context is a namespace that holds a list of collections.</p>
+</div>
+<div class="section" id="collection">
+<h3>collection<a class="headerlink" href="#collection" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">collection</span></tt> link refers to some collection.
+This concept is explained in <a class="reference internal" href="../concepts/resources.html#concept-collection"><em>Collection</em></a>.
+The collection is a list of instances that share the same type.</p>
+</div>
+<div class="section" id="instance">
+<h3>instance<a class="headerlink" href="#instance" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">instance</span></tt> link refers to the properties and values of an instance.
+This concept is explained in <a class="reference internal" href="../concepts/resources.html#concept-instance"><em>Instance</em></a>.</p>
+</div>
+<div class="section" id="class">
+<h3>class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">class</span></tt> link refers to the type of an instance, defining its properties.
+This concept is explained in <a class="reference internal" href="../concepts/resources.html#concept-schema"><em>Class</em></a>.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="cmaas-contract">
+<h2>CMAaS contract<a class="headerlink" href="#cmaas-contract" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">CMAaS</span> <span class="pre">contract</span></tt> is a group of links that adhere to the Globo.com generic CMAaS or <tt class="docutils literal"><span class="pre">Content</span> <span class="pre">Management</span> <span class="pre">Application</span> <span class="pre">as</span> <span class="pre">a</span> <span class="pre">Service</span></tt>.</p>
+<div class="section" id="item">
+<h3>item<a class="headerlink" href="#item" title="Permalink to this headline">¶</a></h3>
+<p>When the target is a list, the <tt class="docutils literal"><span class="pre">item</span></tt> refers to each resource within that list.
+Moreover, these items are guaranteed <em>not</em> to be lists.</p>
+</div>
+<div class="section" id="instances">
+<h3>instances<a class="headerlink" href="#instances" title="Permalink to this headline">¶</a></h3>
+<p>When the target is a list, the <tt class="docutils literal"><span class="pre">instances</span></tt> refers to each resource within that list that represents a sub-list.
+Moreover, these resources are guaranteed to be also lists.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="pagination-contract">
+<h2>Pagination contract<a class="headerlink" href="#pagination-contract" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Pagination</span> <span class="pre">contract</span></tt> is a group of links that support the basic primitives to navigate through items organized in pages.</p>
+<div class="section" id="first">
+<h3>first<a class="headerlink" href="#first" title="Permalink to this headline">¶</a></h3>
+<p>Refers to the first page of a list.</p>
+</div>
+<div class="section" id="last">
+<h3>last<a class="headerlink" href="#last" title="Permalink to this headline">¶</a></h3>
+<p>Refers to the last page of a list.
+This link is only present if the respective resource URL receives the <tt class="docutils literal"><span class="pre">do_item_count</span></tt> parameter set to 1.</p>
+</div>
+<div class="section" id="previous">
+<h3>previous<a class="headerlink" href="#previous" title="Permalink to this headline">¶</a></h3>
+<p>Refers to the previous page in a list.</p>
+</div>
+<div class="section" id="next">
+<h3>next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h3>
+<p>Refers to the next page in a list.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">By default, the <tt class="docutils literal"><span class="pre">item_count</span></tt> attribute of a list is not computed.
+As a result, the URL given by the <tt class="docutils literal"><span class="pre">next</span></tt> link may not contain data beyond the last page.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pagination.html" class="btn btn-neutral float-right" title="Pagination"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="parameters.html" class="btn btn-neutral" title="Overriding URIs"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Globo.com, Icaro Medeiros, Rodrigo Senra, Tatiana Al-Chueyr.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
