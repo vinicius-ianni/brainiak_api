@@ -76,7 +76,7 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
             'method': "GET"
         },
         {
-            "href": href,
+            "href": "{0}{1}".format(query_params.base_url, href),
             "method": "POST",
             "rel": "create",
             "schema": {"$ref": "{+_base_url}"}
