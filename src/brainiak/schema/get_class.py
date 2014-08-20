@@ -46,10 +46,8 @@ def get_schema(query_params):
     return response_dict
 
 
-def absolut_base_url(base_url):
-    parsed_url = urlparse(base_url)
-    absolut_base_url = "{0}://{1}".format(parsed_url.scheme, parsed_url.netloc)
-    return absolut_base_url
+def absolut_base_url(request):
+    return "{0}://{1}".format(request.protocol, request.host)
 
 
 def assemble_schema_dict(query_params, title, predicates, context, **kw):
@@ -68,7 +66,8 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
 
     # TODO problem with CMAaS
     # forced_absolute_base_url = absolut_base_url(query_params.base_url)
-    forced_absolute_base_url = query_params.request.host
+
+    forced_absolute_base_url = absolut_base_url(query_params.request)
 
     if 'expand_uri' in query_params:
         expand_uri_param = 'expand_uri={0}'.format(query_params['expand_uri'])
