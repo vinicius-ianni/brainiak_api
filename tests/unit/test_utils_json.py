@@ -42,3 +42,9 @@ class JSONTestCase(TestCase):
                           validate_json_schema,
                           valid_json,
                           self.JSON_SCHEMA_EXAMPLE)
+
+    def test_json_with_escaped_quotes(self):
+        expected = 'SELECT ?o ?label_o FROM <http://semantica.globo.com/esportes/> WHERE { ?s a esportes:MateriaEsporte . ?s base:permalink "http://globoesporte.globo.com/futebol/times/fluminense/noticia/2011/04/conca-x-200-timidez-brincadeiras-genialidade-e-gols-pelo-fluminense.html" . ?s ?p ?o . ?p a owl:ObjectProperty . ?o rdfs:label ?label_o . '
+        json_request_body = '''{ "sparql_template": "SELECT ?o ?label_o FROM <http://semantica.globo.com/esportes/> WHERE { ?s a esportes:MateriaEsporte . ?s base:permalink \\"http://globoesporte.globo.com/futebol/times/fluminense/noticia/2011/04/conca-x-200-timidez-brincadeiras-genialidade-e-gols-pelo-fluminense.html\\" . ?s ?p ?o . ?p a owl:ObjectProperty . ?o rdfs:label ?label_o . ", "description": "a" }'''
+        result_dict = get_json_request_as_dict(json_request_body)
+        self.assertEqual(result_dict["sparql_template"], expected)

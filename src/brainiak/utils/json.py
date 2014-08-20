@@ -15,7 +15,8 @@ def validate_json_schema(request_json, schema):
 
 def get_json_request_as_dict(json_request_body):
     try:
-        raw_body_params = json.loads(json_request_body)
+        # json.dumps and two json.loads is needed for escaped quotes case
+        raw_body_params = json.loads(json.loads(json.dumps(json_request_body)))
     except ValueError:
         error_message = _("JSON malformed. Received: {0}")
         raise HTTPError(400, log_message=error_message.format(json_request_body))
