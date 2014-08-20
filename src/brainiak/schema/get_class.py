@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from urlparse import urlparse
 from brainiak import triplestore, settings
 from brainiak.log import get_logger
 from brainiak.prefixes import MemorizeContext
@@ -45,6 +46,12 @@ def get_schema(query_params):
     return response_dict
 
 
+def absolut_base_url(base_url):
+    parsed_url = urlparse(base_url)
+    absolut_base_url = "{0}://{1}".format(parsed_url.scheme, parsed_url.netloc)
+    return absolut_base_url
+
+
 def assemble_schema_dict(query_params, title, predicates, context, **kw):
     effective_context = {"@language": query_params.get("lang")}
     effective_context.update(context.context)
@@ -58,6 +65,9 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
     href_class = assemble_url(schema_url, {"class_prefix": query_params.get("class_prefix", "")})
     # {value} is used here for CMAaaS integration
     instance_href = u"/_/_/_?instance_uri={value}"
+
+    # TODO problem with CMAaS
+    forced_absolute_base_url = absolut_base_url(query_params.base_url)
 
     if 'expand_uri' in query_params:
         expand_uri_param = 'expand_uri={0}'.format(query_params['expand_uri'])
@@ -76,7 +86,7 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
             'method': "GET"
         },
         {
-            "href": "{0}{1}".format(query_params.base_url, href),
+            "href": "{0}{1}".format(forced_absolute_base_url, href),
             "method": "POST",
             "rel": "create",
             "schema": {"$ref": "{+_base_url}"}
