@@ -67,7 +67,8 @@ def assemble_schema_dict(query_params, title, predicates, context, **kw):
     instance_href = u"/_/_/_?instance_uri={value}"
 
     # TODO problem with CMAaS
-    forced_absolute_base_url = absolut_base_url(query_params.base_url)
+    # forced_absolute_base_url = absolut_base_url(query_params.base_url)
+    forced_absolute_base_url = query_params.request.host
 
     if 'expand_uri' in query_params:
         expand_uri_param = 'expand_uri={0}'.format(query_params['expand_uri'])
