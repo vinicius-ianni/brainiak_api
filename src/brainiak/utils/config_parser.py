@@ -40,10 +40,10 @@ def get_all_configs(filename=settings.TRIPLESTORE_CONFIG_FILEPATH):
 def format_all_configs(configs_dict):
     formatted_configs = ""
     for config_name in configs_dict:
-        formatted_configs += "[{0}]\n\n".format(config_name)
+        formatted_configs += "[{0}]<br><br>".format(config_name)
         for config in OrderedDict(sorted(configs_dict[config_name].items())):
-            formatted_configs += "{0} = {1}\n".format(config, configs_dict[config_name][config])
-        formatted_configs += "\n"
+            formatted_configs += "{0} = {1}<br>".format(config, configs_dict[config_name][config])
+        formatted_configs += "<br>"
     return formatted_configs
 
 

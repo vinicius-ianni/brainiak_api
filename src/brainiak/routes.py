@@ -11,6 +11,7 @@ ROUTES = [
     URLSpec(r'/_status/?$', StatusHandler),
     URLSpec(r'/_status/activemq/?', EventBusStatusHandler),
     URLSpec(r'/_status/cache/?', CacheStatusHandler),
+    URLSpec(r'/_status/configs_virtuoso/?', VirtuosoConfigsStatusHandler),
     URLSpec(r'/_status/virtuoso/?', VirtuosoStatusHandler),
     URLSpec(r'/_version/?', VersionHandler),
 

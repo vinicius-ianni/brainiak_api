@@ -42,6 +42,7 @@ from brainiak.suggest.json_schema import SUGGEST_PARAM_SCHEMA
 from brainiak.suggest.suggest import do_suggest
 from brainiak.utils import cache
 from brainiak.utils.cache import memoize, build_instance_key
+from brainiak.utils.config_parser import get_all_configs, format_all_configs
 from brainiak.utils.i18n import _
 from brainiak.utils.json import validate_json_schema, get_json_request_as_dict
 from brainiak.utils.links import build_schema_url_for_instance, content_type_profile, build_schema_url, build_class_url
@@ -784,7 +785,20 @@ class VersionHandler(BrainiakRequestHandler):
 class VirtuosoStatusHandler(BrainiakRequestHandler):
 
     def get(self):
+        import pdb; pdb.set_trace()
         self.write(triplestore.status())
+
+
+class VirtuosoConfigsStatusHandler(BrainiakRequestHandler):
+
+    def get(self):
+        configs = get_all_configs()
+        formatted_configs = format_all_configs(configs)
+        self.write(formatted_configs)
+
+    # TODO
+    def purge(self):
+        pass
 
 
 class CacheStatusHandler(BrainiakRequestHandler):

@@ -52,19 +52,7 @@ class ConfigParserTestCase(TestCase):
         self.assertEqual(result, expected)
 
     def test_format_all_configs(self):
-        expected = """[default]
-
-app_name = Brainiak
-auth_username = dba
-url = http://localhost:8890/sparql-auth
-
-[other]
-
-app_name = Other
-auth_username = one_user
-url = http://localhost:8890/sparql-auth
-
-"""
+        expected = "[default]<br><br>app_name = Brainiak<br>auth_username = dba<br>url = http://localhost:8890/sparql-auth<br><br>[other]<br><br>app_name = Other<br>auth_username = one_user<br>url = http://localhost:8890/sparql-auth<br><br>"
         input_dict = {
             'default': {
                 'url': 'http://localhost:8890/sparql-auth',
