@@ -785,7 +785,6 @@ class VersionHandler(BrainiakRequestHandler):
 class VirtuosoStatusHandler(BrainiakRequestHandler):
 
     def get(self):
-        import pdb; pdb.set_trace()
         self.write(triplestore.status())
 
 
