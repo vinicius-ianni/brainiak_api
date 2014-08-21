@@ -1,7 +1,15 @@
 Releases
 ========
 
-Version 2.7.5 - 2014/08/19
+Version 2.7.7 - 2014/08/19
+--------------------------
+
+Fix
+___________________
+
+- The class-schema in property href now has a absolute URL, this solution is a workaround to work in JSON form.
+
+Version 2.7.6 - 2014/08/19
 --------------------------
 
 Fixes, Improvements
