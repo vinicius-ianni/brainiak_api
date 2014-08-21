@@ -1,19 +1,11 @@
 from unittest import TestCase
-from brainiak.utils.config_parser import ConfigParserNoSectionError, parse_section
+from brainiak.utils.config_parser import ConfigParserNoSectionError, parse_section, \
+    get_all_configs, format_all_configs
 
 
 class ConfigParserTestCase(TestCase):
 
-    def test_parse_default_config_file_and_default_section(self):
-        response = parse_section()
-        expected_response = {
-            'url': 'http://localhost:8890/sparql-auth',
-            'app_name': 'Brainiak',
-            'auth_mode': 'digest',
-            'auth_username': 'dba',
-            'auth_password': 'dba'
-        }
-        self.assertEqual(response, expected_response)
+    maxDiff = None
 
     def test_parse_config_file_and_other_section(self):
         local_ini = "src/brainiak/triplestore.ini"
@@ -27,5 +19,61 @@ class ConfigParserTestCase(TestCase):
         }
         self.assertEqual(response, expected_response)
 
+    def test_parse_default_config_file_and_default_section(self):
+        response = parse_section()
+        expected_response = {
+            'url': 'http://localhost:8890/sparql-auth',
+            'app_name': 'Brainiak',
+            'auth_mode': 'digest',
+            'auth_username': 'dba',
+            'auth_password': 'dba'
+        }
+        self.assertEqual(response, expected_response)
+
     def test_parse_inexistent_section(self):
-        self.assertRaises(ConfigParserNoSectionError, parse_section, "xubiru")
+        self.assertRaises(ConfigParserNoSectionError, parse_section, **{"section": "xubiru"})
+
+    def test_get_all_configs(self):
+        expected = {
+            'default': {
+                'url': 'http://localhost:8890/sparql-auth',
+                'auth_username': 'dba',
+                'app_name': 'Brainiak'},
+            'other': {
+                'url': 'http://localhost:8890/sparql-auth',
+                'auth_username': 'one_user',
+                'app_name': 'Other'},
+            'another': {
+                'url': 'http://localhost:8890/sparql-auth',
+                'auth_username': 'dba',
+                'app_name': 'Another'}
+        }
+        result = get_all_configs()
+        self.assertEqual(result, expected)
+
+    def test_format_all_configs(self):
+        expected = """[default]
+
+app_name = Brainiak
+auth_username = dba
+url = http://localhost:8890/sparql-auth
+
+[other]
+
+app_name = Other
+auth_username = one_user
+url = http://localhost:8890/sparql-auth
+
+"""
+        input_dict = {
+            'default': {
+                'url': 'http://localhost:8890/sparql-auth',
+                'auth_username': 'dba',
+                'app_name': 'Brainiak'},
+            'other': {
+                'url': 'http://localhost:8890/sparql-auth',
+                'auth_username': 'one_user',
+                'app_name': 'Other'}
+        }
+        result = format_all_configs(input_dict)
+        self.assertEqual(result, expected)
