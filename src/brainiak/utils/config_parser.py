@@ -47,6 +47,11 @@ def format_all_configs(configs_dict):
     return formatted_configs
 
 
+def purge_configs():
+    global parser
+    parser = None
+
+
 def _parse_file(filename=settings.TRIPLESTORE_CONFIG_FILEPATH):
     global parser
     parser = ConfigParser()

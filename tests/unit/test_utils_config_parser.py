@@ -1,6 +1,6 @@
 from unittest import TestCase
 from brainiak.utils.config_parser import ConfigParserNoSectionError, parse_section, \
-    get_all_configs, format_all_configs
+    get_all_configs, format_all_configs, purge_configs
 
 
 class ConfigParserTestCase(TestCase):
@@ -65,3 +65,12 @@ class ConfigParserTestCase(TestCase):
         }
         result = format_all_configs(input_dict)
         self.assertEqual(result, expected)
+
+    def test_purge_configs(self):
+        from brainiak.utils.config_parser import parser
+        self.assertFalse(parser is None)
+
+        purge_configs()
+
+        from brainiak.utils.config_parser import parser
+        self.assertTrue(parser is None)
