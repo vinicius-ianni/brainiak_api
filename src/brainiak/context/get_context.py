@@ -57,7 +57,7 @@ def assemble_list_json(query_params, query_result_dict):
     return json_dict
 
 QUERY_COUNT_ALL_CLASSES_OF_A_GRAPH = u"""
-SELECT COUNT(?class) AS ?total_items
+SELECT COUNT(DISTINCT ?class) AS ?total_items
 FROM <%(graph_uri)s>
 {
     ?class a owl:Class ;
