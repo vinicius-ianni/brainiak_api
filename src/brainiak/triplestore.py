@@ -20,7 +20,7 @@ from brainiak.utils.config_parser import parse_section
 JSON_DECODE_ERROR_MESSAGE = "Could not decode JSON:\n  {0}"
 UNAUTHORIZED_MESSAGE = "Check triplestore user and password."
 
-SLOW_QUERY_MESSAGE = "Slow query: took more than {0} seconds\n Query: {1}"
+SLOW_QUERY_MESSAGE = "Slow query: took {0} seconds\n Query: {1}"
 SLOW_QUERY_TIMEOUT = settings.TRIPLESTORE_QUERY_TIMEOUT
 
 DEFAULT_VIRTUOSO_REQUEST_HEADERS = {
@@ -101,7 +101,7 @@ def query_sparql(query, triplestore_config, async=True):
     log_params["time_diff"] = time_diff
     log_request(log_params)
     if time_diff >= SLOW_QUERY_TIMEOUT:
-        log.logger.warning(SLOW_QUERY_MESSAGE.format(SLOW_QUERY_TIMEOUT, query))
+        log.logger.warning(SLOW_QUERY_MESSAGE.format(time_diff, query))
 
     result_dict = _process_json_triplestore_response(response, async)
     return result_dict
