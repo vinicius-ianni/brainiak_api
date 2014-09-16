@@ -1,6 +1,11 @@
 Releases
 ========
 
+Version 2.8.1
+-------------
+
+- Logging slow queries (that take more than 1 second)
+
 Version 2.7.7 - 2014/08/19
 --------------------------
 
