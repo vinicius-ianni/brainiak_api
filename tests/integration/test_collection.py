@@ -29,7 +29,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(response.code, 400)
 
     def test_filter_with_expanded_predicate(self):
-        response = self.fetch('/person/Gender/?p=upper:name&expand_uri=1', method='GET')
+        response = self.fetch('/person/Gender/?p=upper:name&expand_uri=1&inference=1', method='GET')
         expected_items = [
                 {
                     u'@id': u'http://semantica.globo.com/person/Gender/Female',
@@ -61,7 +61,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(sorted(received_response['items']), sorted(expected_items))
 
     def test_filter_without_predicate_and_object(self):
-        response = self.fetch('/person/Gender/?expand_uri=1', method='GET')
+        response = self.fetch('/person/Gender/?expand_uri=1&inference=1', method='GET')
         expected_items = [
             {
                 u'title': u'Feminino',
@@ -90,14 +90,14 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(sorted(received_response['items']), sorted(expected_items))
 
     def test_list_by_page(self):
-        response = self.fetch('/person/Gender/?page=1&per_page=2', method='GET')
+        response = self.fetch('/person/Gender/?page=1&per_page=2&inference=1', method='GET')
         received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
         self.assertEqual(len(received_response['items']), 2)
         self.assertFalse('item_count' in received_response)
 
     def test_list_by_page_with_count(self):
-        response = self.fetch('/person/Gender/?page=1&per_page=2&do_item_count=1', method='GET')
+        response = self.fetch('/person/Gender/?page=1&per_page=2&do_item_count=1&inference=1', method='GET')
 
         self.assertEqual(response.code, 200)
         received_response = json.loads(response.body)
@@ -119,13 +119,13 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(len(received_response['items']), 2)
 
     def test_list_links_prev_and_next(self):
-        response = self.fetch('/person/Gender/?page=2&per_page=1&do_item_count=1', method='GET')
+        response = self.fetch('/person/Gender/?page=2&per_page=1&do_item_count=1&inference=1', method='GET')
         received_response = json.loads(response.body)
-        self.assertQueryStringArgsEqual(received_response["_previous_args"], "page=1&per_page=1&do_item_count=1")
-        self.assertQueryStringArgsEqual(received_response["_next_args"], "page=3&per_page=1&do_item_count=1")
+        self.assertQueryStringArgsEqual(received_response["_previous_args"], "page=1&per_page=1&do_item_count=1&inference=1")
+        self.assertQueryStringArgsEqual(received_response["_next_args"], "page=3&per_page=1&do_item_count=1&inference=1")
 
     def test_list_by_page_sort_first_page(self):
-        response = self.fetch('/person/Gender/?page=1&per_page=2&sort_by=rdfs:label&expand_uri=1', method='GET')
+        response = self.fetch('/person/Gender/?page=1&per_page=2&sort_by=rdfs:label&expand_uri=1&inference=1', method='GET')
         received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
         expected_items = [
@@ -147,7 +147,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(received_response['items'], expected_items)
 
     def test_list_by_page_sort_second_page(self):
-        response = self.fetch('/person/Gender/?page=2&per_page=2&sort_by=rdfs:label&expand_uri=1', method='GET')
+        response = self.fetch('/person/Gender/?page=2&per_page=2&sort_by=rdfs:label&expand_uri=1&inference=1', method='GET')
         received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
         expected_items = [
@@ -162,7 +162,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(received_response['items'], expected_items)
 
     def test_list_by_page_sort_first_page_desc(self):
-        response = self.fetch('/person/Gender/?page=1&per_page=2&sort_by=rdfs:label&sort_order=desc&expand_uri=1', method='GET')
+        response = self.fetch('/person/Gender/?page=1&per_page=2&sort_by=rdfs:label&sort_order=desc&expand_uri=1&inference=1', method='GET')
         received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
         expected_items = [
@@ -184,7 +184,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(received_response['items'], expected_items)
 
     def test_filter_with_object_as_string_expand_uri0(self):
-        response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=0', method='GET')
+        response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=0&inference=1', method='GET')
         expected_items = [
             {
                 u'title': u'Masculino',
@@ -200,7 +200,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
         self.assertEqual(sorted(received_response['items']), sorted(expected_items))
 
     def test_filter_with_object_as_string_expand_uri1(self):
-        response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=1', method='GET')
+        response = self.fetch('/person/Gender/?o=Masculino&lang=pt&expand_uri=1&inference=1', method='GET')
         expected_items = [
             {
                 u'title': u'Masculino',
@@ -217,7 +217,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
 
     def test_filter_with_predicate_as_uri(self):
         url = urllib.quote("http://www.w3.org/2000/01/rdf-schema#label")
-        response = self.fetch('/person/Gender/?lang=pt&p=%s&&expand_uri=1' % url, method='GET')
+        response = self.fetch('/person/Gender/?lang=pt&p=%s&&expand_uri=1&inference=1' % url, method='GET')
         expected_items = [
             {
                 u'title': u'Feminino',
@@ -247,7 +247,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
 
     def test_filter_with_predicate_as_compressed_uri_and_object_as_label_with_expand_uri_1(self):
         url = urllib.quote("rdfs:label")
-        response = self.fetch('/person/Gender/?o=Feminino&lang=pt&p=%s&expand_uri=1' % url, method='GET')
+        response = self.fetch('/person/Gender/?o=Feminino&lang=pt&p=%s&expand_uri=1&inference=1' % url, method='GET')
         expected_items = [
             {
                 u'title': u'Feminino',
@@ -262,7 +262,7 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
 
     def test_filter_with_predicate_as_compressed_uri_and_object_as_label_with_expand_uri_0(self):
         url = urllib.quote("rdfs:label")
-        response = self.fetch('/person/Gender/?o=Feminino&lang=pt&p=%s&expand_uri=0' % url, method='GET')
+        response = self.fetch('/person/Gender/?o=Feminino&lang=pt&p=%s&expand_uri=0&inference=1' % url, method='GET')
         expected_items = [
             {
                 u'title': u'Feminino',
@@ -366,7 +366,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     @patch("brainiak.collection.get_collection.Query.inference_graph", new_callable=PropertyMock, return_value="http://tatipedia.org/ruleset")
     @patch("brainiak.handlers.logger")
     def test_json_returns_object_per_item(self, mock_log, mock_inference_graph):
-        response = self.fetch('/tpedia/Person/?p=http://tatipedia.org/likes&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/', method='GET')
+        response = self.fetch('/tpedia/Person/?p=http://tatipedia.org/likes&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         expected_items = [
@@ -400,7 +400,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     @patch("brainiak.collection.get_collection.Query.inference_graph", new_callable=PropertyMock, return_value="http://tatipedia.org/ruleset")
     @patch("brainiak.handlers.logger")
     def test_multiple_predicates(self, mock_log, mock_inference_graph):
-        response = self.fetch('/tpedia/Person/?o=http://tatipedia.org/JiuJitsu&p1=http://tatipedia.org/isAlive&o1=Yes&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&lang=en', method='GET')
+        response = self.fetch('/tpedia/Person/?o=http://tatipedia.org/JiuJitsu&p1=http://tatipedia.org/isAlive&o1=Yes&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&lang=en&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         expected_items = [
@@ -418,7 +418,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     @patch("brainiak.collection.get_collection.Query.inference_graph", new_callable=PropertyMock, return_value="http://tatipedia.org/ruleset")
     @patch("brainiak.handlers.logger")
     def test_multiple_unknown_predicates(self, mock_log, mock_inference_graph):
-        response = self.fetch('/tpedia/Person/?o=http://tatipedia.org/JiuJitsu&o1=Yes&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&lang=en', method='GET')
+        response = self.fetch('/tpedia/Person/?o=http://tatipedia.org/JiuJitsu&o1=Yes&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&lang=en&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         expected_items = [
@@ -437,7 +437,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     @patch("brainiak.collection.get_collection.Query.inference_graph", new_callable=PropertyMock, return_value="http://tatipedia.org/ruleset")
     @patch("brainiak.handlers.logger")
     def test_multiple_unknown_objects(self, mock_log, mock_inference_graph):
-        response = self.fetch('/tpedia/Person/?p=http://tatipedia.org/likes&p1=http://tatipedia.org/isAlive&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&lang=en', method='GET')
+        response = self.fetch('/tpedia/Person/?p=http://tatipedia.org/likes&p1=http://tatipedia.org/isAlive&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&lang=en&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         expected_items = [
@@ -469,7 +469,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     @patch("brainiak.collection.get_collection.Query.inference_graph", new_callable=PropertyMock, return_value="http://tatipedia.org/ruleset")
     @patch("brainiak.handlers.logger")
     def test_json_returns_sortby_per_item(self, mock_log, mock_inference_graph):
-        response = self.fetch('/tpedia/Person/?sort_by=dbpedia:nickname&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/', method='GET')
+        response = self.fetch('/tpedia/Person/?sort_by=dbpedia:nickname&graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         expected_items = [
@@ -495,7 +495,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     @patch("brainiak.collection.get_collection.Query.inference_graph", new_callable=PropertyMock, return_value="http://tatipedia.org/ruleset")
     @patch("brainiak.handlers.logger")
     def test_json_returns_sortby_include_empty_value(self, mock_log, mock_inference_graph):
-        response = self.fetch('/tpedia/SoccerClub/?graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&sort_by=http://tatipedia.org/stadium', method='GET')
+        response = self.fetch('/tpedia/SoccerClub/?graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&sort_by=http://tatipedia.org/stadium&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         expected_items = [
@@ -528,7 +528,7 @@ class MixTestFilterInstanceResource(TornadoAsyncHTTPTestCase, QueryTestCase):
     @patch("brainiak.collection.get_collection.Query.inference_graph", new_callable=PropertyMock, return_value="http://tatipedia.org/ruleset")
     @patch("brainiak.handlers.logger")
     def test_json_returns_sortby_exclude_empty_value(self, mock_log, mock_inference_graph):
-        response = self.fetch('/tpedia/SoccerClub/?graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&sort_by=http://tatipedia.org/stadium&sort_include_empty=0', method='GET')
+        response = self.fetch('/tpedia/SoccerClub/?graph_uri=http://tatipedia.org/&class_prefix=http://tatipedia.org/&sort_by=http://tatipedia.org/stadium&sort_include_empty=0&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         expected_items = [
@@ -569,6 +569,7 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -603,6 +604,7 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -637,6 +639,7 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -666,6 +669,7 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -695,6 +699,7 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -722,7 +727,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
         query = Query(params).to_string(count=True)
         computed = self.query(query)["results"]["bindings"]
@@ -740,7 +746,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "per_page": "10",
             "page": "0",
             "sort_by": "",
-            "sort_order": "asc"
+            "sort_order": "asc",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -760,7 +767,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "lang": "",
             "per_page": "10",
             "page": "0",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -781,6 +789,7 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "p": "http://tatipedia.org/dislikes",
             "o": "?o",
             "sort_by": "",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)["results"]["bindings"]
@@ -800,7 +809,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "page": "0",
             "p": "http://tatipedia.org/likes",
             "o": "?o",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
         query = Query(params).to_string()
         computed = self.query(query)['results']['bindings']
@@ -839,7 +849,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
 
         query = Query(params).to_string()
@@ -863,7 +874,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
 
         query = Query(params).to_string()
@@ -894,7 +906,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
 
         query = Query(params).to_string()
@@ -929,7 +942,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "1",
             "page": "0",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
         query = Query(params).to_string()
         response = self.query(query)
@@ -946,7 +960,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "1",
             "page": "1",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
         query = Query(params).to_string()
         response = self.query(query)
@@ -963,7 +978,8 @@ class FilterInstancesQueryTestCase(QueryTestCase):
             "graph_uri": self.graph_uri,
             "per_page": "10",
             "page": "0",
-            "sort_by": ""
+            "sort_by": "",
+            "inference": "1"
         })
         query = Query(params).to_string()
         response = self.query(query)
@@ -1052,7 +1068,7 @@ class CastValuesTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
 
     @patch("brainiak.collection.get_collection.settings", DEFAULT_RULESET_URI="http://on.to/ruleset")
     def test_cast_integer_values(self, mock_ruleset):
-        response = self.fetch('/_/_/?lang=en&p=http://on.to/age&graph_uri=http://on.to/&class_uri=http://on.to/Person', method='GET')
+        response = self.fetch('/_/_/?lang=en&p=http://on.to/age&graph_uri=http://on.to/&class_uri=http://on.to/Person&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         computed_items = clear_items(computed_items)
@@ -1082,7 +1098,7 @@ class CastValuesTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
 
     @patch("brainiak.collection.get_collection.settings", DEFAULT_RULESET_URI="http://on.to/ruleset")
     def test_retrieve_float_values(self, mock_ruleset):
-        response = self.fetch('/_/_/?lang=en&p=http://on.to/weight&graph_uri=http://on.to/&class_uri=http://on.to/Person', method='GET')
+        response = self.fetch('/_/_/?lang=en&p=http://on.to/weight&graph_uri=http://on.to/&class_uri=http://on.to/Person&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         computed_items = clear_items(computed_items)
@@ -1112,7 +1128,7 @@ class CastValuesTestCase(TornadoAsyncHTTPTestCase, QueryTestCase):
 
     @patch("brainiak.collection.get_collection.settings", DEFAULT_RULESET_URI="http://on.to/ruleset")
     def test_retrieve_boolean_values(self, mock_ruleset):
-        response = self.fetch('/_/_/?lang=en&p=http://on.to/isHuman&graph_uri=http://on.to/&class_uri=http://on.to/Person', method='GET')
+        response = self.fetch('/_/_/?lang=en&p=http://on.to/isHuman&graph_uri=http://on.to/&class_uri=http://on.to/Person&inference=1', method='GET')
         self.assertEqual(response.code, 200)
         computed_items = json.loads(response.body)["items"]
         computed_items = clear_items(computed_items)

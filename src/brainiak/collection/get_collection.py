@@ -112,16 +112,23 @@ class Query(object):
         if self.direct_instances:
             first_statement = u"?subject a <%(class_uri)s> ;\n"
         else:
-            tuples.insert(0, ("a", "<%(class_uri)s>"))
-            first_statement = "?subject "
+            inference = u'OPTION(inference "%s")' % self.inference_graph
+            first_statement = u'?subject a <%(class_uri)s> ' + inference + ';\n'
 
-        inference = u'OPTION(inference "%s")' % self.inference_graph
-        tuples_strings = [u"%s %s %s" % (p, o, inference) for p, o in tuples]
+        if self.inference:
+            inference = u'OPTION(inference "%s")' % self.inference_graph
+            tuples_strings = [u"%s %s %s" % (p, o, inference) for p, o in tuples]
+        else:
+            tuples_strings = [u"%s %s" % (p, o) for p, o in tuples]
 
         statement = first_statement + u" ;\n".join(tuples_strings) + u" .\n" + sort_sufix
         statements = statement % self.params
 
         return u'GRAPH <%(graph_uri)s> { %(statements)s }' % {"statements": statements, 'graph_uri': self.params['graph_uri']}
+
+    @property
+    def inference(self):
+        return self.params.get("inference") == "1"
 
     @property
     def direct_instances(self):

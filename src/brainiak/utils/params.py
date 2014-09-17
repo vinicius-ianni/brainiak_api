@@ -98,7 +98,8 @@ VALID_PARAMS = [
     'expand_object_properties',
     'meta_properties',
     'pattern',
-    'valid_patterns'
+    'valid_patterns',
+    'inference'
 ]
 
 VALID_PATTERNS = (

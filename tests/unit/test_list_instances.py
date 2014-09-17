@@ -83,6 +83,7 @@ class CastItemTestCase(unittest.TestCase):
                 "isVegetarian": True
             }
         ]
+        self.assertEqual(computed, expected)
 
 
 class BuildMapPropertyToTypeTestCase(object):
@@ -234,8 +235,8 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label .
                      }
         }
 
@@ -253,9 +254,9 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     some:predicate some:object OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     some:predicate some:object .
                      }
         }
 
@@ -275,10 +276,10 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?another_object, ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     another:predicate ?another_object OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     some:predicate some:object OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     another:predicate ?another_object ;
+                     some:predicate some:object .
                      }
         }
 
@@ -296,8 +297,8 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label .
                      }
         }
 
@@ -315,8 +316,8 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label .
                      }
         }
         LIMIT 15
@@ -332,9 +333,9 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?object, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://some.graph/predicate> ?object OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     <http://some.graph/predicate> ?object .
                      }
         }
         LIMIT 10
@@ -350,8 +351,8 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label .
                      }
         }
         LIMIT 10
@@ -367,9 +368,9 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?object, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://schema.org/Creature> ?object OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     <http://schema.org/Creature> ?object .
                      }
         }
         LIMIT 10
@@ -386,9 +387,9 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://schema.org/Creature> ?literal1 OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     <http://schema.org/Creature> ?literal1 .
                      }
             FILTER(str(?literal1) = "Xubiru") .
         }
@@ -407,9 +408,9 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://schema.org/Creature> ?literal1 OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     <http://schema.org/Creature> ?literal1 .
                      }
             FILTER(str(?literal1) = "Xubiru") .
             FILTER(langMatches(lang(?label), "pt") OR langMatches(lang(?label), "")) .
@@ -428,8 +429,8 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?sort_object, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label .
             OPTIONAL {?subject <http://dbpedia.org/ontology/predicate> ?sort_object} }
         }
         ORDER BY ASC(?sort_object)
@@ -448,9 +449,9 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?sort_object, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://dbpedia.org/ontology/predicate> ?sort_object OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     <http://dbpedia.org/ontology/predicate> ?sort_object .
                      }
         }
         ORDER BY ASC(?sort_object)
@@ -468,8 +469,8 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label .
                      }
         }
         ORDER BY DESC(?label)
@@ -488,9 +489,9 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT DISTINCT ?label, ?object, ?subject
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://schema.org/another_predicate> ?object OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label ;
+                     <http://schema.org/another_predicate> ?object .
                      }
         }
         ORDER BY DESC(?object)
@@ -506,8 +507,8 @@ class ListQueryTestCase(unittest.TestCase):
         expected = """
         SELECT count(DISTINCT ?subject) as ?total
         WHERE {
-            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset") ;
-                     <http://www.w3.org/2000/01/rdf-schema#label> ?label OPTION(inference "http://semantica.globo.com/ruleset") .
+            GRAPH <http://some.graph/> { ?subject a <http://some.graph/SomeClass> OPTION(inference "http://semantica.globo.com/ruleset");
+                     <http://www.w3.org/2000/01/rdf-schema#label> ?label .
                      }
         }
         """
@@ -517,18 +518,18 @@ class ListQueryTestCase(unittest.TestCase):
 class BuildJSONTestCase(URLTestCase):
 
     default_params = {
-            "class_uri": "http://some.graph/SomeClass",
-            "lang": "",
-            "graph_uri": "http://some.graph/",
-            "per_page": "10",
-            "page": "0",
-            "p": "?predicate",
-            "o": "?object",
-            "sort_by": "",
-            "sort_order": "asc",
-            "sort_include_empty": "1",
-            "base_url": "http://domain.com",
-            "request": MockRequest(),
+        "class_uri": "http://some.graph/SomeClass",
+        "lang": "",
+        "graph_uri": "http://some.graph/",
+        "per_page": "10",
+        "page": "0",
+        "p": "?predicate",
+        "o": "?object",
+        "sort_by": "",
+        "sort_order": "asc",
+        "sort_include_empty": "1",
+        "base_url": "http://domain.com",
+        "request": MockRequest(),
     }
     maxDiff = None
 

@@ -379,7 +379,8 @@ class CollectionHandler(BrainiakRequestHandler):
 
     @greenlet_asynchronous
     def get(self, context_name, class_name):
-        valid_params = LIST_PARAMS + CLASS_PARAMS + DefaultParamsDict(direct_instances_only='0')
+        valid_params = LIST_PARAMS + CLASS_PARAMS + \
+            DefaultParamsDict(direct_instances_only='0', inference='0')
         with safe_params(valid_params):
             self.query_params = ParamDict(self,
                                           context_name=context_name,
