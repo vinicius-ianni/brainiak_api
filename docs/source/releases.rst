@@ -4,8 +4,8 @@ Releases
 Version 2.9.0
 _____________
 
-- Changes the default result in instance lists because disabled the inference for properties
-- New inference parameter used in instance lists to control inference in properties
+- Changes the default result in instance lists disabling the inference for property values
+- New ``inference`` parameter (default is ``0``) used in instance lists to control inference in property values
 
 Version 2.8.1
 -------------
