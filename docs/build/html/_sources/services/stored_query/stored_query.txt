@@ -202,6 +202,7 @@ Stored queries can be expensive and complex.
 Therefore, we implement a caching mechanism.
 
 Queries can explictly state their cache expiration for results, by using ``time_to_live`` parameter.
+If ``time_to_live`` is not set, a default expiration interval is set to 300 seconds (5 minutes).
 
 *Example*:
 

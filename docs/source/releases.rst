@@ -7,7 +7,7 @@ _____________
 - Changes the default result in instance lists disabling the inference for property values
 - New ``inference`` parameter (default is ``0``) used in instance lists to control inference in property values
 
-Version 2.8.1
+Version 2.8.0
 -------------
 
 - Logging slow queries (that take more than 1 second)
