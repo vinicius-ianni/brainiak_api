@@ -57,6 +57,7 @@ LEGACY_PREFIXES = {
     "esportes": "http://semantica.globo.com/esportes/",
     "g1": "http://semantica.globo.com/G1/",
     "tvg": "http://semantica.globo.com/tvg/",
+    "gshow": "http://semantica.globo.com/gshow/",
     "eureka": "http://semantica.globo.com/eureka/",
     "tecnologia": "http://semantica.globo.com/tecnologia/",
     "techtudo": "http://semantica.globo.com/techtudo/"
