@@ -35,24 +35,10 @@ class TriplestoreTestCase(TornadoAsyncTestCase, QueryTestCase):
         modified_dict["auth_username"] = 'inexistent'
         self.assertRaises(HTTPError, triplestore.query_sparql, SIMPLE_QUERY, modified_dict)
 
-    @greenlet_tornado.greenlet_test
-    def test_authenticated_access_to_not_authenticated_endpoint(self):
-        modified_dict = triplestore_config.copy()
-        modified_dict["url"] = 'http://localhost:8890/sparql'
-
-        response = triplestore.query_sparql(SIMPLE_QUERY, modified_dict)
-        self.assertTrue(response['boolean'])
-
 
 class RunQueryTestCase(QueryTestCase):
 
     fixtures = ["tests/sample/dummy.ttl"]
-
-    def test_sync_query_not_authenticated_works(self):
-        triplestore_config = config_parser.parse_section()
-        triplestore_config["url"] = "http://localhost:8890/sparql"
-        response = triplestore.query_sparql(SIMPLE_QUERY, triplestore_config, async=False)
-        self.assertTrue(response['boolean'])
 
     def test_sync_query_authenticated_works(self):
         triplestore_config = config_parser.parse_section()

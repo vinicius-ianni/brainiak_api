@@ -10,7 +10,7 @@ from brainiak.type_mapper import MAP_RDF_EXPANDED_TYPE_TO_PYTHON as rdf_to_type
 from brainiak.utils.links import build_schema_url_for_instance, remove_last_slash, build_class_url
 from brainiak.utils.resources import decorate_with_resource_id, decorate_dict_with_pagination, calculate_offset
 from brainiak.utils.sparql import compress_keys_and_values, is_literal, is_url, normalize_term, get_one_value, \
-        extract_po_tuples, is_result_true
+    extract_po_tuples, is_result_true
 
 
 EXPANDED_RDFS_LABEL = "http://www.w3.org/2000/01/rdf-schema#label"

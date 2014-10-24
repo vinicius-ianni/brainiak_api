@@ -31,33 +31,33 @@ class TestFilterInstanceResource(TornadoAsyncHTTPTestCase, URLTestCase):
     def test_filter_with_expanded_predicate(self):
         response = self.fetch('/person/Gender/?p=upper:name&expand_uri=1&inference=1', method='GET')
         expected_items = [
-                {
-                    u'@id': u'http://semantica.globo.com/person/Gender/Female',
-                    u'class_prefix': u'http://semantica.globo.com/person/',
-                    u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
-                    u'resource_id': u'Female',
-                    u'title': u'Feminino',
-                    u'http://semantica.globo.com/upper/name': u'Feminino'
-                },
-                {
-                    u'@id': u'http://semantica.globo.com/person/Gender/Male',
-                    u'class_prefix': u'http://semantica.globo.com/person/',
-                    u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
-                    u'resource_id': u'Male',
-                    u'title': u'Masculino',
-                    u'http://semantica.globo.com/upper/name': u'Masculino'
-                },
-                {
-                    u'@id': u'http://semantica.globo.com/person/Gender/Transgender',
-                    u'class_prefix': u'http://semantica.globo.com/person/',
-                    u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
-                    u'resource_id': u'Transgender',
-                    u'title': u'Transg\xeanero',
-                    u'http://semantica.globo.com/upper/name': u'Transg\xeanero'
-                }
+            {
+                u'@id': u'http://semantica.globo.com/person/Gender/Female',
+                u'class_prefix': u'http://semantica.globo.com/person/',
+                u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+                u'resource_id': u'Female',
+                u'title': u'Feminino',
+                u'http://semantica.globo.com/upper/name': [u'Female', u'Feminino']
+            },
+            {
+                u'@id': u'http://semantica.globo.com/person/Gender/Male',
+                u'class_prefix': u'http://semantica.globo.com/person/',
+                u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+                u'resource_id': u'Male',
+                u'title': u'Masculino',
+                u'http://semantica.globo.com/upper/name': [u'Male', u'Masculino']
+            },
+            {
+                u'@id': u'http://semantica.globo.com/person/Gender/Transgender',
+                u'class_prefix': u'http://semantica.globo.com/person/',
+                u'instance_prefix': u'http://semantica.globo.com/person/Gender/',
+                u'resource_id': u'Transgender',
+                u'title': u'Transg\xeanero',
+                u'http://semantica.globo.com/upper/name': [u'Transgender', u'Transg\xeanero']
+            }
         ]
-        received_response = json.loads(response.body)
         self.assertEqual(response.code, 200)
+        received_response = json.loads(response.body)
         self.assertEqual(sorted(received_response['items']), sorted(expected_items))
 
     def test_filter_without_predicate_and_object(self):
