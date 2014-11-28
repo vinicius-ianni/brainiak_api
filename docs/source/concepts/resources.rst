@@ -65,7 +65,7 @@ Collection
 ----------
 
 We need to distinguish the structure of an instance (class) from a group of instances with the same structure (collection).
-Therefore, for each class corresponds a unique collection adn vice-versa.
+Therefore, for each class corresponds a unique collection and vice-versa.
 The collection name and the class name are the same.
 
 
@@ -81,6 +81,3 @@ A collection subset or the whole collection is stored in a context.
 Instances must be easily retrieved.
 Morevoer, "instance queries" must be really simple for developers to understand as they will do way more requests on instances than on classes.
 As such, the interface for manipulating instances accepts JSON content_type as most of the RESTful APIs do.
-
-
-
