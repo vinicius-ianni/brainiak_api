@@ -32,6 +32,7 @@ make
 sudo mkdir -p /var/lib/virtuoso/db/dumps/
 sudo chmod 777 /var/lib/virtuoso/db/ -R
 echo "export VIRTUOSO_HOME=/var/lib/virtuoso/db/" >> ~/.bashrc
+source ~/.bashrc
 sudo ln -f -s $CODE_DIR/virtuoso-opensource/binsrc/tests/isql /usr/bin/isql
 sudo ln -f -s $CODE_DIR/virtuoso-opensource/binsrc/virtuoso/virtuoso-t /usr/bin/virtuoso-t
 cp $CODE_DIR/brainiak_api/setup/fedora/virtuoso.ini $VIRTUOSO_HOME/virtuoso.ini

@@ -17,6 +17,8 @@ python3
 python-matplotlib
 python-debuginfo
 
+java-1.7.0-openjdk
+
 redis
 
 aclocal
@@ -27,4 +29,3 @@ libtool
 bison
 flex
 gperf
-
